@@ -2,7 +2,7 @@
 
 Outputs:
   public/index.html     Production page served by Vercel (connected to /api and Supabase)
-  dist/artifact.html    Claude artifact version (no <head>; the artifact host adds it; no endpoints)
+  dist/artifact.html    Claude artifact version (full page, endpoints empty)
   dist/_preview.html    Local test copy of the artifact version
 
 Run:  python3 build.py      (no dependencies)
@@ -22,9 +22,8 @@ def data_uri(name):
 src = SRC.read_text(encoding="utf-8")
 body = src.replace("{{LOGO}}", data_uri("logo.png")).replace("{{DOCTOR}}", data_uri("doctor.png"))
 
-# 1) Claude artifact version (endpoints empty: the artifact runs in preview mode and uses Claude for the notes)
+# 1) Local preview of the artifact version (endpoints empty)
 (HERE / "dist").mkdir(exist_ok=True)
-(HERE / "dist" / "artifact.html").write_text(body, encoding="utf-8")
 (HERE / "dist" / "_preview.html").write_text(
     '<!doctype html><html><head><meta charset="utf-8">'
     '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
@@ -85,4 +84,10 @@ HEAD = """<!doctype html>
 page = HEAD.replace("{FAVICON}", data_uri("favicon.png")) + content + "\n</body>\n</html>\n"
 (HERE / "public").mkdir(exist_ok=True)
 (HERE / "public" / "index.html").write_text(page, encoding="utf-8")
+# 3) Claude artifact version: same page with endpoints empty (the artifact sandbox blocks fetch; it runs in
+#    preview mode and asks Claude for the notes through the `sample` capability)
+artifact = page
+for k in ("aiEndpoint", "leadEndpoint", "uploadEndpoint"):
+    artifact = artifact.replace('%s: "/api/' % k, '%s: "" //' % k, 1)
+(HERE / "dist" / "artifact.html").write_text(artifact, encoding="utf-8")
 print("built: public/index.html (%d KB), dist/artifact.html, dist/_preview.html" % (len(page) // 1024))

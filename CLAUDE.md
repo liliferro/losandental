@@ -20,7 +20,7 @@ Proyecto de Lili (Marketech / Mood Agency) para su cliente Losan Dental. Landing
 - Seguridad: la anon key solo puede ejecutar `submit_lead()` y subir archivos a carpetas de leads existentes. Nadie puede leer leads ni archivos con ella; la clínica los ve desde el dashboard de Supabase. Nunca se expone una service_role key en el código ni en el HTML.
 
 ## Variables de entorno (Vercel)
-`SUPABASE_URL`, `SUPABASE_ANON_KEY` (configuradas). Opcionales: `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `CRM_WEBHOOK_URL`, `MAX_UPLOAD_MB`.
+`SUPABASE_URL`, `SUPABASE_ANON_KEY`: opcionales, porque `lib/supabase.js` trae por defecto el proyecto losandental y su anon key, que es pública por diseño. Opcionales: `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `CRM_WEBHOOK_URL`, `MAX_UPLOAD_MB`.
 
 ## Reglas de contenido (del brief del cliente)
 - No inventar precios, testimonios, cifras ni datos médicos. Si falta un dato, se usa `[[POR CONFIRMAR: ...]]` o un campo vacío en `SMILE_PATH_CONFIG` (dentro de `build.py`).
