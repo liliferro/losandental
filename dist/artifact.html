@@ -55,6 +55,9 @@
   --body:"Source Sans 3", "Source Sans Pro", "Segoe UI", system-ui, sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --r-lg:26px; --r-md:18px; --r-sm:12px;
+  --ease:cubic-bezier(.22,1,.36,1); --ease-soft:cubic-bezier(.4,0,.2,1);
+  --shadow-1:0 1px 2px rgba(0,37,83,.06),0 2px 8px -2px rgba(0,37,83,.08);
+  --shadow-2:0 2px 4px rgba(0,37,83,.05),0 14px 32px -14px rgba(0,37,83,.32);
 }
 *{box-sizing:border-box}
 html,body{min-height:100%}
@@ -70,7 +73,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .brand .logo{height:34px;width:auto}
 .brand .rail{display:none}
 .stage{padding-block:16px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;justify-content:center;min-width:0}
-.app{width:100%;max-width:580px;background:var(--card);border-radius:var(--r-lg);box-shadow:0 1px 0 rgba(0,37,83,.04),0 24px 60px -24px rgba(0,37,83,.28);display:flex;flex-direction:column;min-height:min(860px,calc(100vh - 44px));position:relative;overflow:hidden;min-width:0}
+.app{width:100%;max-width:580px;background:var(--card);border-radius:var(--r-lg);box-shadow:0 1px 0 rgba(0,37,83,.04),0 24px 60px -24px rgba(0,37,83,.28);display:flex;flex-direction:column;min-height:min(860px,calc(100vh - 44px));position:relative;overflow:hidden;overflow:clip;min-width:0}
 @media (min-width:980px){
   .shell{grid-template-columns:400px minmax(0,1fr)}
   .brand{flex-direction:column;align-items:stretch;justify-content:flex-start;position:sticky;top:0;height:100vh;padding-block:40px 28px;padding-left:44px;padding-right:40px;gap:0;overflow:hidden}
@@ -92,22 +95,26 @@ button{font:inherit;color:inherit;cursor:pointer}
 .rail .phones{margin-top:auto;font-family:var(--mono);font-size:12.5px;color:#B9C9DE;display:grid;gap:4px;position:relative;z-index:1;padding-bottom:84px}
 
 /* ---------- top bar ---------- */
-.topbar{display:flex;align-items:center;gap:12px;padding:16px 20px 10px}
+.topbar{display:flex;align-items:center;gap:12px;padding:16px 20px 10px;position:sticky;top:0;z-index:4;background:rgba(255,255,255,.86);-webkit-backdrop-filter:saturate(1.6) blur(12px);backdrop-filter:saturate(1.6) blur(12px);transition:box-shadow .3s var(--ease-soft)}
+.topbar.scrolled{box-shadow:0 1px 0 rgba(0,37,83,.06),0 8px 20px -14px rgba(0,37,83,.35)}
 .iconbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;flex:none;transition:background .2s}
 .iconbtn:hover{background:var(--cyan-50)}
 .iconbtn[disabled]{opacity:0;pointer-events:none}
 .progress{flex:1;display:flex;gap:6px;min-width:0}
 .seg{flex:1;height:8px;border-radius:99px;background:#E5ECF3;overflow:hidden;position:relative}
-.seg i{position:absolute;inset:0;width:var(--p,0%);background:linear-gradient(90deg,var(--navy-2),#2C8FC0);border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.seg i{position:absolute;inset:0;width:var(--p,0%);background:linear-gradient(90deg,var(--navy-2),#2C8FC0);border-radius:99px;transition:width .7s var(--ease);overflow:hidden}
+.seg.active i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:sheen 2.8s var(--ease-soft) 1s infinite}
+@keyframes sheen{0%{transform:translateX(-100%)}55%,100%{transform:translateX(100%)}}
 .seg.done i{background:linear-gradient(90deg,#1BA9CF,var(--cyan))}
 .chaptername{padding:0 20px;display:flex;justify-content:space-between;font-family:var(--display);font-size:12px;color:var(--muted);letter-spacing:.04em}
 .chaptername b{color:var(--navy);font-weight:600}
 
 /* ---------- screens ---------- */
-.screen{flex:1;padding:18px 22px 24px;display:flex;flex-direction:column;gap:16px;animation:enter .45s cubic-bezier(.2,.8,.2,1)}
-.screen.back{animation-name:enterBack}
-@keyframes enter{from{opacity:.001;transform:translateX(28px)}to{opacity:1;transform:none}}
-@keyframes enterBack{from{opacity:.001;transform:translateX(-28px)}to{opacity:1;transform:none}}
+.screen{flex:1;padding:18px 22px 24px;display:flex;flex-direction:column;gap:16px}
+.screen > *{animation:enter .6s var(--ease) both;animation-delay:calc(var(--d,0) * 55ms)}
+.screen.back > *{animation-name:enterBack}
+@keyframes enter{from{opacity:.001;transform:translate3d(14px,6px,0)}to{opacity:1;transform:none}}
+@keyframes enterBack{from{opacity:.001;transform:translate3d(-14px,6px,0)}to{opacity:1;transform:none}}
 .eyebrow{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan-ink);display:flex;align-items:center;gap:8px}
 h1.q{font-family:var(--display);font-weight:600;font-size:clamp(23px,5.4vw,29px);line-height:1.14;color:var(--navy);margin:0;text-wrap:balance;letter-spacing:-.01em}
 .sub{color:var(--muted);margin:-6px 0 0;max-width:52ch}
@@ -116,7 +123,7 @@ h1.q{font-family:var(--display);font-weight:600;font-size:clamp(23px,5.4vw,29px)
 .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .opts.one{grid-template-columns:minmax(0,1fr)}
 @media (max-width:400px){.opts{grid-template-columns:minmax(0,1fr)}}
-.opt{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);padding:14px 14px 14px 12px;display:flex;gap:12px;align-items:flex-start;transition:border-color .2s,background .2s,transform .15s;animation:rise .4s both;animation-delay:calc(var(--i,0)*45ms);min-width:0}
+.opt{position:relative;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:var(--r-md);padding:14px 14px 14px 12px;display:flex;gap:12px;align-items:flex-start;transition:border-color .25s var(--ease-soft),background .25s var(--ease-soft),transform .3s var(--ease),box-shadow .3s var(--ease);animation:rise .5s var(--ease) both;animation-delay:calc(120ms + var(--i,0)*40ms);min-width:0}
 .opt:hover{border-color:#A9C4DD}
 .opt:active{transform:scale(.98)}
 .opt .ic{width:38px;height:38px;border-radius:12px;background:var(--cyan-50);color:var(--navy);display:grid;place-items:center;flex:none}
@@ -161,7 +168,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 
 /* footer */
 .footer{position:sticky;bottom:0;background:linear-gradient(rgba(255,255,255,0),#fff 22%);padding:18px 22px 20px;display:flex;flex-direction:column;gap:8px;z-index:2}
-.cta{width:100%;border:0;border-radius:16px;background:var(--navy);color:#fff;font-family:var(--display);font-weight:600;font-size:17px;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .15s,background .2s,opacity .2s;box-shadow:0 10px 24px -10px rgba(0,37,83,.6)}
+.cta{width:100%;border:0;border-radius:16px;background:var(--navy);color:#fff;font-family:var(--display);font-weight:600;font-size:17px;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .3s var(--ease),background .25s var(--ease-soft),opacity .3s var(--ease-soft),box-shadow .3s var(--ease);box-shadow:0 10px 24px -10px rgba(0,37,83,.6);position:relative;overflow:hidden}
 .cta .ms{color:var(--cyan)}
 .cta:hover{background:var(--navy-2)}
 .cta:active{transform:scale(.985)}
@@ -363,7 +370,7 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .upl .st{grid-column:1/-1;color:var(--muted);font-size:12.5px}
 .upl li.done .bar i{background:var(--green)}
 .upl li.bad .st{color:var(--red)}
-.fact{display:flex;flex-direction:column;gap:10px;animation:rise .45s both}
+.fact{display:flex;flex-direction:column;gap:10px}
 .fact-lead{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:15px;color:#0B6E4D}
 .fact-lead .ms{font-size:20px}
 .fact-body{background:var(--navy);color:#fff;border-radius:var(--r-md);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
@@ -374,6 +381,74 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .fact-src{font-size:12px;color:#B9C9DE}
 .moretitle{margin:6px 0 0}
 .more{display:flex;flex-direction:column;gap:16px}
+
+/* ---------- v2.3: motion & polish (transform/opacity only; all off with prefers-reduced-motion) ---------- */
+html:not(.icons-ready) .ms{opacity:0}
+.ms{transition:opacity .25s var(--ease-soft)}
+@media (hover:hover) and (pointer:fine){
+  .opt:hover{transform:translateY(-2px);box-shadow:var(--shadow-2);border-color:#A9C4DD}
+  .chip:hover{border-color:#A9C4DD;box-shadow:var(--shadow-1)}
+  .cta:not([disabled]):hover{transform:translateY(-1px);box-shadow:0 16px 30px -12px rgba(0,37,83,.6)}
+  .cta:not([disabled]):hover .ms{transform:translateX(3px)}
+  .cbtn:hover,.paintbtn:hover,.quick button:hover,.tool:hover{transform:translateY(-1px)}
+  .doc:hover,.card.lift:hover{box-shadow:var(--shadow-2)}
+}
+.cta .ms{transition:transform .35s var(--ease)}
+.chip,.tool,.cbtn,.paintbtn,.quick button,.iconbtn,.doc{transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .25s var(--ease-soft),border-color .25s var(--ease-soft),color .25s var(--ease-soft)}
+.chip:active,.tool:active,.cbtn:active{transform:scale(.97)}
+.opt:is([aria-pressed="true"],[aria-checked="true"]){box-shadow:0 0 0 3px rgba(147,229,249,.45),var(--shadow-1)}
+.opt .ic{transition:background .3s var(--ease-soft),color .3s var(--ease-soft),transform .4s var(--ease)}
+.opt:is([aria-pressed="true"],[aria-checked="true"]) .ic{transform:scale(1.06)}
+/* Continue button lights up once when the step is complete */
+.cta.ready{animation:ready .9s var(--ease)}
+.cta.ready::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(147,229,249,.35) 50%,transparent 70%);transform:translateX(-100%);animation:sweep 1s var(--ease) .05s}
+@keyframes ready{0%{transform:scale(1)}35%{transform:scale(1.015)}100%{transform:scale(1)}}
+@keyframes sweep{to{transform:translateX(100%)}}
+/* inputs */
+.field input,.field select{transition:border-color .25s var(--ease-soft),box-shadow .3s var(--ease)}
+input[type=range]::-webkit-slider-thumb{transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+input[type=range]:hover::-webkit-slider-thumb{box-shadow:0 0 0 8px rgba(147,229,249,.35),0 4px 12px rgba(0,37,83,.25)}
+/* tooth tap */
+.tooth .body{transform-box:fill-box;transform-origin:center}
+.tooth.pop .body{animation:toothPop .45s var(--ease)}
+@keyframes toothPop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+/* fact card */
+.fact-lead .ms{animation:popIn .5s var(--ease) .25s both}
+.fact-body{position:relative;overflow:hidden;box-shadow:var(--shadow-2)}
+.fact-body::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(147,229,249,.18) 50%,transparent 65%);transform:translateX(-100%);animation:sweep 1.6s var(--ease) .5s both}
+@keyframes popIn{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+/* result reveal on scroll */
+.reveal{animation:none!important;opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.res-hero{box-shadow:var(--shadow-2)}
+.res-hero::before{content:"";position:absolute;inset:-40% -20% auto auto;width:70%;height:140%;background:radial-gradient(closest-side,rgba(147,229,249,.18),transparent);pointer-events:none;animation:drift 9s var(--ease-soft) infinite alternate}
+@keyframes drift{to{transform:translate3d(-30%,12%,0)}}
+.res-hero .plan{animation:rise .6s var(--ease) both}
+.res-hero .plan:nth-child(2){animation-delay:.12s}
+.card{transition:box-shadow .3s var(--ease)}
+/* AI notes skeleton */
+.skel{display:grid;gap:8px}
+.skel i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,#E6F2F8 25%,#F6FBFD 50%,#E6F2F8 75%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.skel i:nth-child(1){width:62%}.skel i:nth-child(2){width:94%}.skel i:nth-child(3){width:81%}
+@keyframes shimmer{to{background-position:-200% 0}}
+/* success check */
+.okmark{width:44px;height:44px;flex:none}
+.okmark circle{stroke-dasharray:126;stroke-dashoffset:126;animation:draw .7s var(--ease) .1s forwards}
+.okmark path{stroke-dasharray:30;stroke-dashoffset:30;animation:draw .45s var(--ease) .65s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.successhead{display:flex;gap:12px;align-items:center}
+.successhead h3{margin:0}
+/* brand rail: slow light drift on desktop */
+@media (min-width:980px){
+  .brand::before{content:"";position:absolute;inset:-20% -40% auto auto;width:120%;height:70%;background:radial-gradient(closest-side,rgba(147,229,249,.12),transparent);pointer-events:none;animation:drift 14s var(--ease-soft) infinite alternate}
+  .rail > *{animation:rise .8s var(--ease) both}
+  .rail > :nth-child(2){animation-delay:.08s}.rail > :nth-child(3){animation-delay:.16s}.rail > :nth-child(4){animation-delay:.24s}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none}
+  .seg.active i::after,.res-hero::before,.brand::before,.fact-body::after,.cta.ready::after{display:none}
+  .okmark circle,.okmark path{stroke-dashoffset:0}
+}
 @media (prefers-reduced-motion:reduce){.scan{display:none}.xray .hdr .rec i{animation:none}}
 </style>
 
@@ -1008,21 +1083,27 @@ function renderFields(el, step){
 /* ============ engine ============ */
 let cur = "intro", aiPromise = null, resultTracked = false;
 const host = $("#screenHost");
+let lastReady = { id: "", ok: false };
 function update(){
   const btn = $("#nextBtn"); if (!btn) return;
-  const s = stepById(cur); btn.disabled = !!(s && !s.validation());
+  const s = stepById(cur), ok = !(s && !s.validation());
+  btn.disabled = !ok;
+  if (s && ok && lastReady.id === cur && !lastReady.ok){ btn.classList.remove("ready"); void btn.offsetWidth; btn.classList.add("ready"); }
+  lastReady = { id: cur, ok };
 }
 function rerender(){ show(cur, 0, true); }
 function chapterOf(id){ const s = stepById(id); return s ? s.chapter : (id === "analyze" || id === "result") ? 4 : -1; }
 function setProgress(){
   const prog = $("#progress"), s = stepById(cur), curCh = chapterOf(cur), act = activeSteps();
-  prog.replaceChildren();
+  if (prog.children.length !== CHAPTERS.length) prog.replaceChildren(...CHAPTERS.map(() => h("div", { class: "seg" }, h("i"))));
   CHAPTERS.forEach((c, i) => {
     const inCh = act.filter(x => x.chapter === i), pos = s ? inCh.indexOf(s) : -1;
     let p = 0;
     if (curCh > i) p = 100;
     else if (curCh === i) p = Math.round((pos / inCh.length) * 100) + 6;
-    prog.append(h("div", { class: "seg" + (p >= 100 ? " done" : ""), style: { "--p": Math.min(100, p) + "%" } }, h("i")));
+    const seg = prog.children[i];
+    seg.className = "seg" + (p >= 100 ? " done" : curCh === i ? " active" : "");
+    seg.style.setProperty("--p", Math.min(100, p) + "%");
   });
   const name = $("#chName");
   if (s){
@@ -1052,8 +1133,12 @@ function show(id, dir = 1, same = false){
     if (id === "intro") foot.append(h("div", { class: "hintline" }, "About 3 minutes · No X-ray needed · Not a diagnosis"));
     nodes.push(foot);
   }
+  if (!same) [...sc.children].forEach((c, i) => c.style.setProperty("--d", Math.min(i, 8)));
   host.replaceChildren(...nodes);
-  setProgress(); update();
+  setProgress();
+  if (!same) lastReady = { id, ok: !(s && !s.validation()) }; // entering a step never pulses; completing one does
+  update();
+  if (id === "result") requestAnimationFrame(() => revealOnScroll(sc));
   if (focusId){ const t = [...host.querySelectorAll("[data-fid]")].find(x => x.dataset.fid === focusId); if (t) t.focus({ preventScroll: true }); }
   if (!same){
     window.scrollTo(0, 0);
@@ -1141,7 +1226,8 @@ function renderTeeth(el){
     changed();
   };
   const say = (n, v) => { status.textContent = `Tooth ${n} · ${toothMeta(n).name} · ${STATE_WORD[v]}`; if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {} };
-  const toggle = n => { const v = st.teeth[n] === tool ? "ok" : tool; st.teeth[n] = v; paintAll(); say(n, v); };
+  const pop = n => { const g = groups.get(n); if (!g || reducedMotion()) return; g.classList.remove("pop"); void g.getBoundingClientRect(); g.classList.add("pop"); };
+  const toggle = n => { const v = st.teeth[n] === tool ? "ok" : tool; st.teeth[n] = v; paintAll(); say(n, v); pop(n); };
   const setRoving = n => groups.forEach((g, k) => g.setAttribute("tabindex", k === n ? "0" : "-1"));
   // Tap mode (default): a tap marks one tooth; scrolling over the map still scrolls the page.
   svg.addEventListener("click", e => { if (paintMode) return; const g = e.target.closest("[data-t]"); if (!g) return; const n = Number(g.dataset.t); toggle(n); setRoving(n); });
@@ -1422,7 +1508,7 @@ function formCard(plan, med, onChange){
   const renderSuccess = sent => {
     const nm = c.first.trim();
     card.replaceChildren(...kids(
-      h("h3", { tabindex: "-1" }, icon("mark_email_read", true), nm ? `Thanks, ${nm}. Your plan is on its way.` : "Thanks. Your plan is on its way."),
+      h("div", { class: "successhead" }, okMark(), h("h3", { tabindex: "-1" }, nm ? `Thanks, ${nm}. Your plan is on its way.` : "Thanks. Your plan is on its way.")),
       h("p", { class: "fine big" }, "Next step: your coordinator will write to you within ", CFG.replyTime ? String(CFG.replyTime) : pend("tiempo de respuesta"), "."),
       sent ? null : insight("<b>Preview mode:</b> no CRM is connected yet, so nothing was sent. Set leadEndpoint to send real leads.", true),
       h("div", { class: "label" }, "Speed up your review"),
@@ -1434,6 +1520,11 @@ function formCard(plan, med, onChange){
   return card;
 }
 
+function okMark(){
+  const m = S("svg", { viewBox: "0 0 44 44", class: "okmark", "aria-hidden": "true" });
+  m.innerHTML = '<circle cx="22" cy="22" r="20" fill="#EAF7F1" stroke="#14946A" stroke-width="2.5" transform="rotate(-90 22 22)"/><path d="M13.5 22.5l5.5 5.5 11.5-12" fill="none" stroke="#0B6E4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+  return m;
+}
 /* ---------- X-ray upload (after the lead is sent, tied to lead_id) ---------- */
 function uploadBox(){
   const OK = /\.(jpe?g|png|pdf|dcm)$/i, max = Number(CFG.maxUploadMB) || 0;
@@ -1538,7 +1629,7 @@ function renderResult(el){
       h("h3", { style: { color: "#fff" } }, h("span", { class: "ms", style: { color: "#93E5F9" } }, "radiology"), "Your probable result"),
       h("div", { class: "xray", style: { padding: "0" } }, buildMap("result", plan)),
       h("div", { class: "legend" }, h("span", {}, h("i", { style: { background: "#3EE6A8" } }), "Implant"), h("span", {}, h("i", { style: { background: "#93E5F9" } }), "New tooth"), h("span", {}, h("i", { style: { background: "#7FA9BF" } }), "Your tooth"))));
-    const ai = h("div", { class: "card ai", "aria-live": "polite" }, h("span", { class: "who" }, "SMILE AI · PERSONAL NOTES"), h("div", { class: "thinking" }, icon("progress_activity"), "Writing your notes…"));
+    const ai = h("div", { class: "card ai", "aria-live": "polite" }, h("span", { class: "who" }, "SMILE AI · PERSONAL NOTES"), h("div", { class: "thinking" }, icon("progress_activity"), "Writing your notes…"), h("div", { class: "skel", "aria-hidden": "true" }, h("i"), h("i"), h("i")));
     more.append(ai);
     (aiPromise || (aiPromise = runAI(plan))).then(n => {
       const kids = [h("span", { class: "who" }, n.source === "ai" ? "SMILE AI · PERSONAL NOTES" : "YOUR PERSONAL NOTES"), h("h3", {}, n.headline), h("p", {}, n.summary)];
@@ -1550,7 +1641,8 @@ function renderResult(el){
   }
   const R = 46, C = Math.PI * R, off = C * (1 - ready.score / 100), rm = reducedMotion();
   const g = S("svg", { viewBox: "0 0 120 72", "aria-hidden": "true" });
-  g.innerHTML = `<path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="#E2EAF2" stroke-width="11" stroke-linecap="round"/><path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="${ready.score >= 80 ? "#14946A" : ready.score >= 65 ? "#2C8FC0" : "#F2A93B"}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${rm ? off : C}">${rm ? "" : `<animate attributeName="stroke-dashoffset" from="${C}" to="${off}" dur="1.1s" fill="freeze" begin=".3s"/>`}</path><text x="60" y="58" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="600" font-size="24" fill="#002553">${ready.score}</text>`;
+  g.innerHTML = `<path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="#E2EAF2" stroke-width="11" stroke-linecap="round"/><path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="${ready.score >= 80 ? "#14946A" : ready.score >= 65 ? "#2C8FC0" : "#F2A93B"}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${rm ? off : C}">${rm ? "" : `<animate attributeName="stroke-dashoffset" from="${C}" to="${off}" dur="1.1s" fill="freeze" begin=".3s"/>`}</path><text x="60" y="58" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="600" font-size="24" fill="#002553">${rm ? ready.score : 0}</text>`;
+  if (!rm){ const tx = g.querySelector("text"), t0 = performance.now() + 300; const tick = t => { const k = Math.max(0, Math.min(1, (t - t0) / 1100)); tx.textContent = Math.round(ready.score * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }
   more.append(h("div", { class: "card" },
     h("h3", {}, icon("monitor_heart"), "Readiness signals"),
     h("div", { class: "gauge" }, g, h("div", { class: "lab" }, `${ready.score} · ${ready.band}`, h("small", {}, "How many common healing factors look favorable. It's a guide for your consult, not medical clearance."))),
@@ -1628,6 +1720,24 @@ function loadSample(){
   go("analyze");
 }
 
+
+/* ============ polish: scroll reveal, top bar, icon font ============ */
+function revealOnScroll(root){
+  if (reducedMotion() || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  root.querySelectorAll(".card, .moretitle, details.internal").forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+    el.classList.add("reveal"); io.observe(el);
+  });
+}
+const topbar = $(".topbar");
+const onScroll = () => topbar.classList.toggle("scrolled", window.scrollY > 8);
+window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+(() => {
+  const root = document.documentElement, ready = () => root.classList.add("icons-ready");
+  setTimeout(ready, 2500); // never hide icons for long if the font is slow or blocked
+  try { document.fonts.load('24px "Material Symbols Rounded"', "check").then(ready, ready); } catch (e) { ready(); }
+})();
 
 /* ============ measurement hooks ============ */
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("[data-track]"); if (a) trackClick(a.dataset.track, a.dataset.where || ""); });

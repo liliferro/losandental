@@ -1,5 +1,22 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.3.0 · 2026-11-03 · Movimiento y acabado
+Pedido de Lili: efectos sutiles que hagan la experiencia más elegante, robusta y confiable. Todo anima solo `transform` y `opacity` (fluido en móvil) y se apaga con `prefers-reduced-motion`.
+- **Transiciones entre pasos:** entrada escalonada de cada bloque (55 ms entre bloques) con curva `cubic-bezier(.22,1,.36,1)` y dirección según si se avanza o se retrocede.
+- **Barra de progreso:** antes se reconstruía en cada paso y no se animaba; ahora avanza de forma fluida y el capítulo activo tiene un brillo lento.
+- **Barra superior fija** con fondo translúcido desenfocado y sombra al hacer scroll.
+- **Opciones:** se elevan al pasar el mouse, el ícono crece y aparece un anillo aqua al seleccionarlas.
+- **Botón "Continue":** pulsa una vez, con un destello, en el momento en que el paso queda completo; al entrar a un paso no pulsa.
+- **Mapa dental:** cada diente hace un pequeño rebote al marcarlo.
+- **Tarjeta "Did you know?":** destello suave al aparecer y check animado.
+- **Resultado:** luz de fondo que se desplaza en la tarjeta principal, planes que aparecen escalonados, puntaje que cuenta de 0 al valor real y tarjetas que aparecen al hacer scroll (`IntersectionObserver`; sin soporte, se muestran todas).
+- **Notas de IA:** líneas de carga tipo esqueleto en lugar de solo un spinner.
+- **Envío exitoso:** check que se dibuja (círculo y palomita).
+- **Íconos:** ya no se ve el texto del ícono (p. ej. "arrow_forward") mientras carga la fuente; aparecen con un fundido, con tope de 2.5 s.
+- **Panel de marca en escritorio:** luz ambiental lenta y entrada escalonada del contenido.
+- Sin cambios en marca, colores, textos ni payload.
+
+
 ## v2.2.1 · 2026-11-03 · Corrección: texto "null" visible
 - En la intro, sin `?demo=1`, aparecía la palabra "null" donde va el enlace de demo. El mismo error afectaba al formulario (bloque de error vacío) y a la pantalla de éxito (aviso de preview).
 - Causa: `append()` y `replaceChildren()` del DOM convierten `null` en texto. Se agregó el filtro `kids()` para todos los hijos condicionales.
