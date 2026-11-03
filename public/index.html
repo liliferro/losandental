@@ -438,7 +438,7 @@ const DOCTOR_IMG = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVgAAAHwCAYAAA
 const CFG = Object.assign({
   aiEndpoint: "",          // POST {prompt, data} -> {headline, summary, why[], ask[], prep[]}. Empty = built-in notes.
   leadEndpoint: "",        // POST lead JSON (schema in CHANGELOG.md). Empty = preview mode, nothing is sent.
-  uploadEndpoint: "",      // POST multipart {lead_id, file}. Empty = preview mode, files are not uploaded.
+  uploadEndpoint: "",      // POST {lead_id, filename, size} -> {uploadUrl}; the file is then PUT to that URL. Empty = preview mode.
   REQUIRED_CONTACT: "email", // "email" | "phone"  [[POR CONFIRMAR: cuál pide la clínica como obligatorio]]
   ENABLE_REWARD: false,    // option B: redeemable points. Only turns on if rewardText is filled in.
   rewardText: "",          // [[POR CONFIRMAR: beneficio real, p. ej. traslado o consulta]]
