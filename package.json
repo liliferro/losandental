@@ -1,0 +1,7 @@
+{
+  "name": "losandental",
+  "private": true,
+  "type": "module",
+  "description": "Losan Dental Smile Path landing (static page + Vercel functions + Supabase)",
+  "engines": { "node": "22.x" }
+}

@@ -1,0 +1,114 @@
+# CHANGELOG · Losan Smile Path
+
+## v2.1.0 · 2026-11-03 · Migración a GitHub + Vercel + Supabase
+- El repo `liliferro/losandental` es la fuente única. Vercel despliega `public/` en cada push a `main`.
+- `api/lead.js` guarda el lead en Supabase con `public.submit_lead()`, que valida consentimiento, contacto y tamaño, y descarta duplicados por `lead_id`. Si existe `CRM_WEBHOOK_URL`, reenvía el mismo JSON.
+- `api/upload-url.js` firma la subida directa a Storage (bucket privado `xrays`). Solo se permite subir dentro de la carpeta de un lead que ya existe.
+- `api/notes.js` arma el prompt en el servidor y llama a Claude. Necesita `ANTHROPIC_API_KEY`; sin ella, la página usa las notas fijas.
+- La tabla `leads` tiene RLS activo y ninguna política: la anon key no puede leer nada. Esquema en `supabase/migrations/`.
+- `build.py` ahora genera `public/index.html` (producción, con endpoints) y `dist/artifact.html` (artefacto de Claude, sin endpoints).
+
+
+## v2.0.0 · 2026-11-03
+
+Objetivo: que más gente termine el quiz (de 17 a 11 pasos), que el resultado convierta mejor y que el lead le llegue a la clínica más útil. No cambian la marca, los colores ni el tono.
+
+### 1. Pasos unidos (17 → 11)
+Toda la definición de preguntas está en el arreglo `STEPS`, dentro de `smile-path.src.html`. Es el equivalente a `steps.config.ts`: la página es un solo archivo HTML sin paso de compilación de TypeScript. Cada paso tiene `id`, `chapter`, `fields[]`, `validation()` y `next()`. Un solo renderizador genérico (`renderFields`) dibuja todos los campos.
+
+| Capítulo | Paso (`id`) | Contenido |
+|---|---|---|
+| 1 · Smile Map (2) | `teeth` | Mapa dental (sin cambios de contenido) |
+| | `today` | ¿Qué usas hoy? + ¿hace cuánto? (slider) + **¿Qué te molesta más?** (`impacto_principal[]`) |
+| 2 · Health Check (4) | `about` | Edad + ¿fumas o vapeas? |
+| | `health` | Condiciones médicas (sin cambios) |
+| | `mouth` | Encías/mordida + tratamientos previos (dos grupos de chips) |
+| | `prep` | Consulta previa + radiografías de los últimos 12 meses + ansiedad (3 chips) |
+| 3 · Your Trip (3) | `getting` | ¿Desde dónde viajas? + ¿cómo llegarías? |
+| | `docs` | Documento de viaje + aviso de la garita de Andrade (sin cambios) |
+| | `stay` | Días de estancia + segunda visita (sin cambios) |
+| 4 · Your Goals (2) | `priority` | ¿Qué te importa más? (elige 2) (sin cambios) |
+| | `plan` | ¿Cuándo quieres empezar? + ¿cómo pagarías? |
+
+- "Continuar" solo se activa con todos los campos obligatorios visibles del paso completos.
+- La barra de progreso y el conteo "n of m" por capítulo se calculan sobre los pasos activos. Por ejemplo, viajando desde México son 10 pasos y el capítulo 3 muestra "of 2".
+- **Interpretación:** el brief pide pasar el capítulo 1 de 4 a 2 pasos, pero lista tres bloques (mapa, uso+tiempo, impacto). Para llegar a 2, "¿Qué te molesta más?" va dentro del paso `today`.
+- **Agregado:** la opción "None of these" en "¿Qué te molesta más?". Sin ella, alguien sin molestias no podría continuar, porque el campo es obligatorio. Sigue el mismo patrón que las demás preguntas de chips.
+
+### 2. Lógica condicional
+- Mapa sin dientes faltantes ni dañados → se oculta "¿hace cuánto?" y el resultado se orienta a **"An evaluation and cosmetic consultation"** (valoración / estética). **Matiz:** si la persona usa dentadura completa o parcial, la pregunta sí se muestra, porque el tiempo sin dientes afecta el hueso aunque no haya marcado dientes en el mapa.
+- `from = mx` → se omite el paso `docs` (`getting.next()` salta directo a `stay`).
+- `pay = insurance` → aviso con `[[POR CONFIRMAR: política de seguros de Losan]]` hasta que se llene `insurancePolicy`.
+- Condiciones `chemo`, `radiation` o `pregnant` → el resultado dice **"Requires a medical evaluation before defining a plan"**, sin plan probable, precio, mapa de resultado, viaje ni notas de IA. Además se envía `requiere_revision_medica: true`.
+
+### 3. Puntos
+- La opción B queda detrás de `ENABLE_REWARD`, pero solo se activa si además está lleno `rewardText`. Mientras el beneficio no esté confirmado, la página usa la opción A: sin puntos visibles, solo el avance por capítulos.
+- El confeti solo aparece en el resultado final, y no aparece en el caso de revisión médica.
+
+### 4. Pantalla de resultado
+Nuevo orden: solución probable + botón principal **"Send my plan to the doctor"** → bloque de precio → 4 beneficios → formulario → "More about your plan" (mapa, notas, puntaje de preparación, viaje, especialistas).
+- Bloque de precio: si `priceFrom` está vacío, dice "Get your personalized quote" y su botón lleva al formulario (`intencion: "cotizacion"`).
+- Se quitaron "I need a full examination" y "Confirm this solution with the doctor". Ahora la intención se guarda en `intencion` (ver valores abajo).
+- WhatsApp: `https://wa.me/19288678333?text=<resumen del plan>`. Teléfonos con `tel:`. "Copy number" queda como opción secundaria.
+- Para el caso Evaluation se agregaron 2 beneficios, para llegar a 4. Usan solo datos que ya estaban en la página: odontología cosmética del nombre de la clínica, traslado desde Yuma y hotel.
+
+### 5. Formulario
+- `REQUIRED_CONTACT = "email" | "phone"` (por defecto `"email"`, `[[POR CONFIRMAR]]`).
+- Selector de país: US +1, Canada +1 y México +52. Se valida el número (NANP de 10 dígitos o MX de 10 dígitos) y se envía en formato E.164. El país se preselecciona según el idioma del navegador o según "¿Desde dónde viajas?".
+- El idioma preferido se toma de `navigator.language` y se puede cambiar.
+- El consentimiento es explícito, aparece sin marcar e incluye un enlace al aviso de privacidad (`[[POR CONFIRMAR: URL]]` hasta que se llene `privacyUrl`).
+- Estados del formulario: enviando, éxito ("…will write to you within `[[POR CONFIRMAR: tiempo]]`") y error con botón "Try again".
+- El avance se guarda en `localStorage` (`losan-smile-path-v2`) y la intro ofrece "Continue where you left off". El guardado se borra al enviar el formulario.
+
+### 6. Radiografías
+- La carga se movió a la pantalla de éxito. Acepta JPG, PNG, PDF y DICOM (.dcm), con barra de avance por archivo, y cada archivo queda asociado a su `lead_id`.
+- Contrato de `uploadEndpoint`: `POST {lead_id, filename, size}` → `{uploadUrl}`. Luego el navegador hace `PUT` del archivo a esa URL firmada, directo a Supabase Storage (`xrays/<lead_id>/<timestamp>-<archivo>`), con avance real.
+- Tamaño máximo: `maxUploadMB`, `[[POR CONFIRMAR]]`. Con 0 no se aplica límite en el navegador.
+
+### 7. Payload del CRM (cambio de formato)
+**Antes (v1):** `submittedAt, page, utm{...todos los parámetros}, contact{email, firstName, phone, whatsapp, language, consent}, wants, plan{...}, teeth{n: estado}, readiness{score, band, flags}, tags[], answers{...}, summary, points`.
+
+**Ahora (v2):** un solo JSON:
+
+```json
+{
+  "lead_id": "uuid",
+  "timestamp": "ISO-8601",
+  "idioma": "en | es",
+  "contacto": { "nombre": "", "email": "", "telefono": "+1XXXXXXXXXX", "pais_telefono": "US|CA|MX", "whatsapp": true, "consentimiento": true, "consentimiento_texto": "..." },
+  "mapa_dental": { "faltantes": [3,4], "dañados": [30], "sanos": [], "uso_actual": ["partial"], "dentadura_completa": null, "tiempo_sin_dientes": "3–5 years", "impacto_principal": ["chew","smile"] },
+  "salud": { "edad": 58, "tabaco": "never|former|vape|smoke", "anios_sin_fumar": null, "cigarros_dia": null, "pausaria_tabaco": null, "condiciones": [], "control_diabetes": null, "encias_mordida": [], "tratamientos_previos": [], "consulta_previa": "yes|no", "radiografias_12m": "ct|pano|none|unsure", "ansiedad": "calm|nervous|fear", "alertas": [] },
+  "viaje": { "desde": "az|ca|nvut|us|ca2|mx", "como_llega": "drive|fly|help|unsure", "documento": "passport|card|sentri|edl|none|null", "dias_estancia": 5, "segunda_visita": "yes|maybe|no" },
+  "metas": { "prioridades": ["fixed"], "inicio": "asap|1-3|3-6|research", "pago": "full|finance|insurance|unsure" },
+  "solucion_probable": { "familia": "All-on-4|Implants|Evaluation|Medical review", "titulo": "", "superior": { "tipo": "full|bridge|single|none", "detalle": "" }, "inferior": { "tipo": "", "detalle": "" }, "sitios_implante": [], "caso_limite": false },
+  "puntaje_preparacion": 82,
+  "requiere_revision_medica": false,
+  "intencion": "enviar_plan | cotizacion | valoracion_medica",
+  "utm": { "source": "", "medium": "", "campaign": "", "content": "", "term": "" },
+  "referrer": ""
+}
+```
+- Los dientes usan la numeración universal (2–15 arriba, 18–31 abajo).
+- Los valores son códigos estables. Las etiquetas visibles están en los arreglos de opciones del código.
+- Se dejaron de enviar los sliders de impacto (`pain`, `chewing`, `hidingSmile`), `tags`, `summary`, `answers` y `points`.
+- Atención: la clave `dañados` lleva ñ porque así la pide el brief. Si el CRM o el webhook no aceptan claves con ñ, hay que cambiarla a `danados` en un solo lugar (`leadPayload`).
+- Los UTM y el referrer se capturan al cargar la página y se guardan en el estado. Al retomar una sesión se conserva la primera atribución.
+- "Clinic view" solo aparece con `?modo=clinica` y "Preview with a sample patient" solo con `?demo=1`. Como un enlace de artefacto de Claude no lleva query string, también funcionan `#clinica` y `#demo`.
+
+### 8. Medición
+Capa `window.dataLayer.push`, sin píxeles de terceros:
+`quiz_start` (`resumed` al retomar), `step_complete {step_id, chapter}`, `chapter_complete {chapter}`, `result_view {solucion_probable}`, `lead_submit {intencion}`, `xray_upload`, `whatsapp_click {location}`, `call_click {location}` y `quiz_abandon {last_step_id}` (con `visibilitychange`, `pagehide` y `beforeunload`; se dispara una sola vez y no cuenta las salidas a WhatsApp o a una llamada). En modo vista previa, `lead_submit` y `xray_upload` llevan `modo: "preview"`.
+
+### 9. Móvil y accesibilidad
+- Debajo de 980 px, el panel de marca se convierte en un encabezado compacto con logo, rating 5.0 y botón de WhatsApp. Así queda cubierta la regla de < 768 px.
+- Mapa dental: el modo principal es tocar, y la página hace scroll sobre el mapa. El modo de arrastrar solo se activa con "Paint several", y solo entonces se aplica `touch-action: none`.
+- Teclado: navegación con flechas por cada arcada (tabindex itinerante), Enter o Espacio para marcar y `aria-label` en cada diente ("Tooth 14, missing. Upper left first molar").
+- Tamaños mínimos: 12 px en microetiquetas (también en el texto del SVG), 16 px en campos y 44×44 px en los objetivos táctiles de la interfaz. Los dientes del SVG quedan por debajo de 44 px por geometría; para eso existen el modo tocar con zoom y los botones rápidos.
+- Contraste: aqua #93E5F9 sobre azul marino #002553 da 10.7:1 (AA). Las etiquetas grises del mapa se aclararon a #7FB6D1 (8.8:1).
+- `prefers-reduced-motion`: sin confeti, sin escaneo y sin animación del medidor.
+
+### 10. Pantalla de carga
+El plan se calcula en el navegador. La pantalla dura ~2 s y cada línea corresponde a un cálculo real (mapa, factores de salud, plan, viaje). Se quitó "Writing your personal notes", porque la IA no se espera ahí: sus notas cargan en el resultado con su propio indicador.
+
+### Valores pendientes (`SMILE_PATH_CONFIG`)
+`REQUIRED_CONTACT`, `rewardText`, `priceFrom`, `insurancePolicy`, `privacyUrl`, `replyTime` y `maxUploadMB`. Mientras estén vacíos, la página no inventa nada: o muestra `[[POR CONFIRMAR: …]]` o usa la alternativa segura.

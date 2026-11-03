@@ -29,14 +29,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .brand{background:var(--navy);color:#fff;padding-block:14px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand .logo{height:34px;width:auto}
 .brand .rail{display:none}
-.brand .callpill{display:flex;align-items:center;gap:6px;font-family:var(--display);font-size:13px;color:var(--cyan);white-space:nowrap}
 .stage{padding-block:16px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;justify-content:center;min-width:0}
 .app{width:100%;max-width:580px;background:var(--card);border-radius:var(--r-lg);box-shadow:0 1px 0 rgba(0,37,83,.04),0 24px 60px -24px rgba(0,37,83,.28);display:flex;flex-direction:column;min-height:min(860px,calc(100vh - 44px));position:relative;overflow:hidden;min-width:0}
 @media (min-width:980px){
   .shell{grid-template-columns:400px minmax(0,1fr)}
   .brand{flex-direction:column;align-items:stretch;justify-content:flex-start;position:sticky;top:0;height:100vh;padding-block:40px 28px;padding-left:44px;padding-right:40px;gap:0;overflow:hidden}
   .brand .logo{height:52px;align-self:flex-start}
-  .brand .callpill{display:none}
+  .brand .mhead{display:none}
   .brand .rail{display:flex;flex-direction:column;flex:1;margin-top:40px;position:relative}
   .stage{padding-block:36px}
 }
@@ -54,7 +53,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* ---------- top bar ---------- */
 .topbar{display:flex;align-items:center;gap:12px;padding:16px 20px 10px}
-.iconbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;flex:none;transition:background .2s}
+.iconbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;flex:none;transition:background .2s}
 .iconbtn:hover{background:var(--cyan-50)}
 .iconbtn[disabled]{opacity:0;pointer-events:none}
 .progress{flex:1;display:flex;gap:6px;min-width:0}
@@ -89,16 +88,16 @@ h1.q{font-family:var(--display);font-weight:600;font-size:clamp(23px,5.4vw,29px)
 .opt .d{font-size:13.5px;color:var(--muted);display:block;margin-top:2px;line-height:1.35}
 .opt .tick{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;transform:scale(0);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .opt .tick .ms{font-size:16px}
-.opt[aria-pressed="true"]{border-color:var(--navy);background:#F3F9FD}
-.opt[aria-pressed="true"] .ic{background:var(--navy);color:var(--cyan)}
-.opt[aria-pressed="true"] .tick{transform:scale(1)}
+.opt:is([aria-pressed="true"],[aria-checked="true"]){border-color:var(--navy);background:#F3F9FD}
+.opt:is([aria-pressed="true"],[aria-checked="true"]) .ic{background:var(--navy);color:var(--cyan)}
+.opt:is([aria-pressed="true"],[aria-checked="true"]) .tick{transform:scale(1)}
 @keyframes rise{from{opacity:.001;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:9px 14px;font-size:15px;display:inline-flex;align-items:center;gap:6px;transition:all .2s;animation:rise .35s both;animation-delay:calc(var(--i,0)*30ms)}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:9px 14px;min-height:44px;font-size:15px;display:inline-flex;align-items:center;gap:6px;transition:all .2s;animation:rise .35s both;animation-delay:calc(var(--i,0)*30ms)}
 .chip .ms{font-size:18px;color:var(--muted)}
-.chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
-.chip[aria-pressed="true"] .ms{color:var(--cyan)}
+.chip:is([aria-pressed="true"],[aria-checked="true"]){background:var(--navy);border-color:var(--navy);color:#fff}
+.chip:is([aria-pressed="true"],[aria-checked="true"]) .ms{color:var(--cyan)}
 
 /* slider */
 .slider{background:#F6F9FC;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 16px 12px}
@@ -132,7 +131,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .cta:active{transform:scale(.985)}
 .cta[disabled]{opacity:.35;box-shadow:none;cursor:not-allowed}
 .hintline{text-align:center;font-size:13px;color:var(--muted)}
-.linkbtn{background:none;border:0;color:var(--cyan-ink);font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:4px}
+.linkbtn{background:none;border:0;color:var(--cyan-ink);font-weight:600;text-decoration:underline;text-underline-offset:3px;padding:4px 6px;min-height:44px;display:inline-flex;align-items:center;font-size:14px}
 
 /* ---------- intro ---------- */
 .hero-badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:4px}
@@ -144,7 +143,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .intro-hero svg{position:absolute;right:-18px;top:-10px;width:56%;max-width:250px;opacity:.95}
 .intro-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--xray) 30%,rgba(4,13,24,.55) 62%,rgba(4,13,24,0) 85%);pointer-events:none}
 .intro-hero > span{position:relative;z-index:1}
-.intro-hero .k{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.14em}
+.intro-hero .k{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.14em}
 .intro-hero .big{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.15;max-width:13ch;margin-top:4px}
 .stars{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
 .stars b{color:var(--ink);font-family:var(--display)}
@@ -152,7 +151,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 
 /* ---------- X-ray tooth map ---------- */
 .xray{background:radial-gradient(120% 80% at 50% 45%,#0B2340 0%,var(--xray) 70%);border-radius:var(--r-md);padding:12px 10px 10px;position:relative;overflow:hidden;color:#CFEAF7}
-.xray .hdr{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:#7FB6D1;padding:0 6px}
+.xray .hdr{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:#7FB6D1;padding:0 6px}
 .xray .hdr .rec{display:flex;align-items:center;gap:6px}
 .xray .hdr .rec i{width:7px;height:7px;border-radius:50%;background:#3EE6A8;box-shadow:0 0 8px #3EE6A8;animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.25}}
@@ -165,18 +164,18 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px;font-family:var(--mono);font-variant-numeric:tabular-nums}
 .readout div{background:rgba(147,229,249,.06);border:1px solid rgba(147,229,249,.14);border-radius:10px;padding:7px 8px;text-align:center}
 .readout b{display:block;font-size:20px;font-weight:500;color:#fff}
-.readout span{font-size:10px;letter-spacing:.12em;color:#7FB6D1}
+.readout span{font-size:12px;letter-spacing:.06em;color:#7FB6D1}
 .readout .m b{color:var(--cyan)} .readout .f b{color:#FFC56B}
-.status{font-family:var(--mono);font-size:11.5px;color:#9CC9DD;text-align:center;min-height:18px;margin-top:6px}
+.status{font-family:var(--mono);font-size:12px;color:#9CC9DD;text-align:center;min-height:18px;margin-top:6px}
 .tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.tool{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--display);font-size:13px;font-weight:500;color:var(--ink);line-height:1.15;text-align:center}
+.tool{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 8px;min-height:64px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--display);font-size:13px;font-weight:500;color:var(--ink);line-height:1.15;text-align:center}
 .tool .sw{width:22px;height:22px;border-radius:7px}
-.tool[aria-pressed="true"]{border-color:var(--navy);background:#F3F9FD;box-shadow:inset 0 0 0 1px var(--navy)}
+.tool[aria-checked="true"]{border-color:var(--navy);background:#F3F9FD;box-shadow:inset 0 0 0 1px var(--navy)}
 .sw.m{border:2px dashed #2C8FC0;background:#E8F6FC}
 .sw.f{background:linear-gradient(135deg,#FFE2B0,var(--amber));border:1px solid #D88F1E}
 .sw.o{background:radial-gradient(#fff,#CFE3EC);border:1px solid #9FBFD0}
-.quick{display:flex;flex-wrap:wrap;gap:6px}
-.quick button{border:1px solid var(--line);background:#F6F9FC;border-radius:99px;font-size:13px;padding:6px 11px;color:var(--navy);font-weight:600}
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+.quick button:not(.paintbtn){border:1px solid var(--line);background:#F6F9FC;border-radius:99px;font-size:14px;padding:0 14px;min-height:44px;color:var(--navy);font-weight:600}
 .quick button:hover{background:var(--cyan-50)}
 
 /* ---------- form ---------- */
@@ -186,8 +185,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .field input:focus{border-color:var(--navy);outline:none;box-shadow:0 0 0 4px rgba(147,229,249,.45)}
 .row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 @media (max-width:400px){.row2{grid-template-columns:minmax(0,1fr)}}
-.check{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--muted);line-height:1.4}
-.check input{width:20px;height:20px;margin-top:1px;accent-color:var(--navy);flex:none}
+.check{display:flex;gap:10px;align-items:flex-start;min-height:44px;padding:4px 0;font-size:13.5px;color:var(--muted);line-height:1.4}
+.check input{width:24px;height:24px;margin-top:1px;accent-color:var(--navy);flex:none}
 .lock{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
 .lock .ms{font-size:18px;color:var(--green)}
 
@@ -209,7 +208,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .analyze svg.mini{width:220px;max-width:70%;height:auto}
 .analyze h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0;color:#fff}
 .phases{display:grid;gap:10px;width:100%;max-width:340px;text-align:left}
-.phase{display:flex;gap:10px;align-items:center;font-size:15px;color:#6F8DA6;transition:color .3s}
+.phase{display:flex;gap:10px;align-items:center;font-size:15px;color:#8FB0C8;transition:color .3s}
 .phase .ms{font-size:20px}
 .phase.on{color:#fff}.phase.on .ms{color:var(--cyan);animation:spin 1s linear infinite}
 .phase.ok{color:#BFE3F2}.phase.ok .ms{color:#3EE6A8;animation:none}
@@ -218,7 +217,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 
 /* ---------- results ---------- */
 .res-hero{background:var(--navy);color:#fff;border-radius:var(--r-md);padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
-.res-hero .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--cyan)}
+.res-hero .k{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--cyan)}
 .res-hero h2{font-family:var(--display);font-weight:600;font-size:clamp(22px,5vw,27px);line-height:1.12;margin:0;text-wrap:balance}
 .res-hero .plans{display:grid;gap:8px}
 .plan{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.07);border:1px solid rgba(147,229,249,.18);border-radius:14px;padding:10px 12px}
@@ -255,7 +254,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .timeline .dot .ms{font-size:18px}
 .timeline b{font-family:var(--display);font-weight:500;color:var(--navy);display:block}
 .timeline span{font-size:14px;color:var(--muted)}
-.timeline em{font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--cyan-ink);display:block;letter-spacing:.04em}
+.timeline em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--cyan-ink);display:block;letter-spacing:.04em}
 .team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 @media (max-width:400px){.team{grid-template-columns:minmax(0,1fr)}}
 .doc{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center}
@@ -263,7 +262,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .doc b{font-family:var(--display);font-weight:500;color:var(--navy);font-size:14.5px;display:block;line-height:1.2}
 .doc span{font-size:12.5px;color:var(--muted);line-height:1.3;display:block}
 .ai{background:linear-gradient(180deg,#F3FAFE,#fff);border-color:#BFE6F4}
-.ai .who{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--cyan-ink)}
+.ai .who{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--cyan-ink)}
 .ai p{margin:0}
 .ai ul{margin:0;padding-left:20px;display:grid;gap:4px}
 .ai .thinking{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:14.5px}
@@ -278,21 +277,82 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .upload{border:1.5px dashed #A9C4DD;border-radius:14px;padding:14px;display:flex;gap:12px;align-items:center;font-size:14px;color:var(--muted);cursor:pointer}
 .upload .ms{color:var(--navy);font-size:28px}
 .upload b{color:var(--navy);font-family:var(--display);font-weight:500;display:block}
-.upload input{display:none}
 details.internal{border:1px dashed #B7CADB;border-radius:14px;padding:10px 14px;font-size:13.5px;color:var(--muted)}
 details.internal summary{cursor:pointer;font-family:var(--display);font-weight:500;color:var(--navy)}
-details.internal pre{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:11.5px;background:#F6F9FC;border-radius:10px;padding:10px;color:#20354D;overflow-x:auto;margin:8px 0 0}
+details.internal pre{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12px;background:#F6F9FC;border-radius:10px;padding:10px;color:#20354D;overflow-x:auto;margin:8px 0 0}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.tags span{font-family:var(--mono);font-size:11px;background:var(--navy);color:var(--cyan);border-radius:6px;padding:3px 7px}
+.tags span{font-family:var(--mono);font-size:12px;background:var(--navy);color:var(--cyan);border-radius:6px;padding:3px 7px}
 .fine{font-size:12.5px;color:var(--muted);line-height:1.45}
 canvas.confetti{position:absolute;inset:0;pointer-events:none;z-index:5}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* ---------- v2: merged steps, a11y, mobile ---------- */
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.screen.still,.screen.still *{animation:none!important}
+.flabel{font-family:var(--display);font-weight:600;font-size:17px;color:var(--navy);margin:8px 0 -6px;line-height:1.25}
+.fhint{font-size:13.5px;color:var(--muted);margin:-8px 0 0}
+h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus,h3[tabindex="-1"]:focus,.card[tabindex="-1"]:focus{outline:none}
+mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:12px;border-radius:4px;padding:1px 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.mhead{display:flex;align-items:center;gap:10px}
+.mrating{display:flex;align-items:center;gap:4px;font-family:var(--display);font-weight:600;font-size:14px;color:#fff}
+.mrating .ms{color:#F5B301;font-size:18px}
+.mwa{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;background:var(--cyan);color:var(--navy);font-family:var(--display);font-weight:600;font-size:14px;text-decoration:none}
+.mwa .ms{font-size:20px}
+.rail .phones a{color:inherit;text-decoration:none;min-height:44px;display:flex;align-items:center}
+.rail .phones{gap:0}
+.rail .phones a:hover{color:#fff;text-decoration:underline}
+.xray svg{touch-action:manipulation}
+.xray.painting svg{touch-action:none}
+.tooth:focus{outline:none}
+.tooth:focus-visible .body{stroke:#FFFFFF!important;stroke-width:3}
+.paintbtn{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:99px;font-size:14px;font-weight:600;padding:0 14px;min-height:44px}
+.paintbtn .ms{font-size:18px}
+.paintbtn[aria-pressed="true"]{background:var(--navy);color:#fff}
+.paintbtn[aria-pressed="true"] .ms{color:var(--cyan)}
+.resume{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 12px;align-items:start;border:1.5px solid var(--navy);background:#F3F9FD;border-radius:var(--r-md);padding:14px}
+.resume > .ms{color:var(--navy)}
+.resume b{display:block;font-family:var(--display);font-weight:600;color:var(--navy)}
+.resume span{font-size:14px;color:var(--muted)}
+.resume-actions{grid-column:1/-1;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.cta.small{width:auto;padding:12px 18px;font-size:15px;min-height:44px}
+.herocta{display:flex;flex-direction:column;gap:6px;align-items:center}
+.herocta .linkbtn{text-align:center}
+.price .pricev{font-family:var(--display);font-weight:600;font-size:24px;color:var(--navy);margin:0}
+.reward{background:#F3FAFE;border-color:#BFE6F4}
+.fine.big{font-size:14.5px;margin:0}
+.phonerow{display:grid;grid-template-columns:minmax(118px,auto) minmax(0,1fr);gap:8px}
+.field input[aria-invalid="true"]{border-color:var(--red)}
+.formhelp{font-size:13.5px;color:var(--amber-ink);margin:-4px 0 0;min-height:1em}
+.formhelp:empty{display:none}
+.check a{color:var(--cyan-ink);font-weight:600}
+.errorbox{display:flex;flex-direction:column;gap:8px}
+.alt-contact{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:12px}
+.contactrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.contactrow .hintline{grid-column:1/-1}
+@media (max-width:400px){.contactrow{grid-template-columns:minmax(0,1fr)}}
+.cbtn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border:1.5px solid var(--navy);border-radius:14px;color:var(--navy);background:#fff;font-family:var(--display);font-weight:600;font-size:14.5px;text-decoration:none;padding:8px 10px;text-align:center}
+.cbtn:hover{background:var(--cyan-50)}
+.uploadwrap{display:flex;flex-direction:column;gap:8px}
+.uploadwrap input:focus-visible + .upload{outline:3px solid var(--cyan-ink);outline-offset:2px}
+.upl{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.upl li{display:grid;grid-template-columns:minmax(0,1fr) 90px;gap:4px 10px;font-size:13px;align-items:center}
+.upl .fn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.upl .bar{height:8px;border-radius:99px;background:#E5ECF3;overflow:hidden}
+.upl .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--navy-2),#2C8FC0);transition:width .2s}
+.upl .st{grid-column:1/-1;color:var(--muted);font-size:12.5px}
+.upl li.done .bar i{background:var(--green)}
+.upl li.bad .st{color:var(--red)}
+.moretitle{margin:6px 0 0}
+.more{display:flex;flex-direction:column;gap:16px}
+@media (prefers-reduced-motion:reduce){.scan{display:none}.xray .hdr .rec i{animation:none}}
 </style>
 
 <div class="shell">
   <aside class="brand">
     <img class="logo" src="{{LOGO}}" alt="Losan Dental — Implant, Prosthetic &amp; Cosmetic Dentistry">
-    <span class="callpill"><span class="ms">call</span>+1 (928) 867-8333</span>
+    <div class="mhead">
+      <span class="mrating" aria-label="Rated 5.0 on Google"><span class="ms fill" aria-hidden="true">star</span>5.0</span>
+      <a class="mwa" href="https://wa.me/19288678333?text=Hi%21%20I%20have%20a%20question%20about%20implants%20at%20Losan%20Dental." target="_blank" rel="noopener" data-track="whatsapp_click" data-where="header"><span class="ms" aria-hidden="true">chat</span>WhatsApp</a>
+    </div>
     <div class="rail">
       <h2>Your new smile, <em>mapped</em> before you travel.</h2>
       <p>A 3-minute screening that turns your answers into a probable implant or All-on-4 plan for your consultation.</p>
@@ -304,9 +364,9 @@ canvas.confetti{position:absolute;inset:0;pointer-events:none;z-index:5}
         <li><span class="ms">hotel</span>Hotel in the same building as the clinic</li>
       </ul>
       <div class="phones">
-        <span>PATIENT COORDINATOR · +1 (928) 867-8333</span>
-        <span>US · +1 (928) 487-2150</span>
-        <span>MX · +52 (658) 596-8115</span>
+        <a href="https://wa.me/19288678333" target="_blank" rel="noopener" data-track="whatsapp_click" data-where="rail">PATIENT COORDINATOR (WHATSAPP) · +1 (928) 867-8333</a>
+        <a href="tel:+19284872150" data-track="call_click" data-where="rail">US · +1 (928) 487-2150</a>
+        <a href="tel:+526585968115" data-track="call_click" data-where="rail">MX · +52 (658) 596-8115</a>
       </div>
       <img class="docimg" src="{{DOCTOR}}" alt="">
       <div class="doccap"><b>Dr. Diego López</b>Prosthodontist and CEO, Losan Dental</div>
@@ -317,9 +377,9 @@ canvas.confetti{position:absolute;inset:0;pointer-events:none;z-index:5}
       <div class="topbar">
         <button class="iconbtn" id="backBtn" aria-label="Previous question"><span class="ms">arrow_back</span></button>
         <div class="progress" id="progress" aria-hidden="true"></div>
-        <div class="pts" id="pts" aria-label="Smile points"><span class="ms fill">auto_awesome</span><span id="ptsVal">0</span></div>
+        <div class="pts" id="pts" aria-label="Smile points" hidden><span class="ms fill">auto_awesome</span><span id="ptsVal">0</span></div>
       </div>
-      <div class="chaptername" id="chName"></div>
+      <div class="chaptername" id="chName" aria-live="polite"></div>
       <div id="screenHost" style="display:flex;flex-direction:column;flex:1"></div>
     </div>
   </main>
@@ -329,10 +389,41 @@ canvas.confetti{position:absolute;inset:0;pointer-events:none;z-index:5}
 (() => {
 "use strict";
 const DOCTOR_IMG = "{{DOCTOR}}";
-// Settings for the hosted page. Set window.SMILE_PATH_CONFIG before this script (see the standalone HTML head).
-const CFG = Object.assign({ aiEndpoint: "", leadEndpoint: "", showDemo: false }, window.SMILE_PATH_CONFIG || {});
-const DEMO = !!CFG.showDemo || /[?&]demo(=|&|$)/.test(location.search) || !!window.claude;
-const UTM = (() => { try { return Object.fromEntries(new URLSearchParams(location.search)); } catch (e) { return {}; } })();
+/* ============ settings ============
+   The hosted page sets window.SMILE_PATH_CONFIG in <head> (see build.py). Every value marked
+   [[POR CONFIRMAR]] stays empty until the clinic confirms it, and the page falls back safely:
+   no price, reward or policy is ever shown unless it is filled in here. */
+const CFG = Object.assign({
+  aiEndpoint: "",          // POST {prompt, data} -> {headline, summary, why[], ask[], prep[]}. Empty = built-in notes.
+  leadEndpoint: "",        // POST lead JSON (schema in CHANGELOG.md). Empty = preview mode, nothing is sent.
+  uploadEndpoint: "",      // POST multipart {lead_id, file}. Empty = preview mode, files are not uploaded.
+  REQUIRED_CONTACT: "email", // "email" | "phone"  [[POR CONFIRMAR: cuál pide la clínica como obligatorio]]
+  ENABLE_REWARD: false,    // option B: redeemable points. Only turns on if rewardText is filled in.
+  rewardText: "",          // [[POR CONFIRMAR: beneficio real, p. ej. traslado o consulta]]
+  priceFrom: "",           // [[POR CONFIRMAR: rango de precio por arcada / "desde"]] e.g. "$X,XXX per arch"
+  insurancePolicy: "",     // [[POR CONFIRMAR: política de seguros de Losan]]
+  privacyUrl: "",          // [[POR CONFIRMAR: URL del aviso de privacidad]]
+  replyTime: "",           // [[POR CONFIRMAR: tiempo en que escribe la coordinadora]] e.g. "1 business day"
+  maxUploadMB: 0           // [[POR CONFIRMAR: tamaño máximo]] 0 = no limit enforced in the browser
+}, window.SMILE_PATH_CONFIG || {});
+const QS = (() => { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(); } })();
+const HASH = (location.hash || "").slice(1);
+// Internal views. "#demo" / "#clinica" also work because a Claude artifact link cannot carry a query string.
+const DEMO = QS.get("demo") === "1" || HASH === "demo";
+const CLINIC = QS.get("modo") === "clinica" || HASH === "clinica";
+const REWARD = !!(CFG.ENABLE_REWARD && String(CFG.rewardText).trim());
+const WA_NUM = "19288678333";
+const LS_KEY = "losan-smile-path-v2";
+const ATTR = (() => {
+  const utm = {}; ["source", "medium", "campaign", "content", "term"].forEach(k => utm[k] = QS.get("utm_" + k) || "");
+  let referrer = ""; try { referrer = document.referrer || ""; } catch (e) {}
+  return { utm, referrer };
+})();
+window.dataLayer = window.dataLayer || [];
+let lastExternalClick = 0;
+const track = (event, params = {}) => { try { window.dataLayer.push(Object.assign({ event }, params)); } catch (e) {} };
+const trackClick = (event, where) => { lastExternalClick = Date.now(); track(event, { location: where }); };
+
 const $ = (s, r = document) => r.querySelector(s);
 const h = (tag, attrs = {}, ...kids) => {
   const el = document.createElement(tag);
@@ -351,21 +442,53 @@ const icon = (name, fill) => h("span", { class: "ms" + (fill ? " fill" : ""), "a
 const svgNS = "http://www.w3.org/2000/svg";
 const S = (tag, attrs = {}) => { const el = document.createElementNS(svgNS, tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); return el; };
 
+
+/* ============ placeholders ============ */
+const pend = label => h("mark", { class: "pending" }, `[[POR CONFIRMAR: ${label}]]`);
+const pendHTML = label => `<mark class="pending">[[POR CONFIRMAR: ${label}]]</mark>`;
+const reducedMotion = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
+
 /* ============ state ============ */
-const fresh = () => ({
-  teeth: {}, current: new Set(), dentureArch: "", dentureFit: 5,
-  duration: 3, pain: 3, chew: 5, conf: 5,
-  age: 58, smoke: "", quitYears: 2, cigs: 10, smokeStop: "",
-  health: new Set(), diabetes: "", gums: new Set(), history: new Set(), consult: "", imaging: "", anxiety: 5,
-  from: "", travel: "", docs: "", days: 5, second: "",
-  priority: new Set(), timing: "", pay: "",
-  contact: { first: "", last: "", email: "", phone: "", whatsapp: true, lang: "English", consent: false, goal: "" },
-  points: 0, earned: new Set()
-});
-let st = fresh();
 const UPPER = [2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 const LOWER = [31,30,29,28,27,26,25,24,23,22,21,20,19,18];
-[...UPPER, ...LOWER].forEach(n => st.teeth[n] = "ok");
+const ALL = [...UPPER, ...LOWER];
+const defaultLang = () => { try { return /^es\b/i.test(navigator.language || "") ? "Español" : "English"; } catch (e) { return "English"; } };
+const defaultCountry = () => { try { const l = (navigator.language || "").toUpperCase(); return /-MX$/.test(l) ? "MX" : /-CA$/.test(l) ? "CA" : "US"; } catch (e) { return "US"; } };
+const fresh = () => {
+  const s = {
+    teeth: {}, current: new Set(), dentureArch: "", dentureFit: 5, duration: 3, impact: new Set(),
+    age: 58, smoke: "", quitYears: 2, cigs: 10, smokeStop: "",
+    health: new Set(), diabetes: "", gums: new Set(), history: new Set(), consult: "", imaging: "", anxiety: "",
+    from: "", travel: "", docs: "", days: 5, second: "",
+    priority: new Set(), timing: "", pay: "",
+    contact: { first: "", email: "", phone: "", country: defaultCountry(), countryTouched: false, whatsapp: true, lang: defaultLang(), consent: false, intent: "" },
+    points: 0, earned: new Set(), started: false, submitted: false, leadId: "", stepId: "intro", attr: ATTR
+  };
+  ALL.forEach(n => s.teeth[n] = "ok");
+  return s;
+};
+let st = fresh();
+
+/* progress saved in this browser only, so a patient can come back later */
+const SETS = ["current", "impact", "health", "gums", "history", "priority", "earned"];
+function save(){
+  if (!st.started || st.submitted) return;
+  try { const o = Object.assign({}, st); SETS.forEach(k => o[k] = [...st[k]]); localStorage.setItem(LS_KEY, JSON.stringify({ v: 2, at: Date.now(), st: o })); } catch (e) {}
+}
+function loadSaved(){
+  try {
+    const d = JSON.parse(localStorage.getItem(LS_KEY) || "null");
+    if (!d || d.v !== 2 || !d.st || !d.st.started || d.st.submitted) return null;
+    const base = fresh(), o = Object.assign(base, d.st);
+    SETS.forEach(k => o[k] = new Set(d.st[k] || []));
+    o.contact = Object.assign(fresh().contact, d.st.contact || {});
+    o.teeth = Object.assign(fresh().teeth, d.st.teeth || {});
+    if (!o.attr || !o.attr.utm) o.attr = ATTR;
+    return o;
+  } catch (e) { return null; }
+}
+function clearSaved(){ try { localStorage.removeItem(LS_KEY); } catch (e) {} }
+const uuid = () => { try { if (crypto.randomUUID) return crypto.randomUUID(); } catch (e) {} return "lead-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10); };
 
 /* ============ tooth anatomy ============ */
 // index from midline: 0 central incisor ... 6 second molar
@@ -441,7 +564,8 @@ function archPath(g){
 }
 /* mode: "edit" | "result" | "mini" */
 function buildMap(mode, plan){
-  const svg = S("svg", { viewBox: "0 0 340 510", role: "img", "aria-label": mode === "result" ? "Probable treatment map" : "Tooth map. Tap teeth to mark them." });
+  const svg = S("svg", mode === "edit" ? { viewBox: "0 0 340 510", role: "group", "aria-label": "Tooth map, 28 teeth. Arrow keys move between teeth, Enter marks." }
+    : mode === "mini" ? { viewBox: "0 0 340 510", "aria-hidden": "true", class: "mini" } : { viewBox: "0 0 340 510", role: "img", "aria-label": "Probable treatment map" });
   svgDefs(svg);
   svg.append(S("rect", { x: 0, y: 0, width: 340, height: 510, fill: "url(#grid)" }));
   for (const upper of [true, false]){
@@ -450,7 +574,7 @@ function buildMap(mode, plan){
     svg.append(S("path", { d: archPath(g), fill: "none", stroke: "rgba(147,229,249,.10)", "stroke-width": 58, "stroke-linecap": "round", filter: "url(#soft)" }));
     svg.append(S("path", { d: archPath(g), fill: "none", stroke: "rgba(147,229,249,.10)", "stroke-width": 1, "stroke-dasharray": "2 5" }));
     if (mode !== "mini"){
-      const t = S("text", { x: 170, y: upper ? 150 : 366, "text-anchor": "middle", fill: "#5D8FAA", "font-family": "IBM Plex Mono, monospace", "font-size": 10, "letter-spacing": "2" });
+      const t = S("text", { x: 170, y: upper ? 150 : 366, "text-anchor": "middle", fill: "#7FB6D1", "font-family": "IBM Plex Mono, monospace", "font-size": 12, "letter-spacing": "1.5" });
       t.textContent = upper ? "UPPER · MAXILLA" : "LOWER · MANDIBLE"; svg.append(t);
     }
     const archPlan = plan ? plan[upper ? "upper" : "lower"] : null;
@@ -462,7 +586,7 @@ function buildMap(mode, plan){
       const fis = S("path", { d: fissure(tt.kind, tt.w, tt.d), fill: "none", stroke: "rgba(10,34,54,.45)", "stroke-width": 1.1, "stroke-linecap": "round" });
       const crack = S("path", { d: `M${-tt.w*0.15} ${-tt.d*0.42} L${tt.w*0.05} ${-tt.d*0.05} L${-tt.w*0.08} ${tt.d*0.12} L${tt.w*0.12} ${tt.d*0.4}`, fill: "none", stroke: "#5B3A06", "stroke-width": 1.3, opacity: 0 });
       grp.append(body, pulp, fis, crack);
-      if (mode === "edit"){ const ti = S("title"); ti.textContent = `#${tt.n} · ${toothMeta(tt.n).name}`; grp.append(ti); }
+      if (mode === "edit"){ grp.setAttribute("role", "button"); grp.setAttribute("tabindex", "-1"); grp.setAttribute("focusable", "true"); }
       svg.append(grp);
       if (mode === "result" && archPlan) paintResult(grp, tt, archPlan);
       else paintTooth(grp, st.teeth[tt.n]);
@@ -477,7 +601,7 @@ function buildMap(mode, plan){
   }
   if (mode !== "mini"){
     for (const [x, txt] of [[14, "R"], [326, "L"]]){
-      const t = S("text", { x, y: 259, "text-anchor": "middle", fill: "#5D8FAA", "font-family": "IBM Plex Mono, monospace", "font-size": 11 });
+      const t = S("text", { x, y: 259, "text-anchor": "middle", fill: "#7FB6D1", "font-family": "IBM Plex Mono, monospace", "font-size": 12 });
       t.textContent = txt; svg.append(t);
     }
     const mid = S("line", { x1: 40, x2: 300, y1: 255, y2: 255, stroke: "rgba(147,229,249,.12)", "stroke-dasharray": "3 6" }); svg.append(mid);
@@ -519,6 +643,11 @@ function screw(tt, tilted){
 }
 
 /* ============ plan logic ============ */
+const MED_REVIEW = ["chemo", "radiation", "pregnant"];
+const medicalReview = () => MED_REVIEW.some(k => st.health.has(k));
+const teethMarked = () => ALL.some(n => st.teeth[n] !== "ok");
+// Skip "how long ago" when the map is clean and there is no denture to explain.
+const askDuration = () => teethMarked() || st.current.has("full") || st.current.has("partial");
 function archStats(list){
   let missing = 0, failing = 0; for (const n of list){ if (st.teeth[n] === "missing") missing++; else if (st.teeth[n] === "failing") failing++; }
   return { missing, failing, affected: missing + failing, healthy: list.length - missing - failing };
@@ -538,7 +667,6 @@ function planArch(upper){
   } else if (s.affected >= 4){
     type = "bridge";
     const aff = list.filter(n => st.teeth[n] !== "ok");
-    // implants at each end of every gap, plus every other tooth inside long gaps
     const runs = []; let cur = [];
     for (const n of list){ if (st.teeth[n] !== "ok") cur.push(n); else if (cur.length){ runs.push(cur); cur = []; } }
     if (cur.length) runs.push(cur);
@@ -558,7 +686,7 @@ function buildPlan(){
   let headline;
   if (full === 2) headline = "Full-mouth All-on-4, upper and lower";
   else if (full === 1) headline = upper.type === "full" ? "All-on-4 for your upper arch" : "All-on-4 for your lower arch";
-  else if (upper.type === "none" && lower.type === "none") headline = "A check-up and smile consultation";
+  else if (upper.type === "none" && lower.type === "none") headline = "An evaluation and cosmetic consultation";
   else { const n = upper.implants.length + lower.implants.length; headline = `Dental implants · about ${n} implant${n > 1 ? "s" : ""}`; }
   const borderline = [upper, lower].some(p => p.type === "bridge" && p.stats.affected >= 7);
   return { upper, lower, headline, borderline, family: full ? "All-on-4" : (upper.type === "none" && lower.type === "none" ? "Evaluation" : "Implants") };
@@ -584,12 +712,14 @@ function readiness(){
   if (st.health.has("pregnant")) add(false, "Pregnant", "Implant surgery usually waits until after pregnancy.", -10);
   if (st.gums.has("perio") || st.gums.has("bleeding")) add(false, "Gum inflammation", "Gums are treated first so implants start in a healthy mouth.", -5);
   if (st.gums.has("grind")) add(false, "Grinding or clenching", "A night guard is often recommended to protect new teeth.", -4);
-  if (st.duration >= 5) add(false, "Teeth missing 5+ years", "Bone shrinks over time. The 3D scan shows if a graft or angled implants are needed.", -8);
-  else if (st.duration >= 4) add(false, "Teeth missing 3 to 5 years", "The 3D scan will check bone volume.", -4);
-  else if (st.duration >= 1) add(true, "Recent tooth loss", "Less time for bone to shrink.");
+  if (askDuration()){
+    if (st.duration >= 5) add(false, "Teeth missing 5+ years", "Bone shrinks over time. The 3D scan shows if a graft or angled implants are needed.", -8);
+    else if (st.duration >= 4) add(false, "Teeth missing 3 to 5 years", "The 3D scan will check bone volume.", -4);
+    else if (st.duration >= 1) add(true, "Recent tooth loss", "Less time for bone to shrink.");
+  }
   if (st.history.has("failed")) add(false, "A past implant failed", "Tell the doctor what happened. It helps plan a different approach.", -6);
   if (st.imaging === "ct" || st.imaging === "pano") add(true, "Recent X-rays available", "Sending them lets the doctors review your case sooner.", 2);
-  if (st.age >= 18 && st.age < 80 && !f.some(x => !x.ok && /Diabetes|Radiation|cancer/i.test(x.label))) add(true, "General health", "Nothing on your list that usually rules out implants.");
+  if (st.age >= 18 && st.age < 80 && !f.some(x => !x.ok && /Diabetes|Radiation|cancer|Pregnant/i.test(x.label))) add(true, "General health", "Nothing on your list that usually rules out implants.");
   score = Math.max(35, Math.min(98, Math.round(score)));
   const band = score >= 80 ? "Strong signals" : score >= 65 ? "Good signals, a few things to check" : "Needs a closer look";
   return { score, band, factors: f };
@@ -598,11 +728,10 @@ function tripPlan(plan){
   const full = plan.family === "All-on-4";
   const v1 = full ? { days: "5–7 days", txt: "Exam, 3D CT scan, any extractions, implants placed and fixed temporary teeth." }
                   : { days: "2–4 days", txt: "Exam, 3D CT scan and implant placement." };
-  const heal = { days: "3–6 months at home", txt: "Implants fuse with the bone. You wear temporary teeth." + (st.duration >= 5 ? " If a bone graft is needed, healing can take longer." : "") };
+  const heal = { days: "3–6 months at home", txt: "Implants fuse with the bone. You wear temporary teeth." + (askDuration() && st.duration >= 5 ? " If a bone graft is needed, healing can take longer." : "") };
   const v2 = full ? { days: "3–5 days", txt: "Your final bridge is fitted and adjusted." } : { days: "2–3 days", txt: "Final crowns or bridge are fitted." };
   const need = full ? 5 : 2;
-  const fits = st.days >= need;
-  return { v1, heal, v2, need, fits };
+  return { v1, heal, v2, need, fits: st.days >= need };
 }
 
 /* ============ option sets ============ */
@@ -614,288 +743,315 @@ const CURRENT = [
   ["implant","hardware","Dental implants","One or more already"],
   ["crowns","verified","Crowns or root canals","On some teeth"]
 ];
+const DENTURE_ARCH = [["upper","north","Upper"],["lower","south","Lower"],["both","unfold_more","Both"]];
 const DURATION = ["Still have them","Under 6 months","6–12 months","1–3 years","3–5 years","5+ years"];
+const IMPACT = [["pain","sick","Pain"],["chew","restaurant","Chewing"],["smile","sentiment_sad","Hiding my smile"],["none","check_circle","None of these"]];
+const SMOKE = [["never","smoke_free","Never","Or not in many years"],["former","history","I quit","Former smoker"],["vape","vaping_rooms","I vape","E-cigarettes or nicotine"],["smoke","smoking_rooms","I smoke","Cigarettes or cigars"]];
+const SMOKE_STOP = [["yes","thumb_up","Yes, I'd try"],["maybe","help","Maybe"],["no","thumb_down","Probably not"]];
 const HEALTH = [["diabetes","glucose","Diabetes"],["bp","monitor_heart","High blood pressure"],["heart","cardiology","Heart condition"],["thinners","bloodtype","Blood thinners"],["bisphos","skeleton","Osteoporosis medication"],["radiation","radiology","Radiation to head/neck"],["chemo","oncology","Cancer treatment now"],["autoimmune","shield_person","Autoimmune disease"],["pregnant","pregnant_woman","Pregnant"],["allergy","medication","Allergy to medicines"],["none","check_circle","None of these"]];
+const DIABETES = [["good","check_circle","Well controlled"],["unsure","help","Not sure"],["hard","warning","Hard to control"]];
 const GUMS = [["bleeding","water_drop","Bleeding gums"],["perio","coronavirus","Gum disease diagnosed"],["loose","swap_vert","Loose teeth"],["grind","compress","Grinding or clenching"],["dry","air","Dry mouth"],["breath","sentiment_stressed","Bad breath"],["none","check_circle","None of these"]];
 const HISTORY = [["extract","content_cut","Extractions this year"],["graft","layers","Bone graft"],["sinus","airwave","Sinus lift"],["placed","hardware","Implants placed"],["failed","report","An implant that failed"],["rootcanal","healing","Root canals"],["ortho","grid_on","Braces or aligners"],["none","check_circle","None of these"]];
+const CONSULT = [["yes","assignment","Yes","I have a treatment plan"],["no","fiber_new","No","This is my first time"]];
+const IMAGING = [["ct","view_in_ar","3D CT scan","Cone beam / CBCT"],["pano","panorama","Panoramic X-ray","The wide one"],["none","close","No recent X-rays"],["unsure","help","Not sure"]];
+const ANXIETY = [["calm","sentiment_satisfied","Calm"],["nervous","sentiment_neutral","A bit nervous"],["fear","sentiment_stressed","Very scared"]];
 const FROM = [["az","sunny","Arizona","Short drive to Yuma"],["ca","beach_access","California","San Diego, LA, Inland Empire"],["nvut","landscape","Nevada or Utah","Drive or fly to Phoenix"],["us","flight","Elsewhere in the US","Fly to Yuma or Phoenix"],["ca2","ac_unit","Canada","Winter in Yuma? Many do"],["mx","home_pin","Mexico","Baja California or nearby"]];
 const TRAVEL = [["drive","directions_car","I can drive in","Park in Yuma or at the clinic"],["fly","flight_takeoff","I'd fly in","Yuma (YUM), Phoenix (PHX) or San Diego (SAN)"],["help","support_agent","I'd need help planning","Shuttle, hotel and timing"],["unsure","help","Not sure yet","That's fine, we'll walk you through it"]];
 const DOCS = [["passport","badge","Passport book"],["card","id_card","Passport card"],["sentri","verified_user","SENTRI or NEXUS"],["edl","directions_car","Enhanced driver's license"],["none","do_not_disturb_on","None yet"]];
+const SECOND = [["yes","event_repeat","Yes"],["maybe","help","Probably"],["no","block","Hard for me"]];
 const PRIORITY = [["fixed","lock","Teeth that never come out"],["natural","face","A natural look"],["eat","restaurant","Eat anything again"],["trips","event_available","Fewest trips"],["price","savings","Best price"],["fast","bolt","The fastest result"]];
 const TIMING = [["asap","bolt","As soon as possible","I'm ready to go"],["1-3","calendar_month","In 1–3 months","Planning my trip"],["3-6","event_upcoming","In 3–6 months","Saving or arranging time off"],["research","search","Just researching","Learning my options"]];
 const PAY = [["full","account_balance_wallet","Pay in full","I've been saving for this"],["finance","credit_card","Monthly payments","I'd like financing options"],["insurance","shield","Use my insurance","Check what my plan covers"],["unsure","help","Not sure yet","Show me the options"]];
 const lbl = (arr, key) => (arr.find(a => a[0] === key) || [])[2] || key;
 
 /* ============ UI builders ============ */
-function optGrid(items, getSel, onPick, { multi = false, one = false } = {}){
-  const wrap = h("div", { class: "opts" + (one ? " one" : ""), role: multi ? "group" : "radiogroup" });
+function optGrid(items, getSel, onPick, { multi = false, one = false, label = "", fkey = "" } = {}){
+  const wrap = h("div", { class: "opts" + (one ? " one" : ""), role: multi ? "group" : "radiogroup", "aria-label": label || null });
+  const state = key => multi ? { "aria-pressed": String(getSel(key)) } : { role: "radio", "aria-checked": String(getSel(key)) };
   items.forEach(([key, ic, t, d], i) => {
-    const b = h("button", { class: "opt", type: "button", "aria-pressed": String(getSel(key)), style: { "--i": i }, onclick: () => { onPick(key); refresh(); } },
-      h("span", { class: "ic" }, icon(ic)), h("span", {}, h("span", { class: "t" }, t), d ? h("span", { class: "d" }, d) : null), h("span", { class: "tick" }, icon("check")));
-    b.dataset.key = key; wrap.append(b);
+    const b = h("button", Object.assign({ class: "opt", type: "button", "data-fid": fkey + ":" + key, style: { "--i": i }, onclick: () => onPick(key) }, state(key)),
+      h("span", { class: "ic", "aria-hidden": "true" }, icon(ic)), h("span", {}, h("span", { class: "t" }, t), d ? h("span", { class: "d" }, d) : null), h("span", { class: "tick", "aria-hidden": "true" }, icon("check")));
+    wrap.append(b);
   });
-  const refresh = () => wrap.querySelectorAll(".opt").forEach(b => b.setAttribute("aria-pressed", String(getSel(b.dataset.key))));
   return wrap;
 }
-function chipSet(items, set, { exclusive = "none", max = 0, after } = {}){
-  const wrap = h("div", { class: "chips" });
-  const refresh = () => wrap.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", String(set.has(b.dataset.key))));
+function toggleSet(set, key, exclusive, max){
+  if (set.has(key)) { set.delete(key); return; }
+  if (exclusive && key === exclusive) set.clear(); else if (exclusive) set.delete(exclusive);
+  if (max && set.size >= max) set.delete([...set][0]);
+  set.add(key);
+}
+function chipSet(items, set, { label = "", fkey = "", single = false, getSel, onPick } = {}){
+  const wrap = h("div", { class: "chips", role: single ? "radiogroup" : "group", "aria-label": label || null });
   items.forEach(([key, ic, t], i) => {
-    const b = h("button", { class: "chip", type: "button", "aria-pressed": "false", style: { "--i": i }, onclick: () => {
-      if (set.has(key)) set.delete(key);
-      else {
-        if (key === exclusive) set.clear(); else set.delete(exclusive);
-        if (max && set.size >= max) set.delete([...set][0]);
-        set.add(key);
-      }
-      refresh(); after && after(); update();
-    } }, icon(ic), t);
-    b.dataset.key = key; wrap.append(b);
+    const on = single ? getSel(key) : set.has(key);
+    wrap.append(h("button", Object.assign({ class: "chip", type: "button", "data-fid": fkey + ":" + key, style: { "--i": i }, onclick: () => onPick(key) },
+      single ? { role: "radio", "aria-checked": String(on) } : { "aria-pressed": String(on) }), icon(ic), t));
   });
-  refresh();
   return wrap;
 }
 function slider({ id, name, ic, min, max, step = 1, get, set, fmt, sub, ticks }){
-  const val = h("div", { class: "val" });
-  const input = h("input", { type: "range", id, min, max, step, value: get(), "aria-label": name });
+  const val = h("div", { class: "val", "aria-hidden": "true" });
+  const input = h("input", { type: "range", id, min, max, step, value: get(), "aria-label": name, "data-fid": "range:" + id });
   const paint = () => {
     const v = Number(input.value); const p = ((v - min) / (max - min)) * 100;
     input.style.setProperty("--p", p + "%");
+    input.setAttribute("aria-valuetext", String(fmt(v)) + (sub ? ", " + sub(v) : ""));
     val.replaceChildren(fmt(v), sub ? h("small", {}, sub(v)) : "");
   };
-  input.addEventListener("input", () => { set(Number(input.value)); paint(); update(); });
+  input.addEventListener("input", () => { set(Number(input.value)); paint(); changed(); });
   paint();
   return h("div", { class: "slider" },
     h("div", { class: "top" }, h("div", { class: "name" }, icon(ic), name), val),
     input,
-    ticks ? h("div", { class: "ticks" }, ticks.map(t => h("span", {}, t))) : null);
+    ticks ? h("div", { class: "ticks", "aria-hidden": "true" }, ticks.map(t => h("span", {}, t))) : null);
 }
 const insight = (html, warn) => h("div", { class: "insight" + (warn ? " warn" : "") }, icon(warn ? "info" : "lightbulb", true), h("div", { html }));
-const painWord = v => ["None","Barely","Mild","Mild","Noticeable","Moderate","Moderate","Strong","Strong","Severe","Worst ever"][v];
 
-/* ============ screens ============ */
+/* ============ question configuration ============
+   Every question lives here. Each step: id, chapter, fields[], validation(), next().
+   Field types: options (single), multi, chips (multi), chips1 (single, chip style), slider, note, custom.
+   A field is required unless optional:true; hidden fields (showIf false) are never required. */
 const CHAPTERS = [
-  { key: "map", name: "Smile Map", icon: "dentistry", unlock: "Smile Map complete", next: "Health Check: 6 quick questions a surgeon would ask" },
+  { key: "map", name: "Smile Map", icon: "dentistry", unlock: "Smile Map complete", next: "Health Check: the questions a surgeon would ask" },
   { key: "health", name: "Health Check", icon: "health_and_safety", unlock: "Health Check complete", next: "Your Trip: getting to Los Algodones" },
   { key: "trip", name: "Your Trip", icon: "flight", unlock: "Trip planned", next: "Your Goals: what matters most to you" },
   { key: "goals", name: "Your Goals", icon: "flag", unlock: "Profile ready to analyze", next: "See your probable solution" }
 ];
+const STEPS = [
+  /* ---- Chapter 1 · Smile Map (2) ---- */
+  { id: "teeth", chapter: 0, pts: 100, eyebrow: "Smile Map · X-ray", title: "Which teeth are missing or failing?",
+    sub: "Tap a tooth to mark it. Loose, broken or painful teeth count as failing.",
+    fields: [{ type: "custom", key: "teeth", optional: true, render: el => renderTeeth(el) }] },
+  { id: "today", chapter: 0, pts: 100, eyebrow: "Smile Map", title: "Your teeth today",
+    fields: [
+      { key: "current", type: "multi", label: "What are you using today?", hint: "Pick all that apply.", items: CURRENT, exclusive: "nothing" },
+      { key: "dentureArch", type: "options", label: "Which denture?", items: DENTURE_ARCH, showIf: () => st.current.has("full") },
+      { key: "dentureFit", type: "slider", name: "How does it fit?", ic: "fit_screen", min: 0, max: 10, showIf: () => st.current.has("full"),
+        fmt: v => v <= 2 ? "Stays put" : v <= 5 ? "Slips sometimes" : v <= 8 ? "Slips a lot" : "Barely wear it", ticks: ["Secure","Loose"] },
+      { type: "note", showIf: () => st.current.has("full"), html: () => "<b>No more adhesive.</b> An upper All-on-4 bridge is fixed in place and leaves the roof of your mouth uncovered, so food tastes like food again." },
+      { key: "duration", type: "slider", label: "How long since you lost your first tooth?", name: "Time without teeth", ic: "hourglass", min: 0, max: 5, showIf: askDuration,
+        fmt: v => DURATION[v], ticks: ["Now","1 yr","5+ yrs"] },
+      { type: "note", live: true, showIf: askDuration, warn: () => st.duration >= 4,
+        html: () => st.duration >= 4 ? "<b>Bone matters.</b> After a tooth is lost, the jawbone in that spot slowly shrinks. Your 3D scan will show whether you need a graft or angled implants."
+                                     : "<b>Good timing.</b> The sooner a tooth is replaced, the more natural bone is left to hold an implant." },
+      { key: "impact", type: "chips", label: "What bothers you most?", hint: "Pick all that apply.", items: IMPACT, exclusive: "none" }
+    ] },
 
-const SCREENS = [
-  { id: "intro", ch: -1, render: renderIntro, cta: "Start my smile map", pts: 0 },
+  /* ---- Chapter 2 · Health Check (4) ---- */
+  { id: "about", chapter: 1, pts: 50, eyebrow: "Health Check", title: "A little about you", sub: "Age alone rarely rules out implants. It helps the surgeon plan.",
+    fields: [
+      { key: "age", type: "slider", name: "Age", ic: "cake", min: 18, max: 90, fmt: v => v + (v === 90 ? "+" : "") + " yrs", ticks: ["18","50","90+"] },
+      { key: "smoke", type: "options", label: "Do you smoke or vape?", items: SMOKE },
+      { key: "quitYears", type: "slider", name: "Quit how long ago?", ic: "event", min: 0, max: 10, showIf: () => st.smoke === "former",
+        fmt: v => v === 0 ? "This year" : v === 10 ? "10+ years" : v + " yr" + (v > 1 ? "s" : ""), ticks: ["This year","10+ yrs"] },
+      { key: "cigs", type: "slider", name: "About how many a day?", ic: "smoking_rooms", min: 1, max: 40, showIf: () => st.smoke === "smoke",
+        fmt: v => v + (v === 40 ? "+" : ""), sub: v => v >= 20 ? "A pack or more" : "Less than a pack", ticks: ["1","20","40+"] },
+      { key: "smokeStop", type: "options", label: "Would you pause smoking around surgery?", items: SMOKE_STOP, showIf: () => st.smoke === "smoke" },
+      { type: "note", warn: true, showIf: () => st.smoke === "smoke" || st.smoke === "vape",
+        html: () => "<b>Straight talk:</b> nicotine reduces blood flow to the gums and is one of the main reasons implants heal poorly. Surgeons usually ask patients to stop before and after surgery." }
+    ] },
+  { id: "health", chapter: 1, pts: 50, eyebrow: "Health Check", title: "Do any of these apply to you?", sub: "Pick all that apply. This stays private and only goes to your doctors.",
+    fields: [
+      { key: "health", type: "chips", label: "Medical conditions", items: HEALTH, exclusive: "none" },
+      { key: "diabetes", type: "options", label: "How is your blood sugar?", items: DIABETES, showIf: () => st.health.has("diabetes") },
+      { type: "note", showIf: () => st.health.has("diabetes"), html: () => "<b>Good to know:</b> well-controlled diabetes usually doesn't rule out implants. Bring a recent A1C result to your consult." },
+      { type: "note", warn: true, showIf: () => st.health.has("bisphos") || st.health.has("radiation"), html: () => "<b>Bring your medication list.</b> Some bone medicines and past radiation change how the jaw heals. The surgeon will review them before planning." }
+    ] },
+  { id: "mouth", chapter: 1, pts: 50, eyebrow: "Health Check", title: "Your gums and dental history",
+    fields: [
+      { key: "gums", type: "chips", label: "Anything going on with your gums or bite?", items: GUMS, exclusive: "none" },
+      { key: "history", type: "chips", label: "What dental treatments have you had?", items: HISTORY, exclusive: "none" },
+      { type: "note", html: () => "<b>Why we ask:</b> healthy gums and a calm bite help implants last. Gum problems are treated first, and grinders usually get a night guard." }
+    ] },
+  { id: "prep", chapter: 1, pts: 50, eyebrow: "Health Check", title: "Before your consultation",
+    fields: [
+      { key: "consult", type: "options", label: "Have you had an implant consultation before?", items: CONSULT },
+      { key: "imaging", type: "options", label: "Do you have X-rays from the last 12 months?", items: IMAGING },
+      { key: "anxiety", type: "chips1", label: "How do you feel about dental visits?", items: ANXIETY },
+      { type: "note", showIf: () => st.anxiety === "fear", html: () => "<b>You're not alone.</b> Losan offers IV sedation, so you can rest through the procedure. You can even play your own music." }
+    ] },
 
-  { id: "teeth", ch: 0, pts: 100, eyebrow: "Smile Map · X-ray", title: "Which teeth are missing or failing?",
-    sub: "Tap a tooth to mark it. Drag to paint several. Loose, broken or painful teeth count as failing.",
-    render: renderTeeth, valid: () => true },
-  { id: "current", ch: 0, pts: 50, eyebrow: "Smile Map", title: "What are you using today?", sub: "Pick all that apply.",
-    render(el){
-      el.append(optGrid(CURRENT, k => st.current.has(k), k => {
-        if (st.current.has(k)) st.current.delete(k);
-        else { if (k === "nothing") st.current.clear(); else st.current.delete("nothing"); st.current.add(k); }
-        rerender();
-      }, { multi: true }));
-      if (st.current.has("full")){
-        el.append(h("div", { class: "label" }, "Which denture?"));
-        el.append(optGrid([["upper","north","Upper"],["lower","south","Lower"],["both","unfold_more","Both"]], k => st.dentureArch === k, k => { st.dentureArch = k; update(); }));
-        el.append(slider({ id: "fit", name: "How does it fit?", ic: "fit_screen", min: 0, max: 10, get: () => st.dentureFit, set: v => st.dentureFit = v,
-          fmt: v => v <= 2 ? "Stays put" : v <= 5 ? "Slips sometimes" : v <= 8 ? "Slips a lot" : "Barely wear it", ticks: ["Secure","Loose"] }));
-        el.append(insight("<b>No more adhesive.</b> An upper All-on-4 bridge is fixed in place and leaves the roof of your mouth uncovered, so food tastes like food again."));
-      }
-    },
-    valid: () => st.current.size > 0 && (!st.current.has("full") || !!st.dentureArch) },
-  { id: "duration", ch: 0, pts: 50, eyebrow: "Smile Map", title: "How long since you lost your first tooth?",
-    render(el){
-      el.append(slider({ id: "dur", name: "Time without teeth", ic: "hourglass", min: 0, max: 5, get: () => st.duration, set: v => { st.duration = v; tip(); },
-        fmt: v => DURATION[v], ticks: ["Now","1 yr","5+ yrs"] }));
-      const box = h("div"); el.append(box);
-      const tip = () => box.replaceChildren(st.duration >= 4
-        ? insight("<b>Bone matters.</b> After a tooth is lost, the jawbone in that spot slowly shrinks. Your 3D scan will show whether you need a graft or angled implants.", true)
-        : insight("<b>Good timing.</b> The sooner a tooth is replaced, the more natural bone is left to hold an implant."));
-      tip();
-    }, valid: () => true },
-  { id: "impact", ch: 0, pts: 50, eyebrow: "Smile Map", title: "How much is this affecting your day?", sub: "Slide each one. There are no wrong answers.",
-    render(el){
-      el.append(slider({ id: "pain", name: "Pain or discomfort", ic: "sick", min: 0, max: 10, get: () => st.pain, set: v => st.pain = v, fmt: v => v + "/10", sub: painWord, ticks: ["None","Severe"] }));
-      el.append(slider({ id: "chew", name: "Trouble chewing", ic: "restaurant", min: 0, max: 10, get: () => st.chew, set: v => st.chew = v, fmt: v => v + "/10", sub: v => v >= 7 ? "Avoiding many foods" : v >= 4 ? "Some foods are hard" : "Eating mostly fine", ticks: ["Eat anything","Soft food only"] }));
-      el.append(slider({ id: "conf", name: "Hiding my smile", ic: "sentiment_sad", min: 0, max: 10, get: () => st.conf, set: v => st.conf = v, fmt: v => v + "/10", sub: v => v >= 7 ? "Most of the time" : v >= 4 ? "Sometimes" : "Rarely", ticks: ["Never","Always"] }));
-    }, valid: () => true },
+  /* ---- Chapter 3 · Your Trip (3, or 2 when traveling from Mexico) ---- */
+  { id: "getting", chapter: 2, pts: 50, eyebrow: "Your Trip", title: "Getting to Los Algodones",
+    next: () => st.from === "mx" ? "stay" : "docs",
+    fields: [
+      { key: "from", type: "options", label: "Where would you travel from?", items: FROM },
+      { key: "travel", type: "options", one: true, label: "How would you get there?", items: TRAVEL },
+      { type: "note", html: () => "<b>Close to the border.</b> Losan is in Los Algodones, 7 miles from Yuma, Arizona, with a shuttle from Yuma and a hotel in the same building." }
+    ] },
+  { id: "docs", chapter: 2, pts: 50, when: () => st.from !== "mx", eyebrow: "Your Trip", title: "Which travel document do you have?", sub: "You'll need one to walk or drive back into the U.S.",
+    fields: [
+      { key: "docs", type: "options", label: "Travel document", items: DOCS },
+      { type: "note", warn: () => st.docs === "none", html: () => st.docs === "none"
+        ? "<b>Plan ahead:</b> to return by land you need a passport book, passport card, SENTRI/NEXUS card or an enhanced driver's license. A passport card is the cheapest option for land crossings."
+        : "<b>Border tip:</b> crossing on foot from the Andrade port of entry takes minutes most days. Lines get longer in winter afternoons." }
+    ] },
+  { id: "stay", chapter: 2, pts: 50, eyebrow: "Your Trip", title: "How long could you stay on your first visit?",
+    fields: [
+      { key: "days", type: "slider", name: "Days in Los Algodones", ic: "hotel", min: 1, max: 14, fmt: v => v + (v === 14 ? "+" : "") + " day" + (v > 1 ? "s" : ""),
+        sub: v => v >= 5 ? "Enough for most full-arch cases" : v >= 3 ? "Enough for most implant visits" : "A short visit", ticks: ["1","7","14+"] },
+      { key: "second", type: "options", label: "Could you come back for a second visit in 3–6 months?", items: SECOND },
+      { type: "note", html: () => "<b>How it usually works:</b> implants need a few months to fuse with the bone, so most cases take two visits. You go home with temporary teeth in between." }
+    ] },
 
-  { id: "age", ch: 1, pts: 50, eyebrow: "Health Check", title: "How old are you?", sub: "Age alone rarely rules out implants. It helps the surgeon plan.",
-    render(el){
-      el.append(slider({ id: "age", name: "Age", ic: "cake", min: 18, max: 90, get: () => st.age, set: v => st.age = v, fmt: v => v + (v === 90 ? "+" : "") + " yrs", ticks: ["18","50","90+"] }));
-      el.append(insight("<b>Did you know?</b> Patients in their 70s and 80s get implants every day. Overall health matters more than the number."));
-    }, valid: () => true },
-  { id: "smoke", ch: 1, pts: 50, eyebrow: "Health Check", title: "Do you smoke or vape?",
-    render(el){
-      el.append(optGrid([["never","smoke_free","Never","Or not in many years"],["former","history","I quit","Former smoker"],["vape","vaping_rooms","I vape","E-cigarettes or nicotine"],["smoke","smoking_rooms","I smoke","Cigarettes or cigars"]], k => st.smoke === k, k => { st.smoke = k; rerender(); }));
-      if (st.smoke === "former") el.append(slider({ id: "quit", name: "Quit how long ago?", ic: "event", min: 0, max: 10, get: () => st.quitYears, set: v => st.quitYears = v, fmt: v => v === 0 ? "This year" : v === 10 ? "10+ years" : v + " yr" + (v > 1 ? "s" : ""), ticks: ["This year","10+ yrs"] }));
-      if (st.smoke === "smoke"){
-        el.append(slider({ id: "cigs", name: "About how many a day?", ic: "smoking_rooms", min: 1, max: 40, get: () => st.cigs, set: v => st.cigs = v, fmt: v => v + (v === 40 ? "+" : ""), sub: v => v >= 20 ? "A pack or more" : "Less than a pack", ticks: ["1","20","40+"] }));
-        el.append(h("div", { class: "label" }, "Would you pause smoking around surgery?"));
-        el.append(optGrid([["yes","thumb_up","Yes, I'd try"],["maybe","help","Maybe"],["no","thumb_down","Probably not"]], k => st.smokeStop === k, k => { st.smokeStop = k; update(); }));
-      }
-      if (st.smoke === "smoke" || st.smoke === "vape") el.append(insight("<b>Straight talk:</b> nicotine reduces blood flow to the gums and is one of the main reasons implants heal poorly. Surgeons usually ask patients to stop before and after surgery.", true));
-    }, valid: () => !!st.smoke && (st.smoke !== "smoke" || !!st.smokeStop) },
-  { id: "health", ch: 1, pts: 50, eyebrow: "Health Check", title: "Do any of these apply to you?", sub: "Pick all that apply. This stays private and only goes to your doctors.",
-    render(el){
-      el.append(chipSet(HEALTH, st.health, { after: rerender }));
-      if (st.health.has("diabetes")){
-        el.append(h("div", { class: "label" }, "How is your blood sugar?"));
-        el.append(optGrid([["good","check_circle","Well controlled"],["unsure","help","Not sure"],["hard","warning","Hard to control"]], k => st.diabetes === k, k => { st.diabetes = k; update(); }));
-        el.append(insight("<b>Good to know:</b> well-controlled diabetes usually doesn't rule out implants. Bring a recent A1C result to your consult."));
-      }
-      if (st.health.has("bisphos") || st.health.has("radiation")) el.append(insight("<b>Bring your medication list.</b> Some bone medicines and past radiation change how the jaw heals. The surgeon will review them before planning.", true));
-    }, valid: () => st.health.size > 0 && (!st.health.has("diabetes") || !!st.diabetes) },
-  { id: "gums", ch: 1, pts: 50, eyebrow: "Health Check", title: "Anything going on with your gums or bite?",
-    render(el){
-      el.append(chipSet(GUMS, st.gums));
-      el.append(insight("<b>Why we ask:</b> healthy gums and a calm bite help implants last. Gum problems are treated first, and grinders usually get a night guard."));
-    }, valid: () => st.gums.size > 0 },
-  { id: "history", ch: 1, pts: 50, eyebrow: "Health Check", title: "What dental treatments have you had?",
-    render(el){
-      el.append(chipSet(HISTORY, st.history));
-      el.append(h("div", { class: "label" }, "Have you had an implant consultation before?"));
-      el.append(optGrid([["yes","assignment","Yes","I have a treatment plan"],["no","fiber_new","No","This is my first time"]], k => st.consult === k, k => { st.consult = k; update(); }));
-      el.append(h("div", { class: "label" }, "Do you have X-rays from the last 12 months?"));
-      el.append(optGrid([["ct","view_in_ar","3D CT scan","Cone beam / CBCT"],["pano","panorama","Panoramic X-ray","The wide one"],["none","close","No recent X-rays"],["unsure","help","Not sure"]], k => st.imaging === k, k => { st.imaging = k; update(); }));
-    }, valid: () => st.history.size > 0 && !!st.consult && !!st.imaging },
-  { id: "anxiety", ch: 1, pts: 50, eyebrow: "Health Check", title: "How do you feel about dental visits?",
-    render(el){
-      const box = h("div");
-      el.append(slider({ id: "anx", name: "Dental anxiety", ic: "psychology", min: 0, max: 10, get: () => st.anxiety, set: v => { st.anxiety = v; tip(); }, fmt: v => v + "/10",
-        sub: v => v >= 8 ? "Very nervous" : v >= 5 ? "A bit nervous" : v >= 2 ? "Mostly calm" : "Totally relaxed", ticks: ["Relaxed","Terrified"] }), box);
-      const tip = () => box.replaceChildren(st.anxiety >= 6
-        ? insight("<b>You're not alone.</b> Losan offers IV sedation, so you can rest through the procedure. You can even play your own music.")
-        : insight("<b>Comfort built in:</b> free Wi-Fi, coffee, your own music during treatment, and IV sedation if you want it."));
-      tip();
-    }, valid: () => true },
-
-  { id: "from", ch: 2, pts: 50, eyebrow: "Your Trip", title: "Where would you travel from?",
-    render(el){
-      el.append(optGrid(FROM, k => st.from === k, k => { st.from = k; update(); }));
-      el.append(insight("<b>Close to the border.</b> Losan is in Los Algodones, 7 miles from Yuma, Arizona, with a shuttle from Yuma and a hotel in the same building."));
-    }, valid: () => !!st.from },
-  { id: "travel", ch: 2, pts: 50, eyebrow: "Your Trip", title: "Can you travel to Los Algodones?",
-    render(el){
-      el.append(optGrid(TRAVEL, k => st.travel === k, k => { st.travel = k; update(); }, { one: true }));
-    }, valid: () => !!st.travel },
-  { id: "docs", ch: 2, pts: 50, eyebrow: "Your Trip", title: "Which travel document do you have?", sub: "You'll need one to walk or drive back into the U.S.",
-    render(el){
-      el.append(optGrid(DOCS.map(d => [...d, ""]), k => st.docs === k, k => { st.docs = k; rerender(); }));
-      el.append(st.docs === "none"
-        ? insight("<b>Plan ahead:</b> to return by land you need a passport book, passport card, SENTRI/NEXUS card or an enhanced driver's license. A passport card is the cheapest option for land crossings.", true)
-        : insight("<b>Border tip:</b> crossing on foot from the Andrade port of entry takes minutes most days. Lines get longer in winter afternoons."));
-    }, valid: () => !!st.docs },
-  { id: "days", ch: 2, pts: 50, eyebrow: "Your Trip", title: "How long could you stay on your first visit?",
-    render(el){
-      el.append(slider({ id: "days", name: "Days in Los Algodones", ic: "hotel", min: 1, max: 14, get: () => st.days, set: v => st.days = v, fmt: v => v + (v === 14 ? "+" : "") + " day" + (v > 1 ? "s" : ""),
-        sub: v => v >= 5 ? "Enough for most full-arch cases" : v >= 3 ? "Enough for most implant visits" : "A short visit", ticks: ["1","7","14+"] }));
-      el.append(h("div", { class: "label" }, "Could you come back for a second visit in 3–6 months?"));
-      el.append(optGrid([["yes","event_repeat","Yes"],["maybe","help","Probably"],["no","block","Hard for me"]], k => st.second === k, k => { st.second = k; update(); }));
-      el.append(insight("<b>How it usually works:</b> implants need a few months to fuse with the bone, so most cases take two visits. You go home with temporary teeth in between."));
-    }, valid: () => !!st.second },
-
-  { id: "priority", ch: 3, pts: 50, eyebrow: "Your Goals", title: "What matters most to you?", sub: "Pick your top two.",
-    render(el){ el.append(chipSet(PRIORITY, st.priority, { exclusive: null, max: 2 })); },
-    valid: () => st.priority.size > 0 },
-  { id: "timing", ch: 3, pts: 50, eyebrow: "Your Goals", title: "When would you like to start?",
-    render(el){ el.append(optGrid(TIMING, k => st.timing === k, k => { st.timing = k; update(); })); }, valid: () => !!st.timing },
-  { id: "pay", ch: 3, pts: 50, eyebrow: "Your Goals", title: "How would you like to pay?",
-    render(el){
-      el.append(optGrid(PAY, k => st.pay === k, k => { st.pay = k; update(); }));
-      el.append(insight("<b>Fair, clear pricing.</b> Patients from the U.S. and Canada choose Losan for world-class care at fair prices. Your coordinator sends an itemized quote after the doctors review your case."));
-    }, valid: () => !!st.pay },
-
-  { id: "analyze", ch: 4, render: renderAnalyze, hideFooter: true },
-  { id: "result", ch: 4, render: renderResult, hideFooter: true }
+  /* ---- Chapter 4 · Your Goals (2) ---- */
+  { id: "priority", chapter: 3, pts: 50, eyebrow: "Your Goals", title: "What matters most to you?", sub: "Pick your top two.",
+    fields: [{ key: "priority", type: "chips", label: "Your top two priorities", items: PRIORITY, max: 2 }] },
+  { id: "plan", chapter: 3, pts: 50, eyebrow: "Your Goals", title: "Timing and payment",
+    fields: [
+      { key: "timing", type: "options", label: "When would you like to start?", items: TIMING },
+      { key: "pay", type: "options", label: "How would you like to pay?", items: PAY },
+      { type: "note", warn: true, showIf: () => st.pay === "insurance",
+        html: () => "<b>About insurance:</b> " + (CFG.insurancePolicy ? String(CFG.insurancePolicy).replace(/</g, "&lt;") : pendHTML("política de seguros de Losan")) },
+      { type: "note", html: () => "<b>Fair, clear pricing.</b> Patients from the U.S. and Canada choose Losan for world-class care at fair prices. Your coordinator sends an itemized quote after the doctors review your case." }
+    ] }
 ];
+const stepById = id => STEPS.find(s => s.id === id);
+const isActive = s => !s.when || s.when();
+const activeSteps = () => STEPS.filter(isActive);
+function nextActive(id){ const i = STEPS.findIndex(s => s.id === id); for (let k = i + 1; k < STEPS.length; k++) if (isActive(STEPS[k])) return STEPS[k].id; return "analyze"; }
+function prevActive(id){ const i = STEPS.findIndex(s => s.id === id); for (let k = i - 1; k >= 0; k--) if (isActive(STEPS[k])) return STEPS[k].id; return "intro"; }
+const shown = f => !f.showIf || f.showIf();
+const filled = f => { const v = st[f.key]; return v instanceof Set ? v.size > 0 : v !== "" && v != null; };
+STEPS.forEach(s => {
+  s.fields.forEach(f => { if (f.required == null) f.required = !f.optional && !!f.key && !["slider", "custom"].includes(f.type); });
+  if (!s.validation) s.validation = () => s.fields.every(f => !f.required || !shown(f) || filled(f));
+  if (!s.next) s.next = () => nextActive(s.id);
+});
+
+/* ============ field renderer ============ */
+let liveNotes = [];
+function changed(){ liveNotes.forEach(p => p()); update(); save(); }
+function renderFields(el, step){
+  for (const f of step.fields){
+    if (!shown(f)) continue;
+    const fkey = f.key || "";
+    if (f.label) el.append(h("h2", { class: "flabel" }, f.label));
+    if (f.hint) el.append(h("p", { class: "fhint" }, f.hint));
+    if (f.type === "options") el.append(optGrid(f.items, k => st[f.key] === k, k => { st[f.key] = k; rerender(); }, { one: f.one, label: f.label || step.title, fkey }));
+    else if (f.type === "multi") el.append(optGrid(f.items, k => st[f.key].has(k), k => { toggleSet(st[f.key], k, f.exclusive, f.max); rerender(); }, { multi: true, label: f.label, fkey }));
+    else if (f.type === "chips") el.append(chipSet(f.items, st[f.key], { label: f.label, fkey, onPick: k => { toggleSet(st[f.key], k, f.exclusive, f.max); rerender(); } }));
+    else if (f.type === "chips1") el.append(chipSet(f.items, null, { single: true, label: f.label, fkey, getSel: k => st[f.key] === k, onPick: k => { st[f.key] = k; rerender(); } }));
+    else if (f.type === "slider") el.append(slider({ id: "f-" + f.key, name: f.name, ic: f.ic, min: f.min, max: f.max, get: () => st[f.key], set: v => st[f.key] = v, fmt: f.fmt, sub: f.sub, ticks: f.ticks }));
+    else if (f.type === "custom") f.render(el);
+    else if (f.type === "note"){
+      const box = h("div");
+      const paint = () => { const v = f.html(); box.replaceChildren(v ? insight(v, typeof f.warn === "function" ? f.warn() : !!f.warn) : ""); };
+      paint(); if (f.live) liveNotes.push(paint); el.append(box);
+    }
+  }
+}
 
 /* ============ engine ============ */
-let cur = 0, lastDir = 1, interstitial = null;
+let cur = "intro", badgeFor = null, aiPromise = null, resultTracked = false;
 const host = $("#screenHost");
 function update(){
   const btn = $("#nextBtn"); if (!btn) return;
-  const s = SCREENS[cur]; btn.disabled = !!(s.valid && !s.valid());
+  const s = stepById(cur); btn.disabled = !!(s && !s.validation());
 }
 function rerender(){ show(cur, 0, true); }
+function chapterOf(id){ const s = stepById(id); return s ? s.chapter : (id === "analyze" || id === "result") ? 4 : -1; }
 function setProgress(){
-  const s = SCREENS[cur], prog = $("#progress");
+  const prog = $("#progress"), s = stepById(cur), curCh = chapterOf(cur), act = activeSteps();
   prog.replaceChildren();
   CHAPTERS.forEach((c, i) => {
-    const inCh = SCREENS.filter(x => x.ch === i), pos = inCh.indexOf(s);
+    const inCh = act.filter(x => x.chapter === i), pos = s ? inCh.indexOf(s) : -1;
     let p = 0;
-    if (s.ch > i || interstitial != null && interstitial >= i) p = 100;
-    else if (s.ch === i) p = Math.round(((pos) / inCh.length) * 100) + 6;
+    if (curCh > i || (badgeFor != null && badgeFor >= i)) p = 100;
+    else if (curCh === i) p = Math.round((pos / inCh.length) * 100) + 6;
     prog.append(h("div", { class: "seg" + (p >= 100 ? " done" : ""), style: { "--p": Math.min(100, p) + "%" } }, h("i")));
   });
   const name = $("#chName");
-  if (s.ch >= 0 && s.ch < 4 && interstitial == null){
-    const inCh = SCREENS.filter(x => x.ch === s.ch);
-    name.replaceChildren(h("b", {}, `Chapter ${s.ch + 1} · ${CHAPTERS[s.ch].name}`), h("span", {}, `${inCh.indexOf(s) + 1} of ${inCh.length}`));
+  if (s && badgeFor == null){
+    const inCh = act.filter(x => x.chapter === s.chapter), total = act.length, n = act.indexOf(s) + 1;
+    name.replaceChildren(h("b", {}, `Chapter ${s.chapter + 1} · ${CHAPTERS[s.chapter].name}`), h("span", {}, `${inCh.indexOf(s) + 1} of ${inCh.length}`, h("span", { class: "sr" }, ` · question ${n} of ${total}`)));
   } else name.replaceChildren();
-  $("#backBtn").disabled = cur === 0 || s.id === "analyze" || s.id === "result";
+  $("#backBtn").disabled = cur === "intro" || cur === "analyze" || cur === "result";
 }
 function addPoints(n){
-  if (!n) return;
-  st.points += n;
+  st.points += n || 0;
+  if (!n || !REWARD) return;
   const v = $("#ptsVal"); const from = st.points - n; const t0 = performance.now();
   const tick = t => { const k = Math.min(1, (t - t0) / 500); v.textContent = Math.round(from + n * k).toLocaleString(); if (k < 1) requestAnimationFrame(tick); };
   requestAnimationFrame(tick);
-  const p = h("span", { class: "pop" }, "+" + n); $("#pts").append(p); setTimeout(() => p.remove(), 1000);
+  const p = h("span", { class: "pop", "aria-hidden": "true" }, "+" + n); $("#pts").append(p); setTimeout(() => p.remove(), 1000);
 }
-function show(i, dir = 1, same = false){
-  cur = i; lastDir = dir;
-  const s = SCREENS[i];
-  const sc = h("section", { class: "screen" + (dir < 0 ? " back" : ""), "aria-live": "polite" });
-  if (same) sc.style.animation = "none";
-  if (s.eyebrow) sc.append(h("div", { class: "eyebrow" }, icon(CHAPTERS[s.ch] ? CHAPTERS[s.ch].icon : "lock_open"), s.eyebrow));
-  if (s.title) sc.append(h("h1", { class: "q" }, s.title));
-  if (s.sub) sc.append(h("p", { class: "sub" }, s.sub));
-  s.render(sc);
+function show(id, dir = 1, same = false){
+  const ae = document.activeElement, focusId = same && ae && ae.dataset ? ae.dataset.fid : null;
+  cur = id; badgeFor = null; liveNotes = [];
+  const s = stepById(id);
+  const sc = h("section", { class: "screen" + (dir < 0 ? " back" : "") + (same ? " still" : "") });
+  if (id === "intro") renderIntro(sc);
+  else if (id === "analyze") renderAnalyze(sc);
+  else if (id === "result") renderResult(sc);
+  else {
+    sc.append(h("div", { class: "eyebrow" }, icon(CHAPTERS[s.chapter].icon), s.eyebrow), h("h1", { class: "q" }, s.title));
+    if (s.sub) sc.append(h("p", { class: "sub" }, s.sub));
+    renderFields(sc, s);
+  }
   const nodes = [sc];
-  if (!s.hideFooter){
-    const btn = h("button", { class: "cta", id: "nextBtn", type: "button", onclick: next }, s.cta || "Continue", icon("arrow_forward"));
+  if (s || id === "intro"){
+    const btn = h("button", { class: "cta", id: "nextBtn", type: "button", onclick: goNext }, id === "intro" ? "Start my smile map" : "Continue", icon("arrow_forward"));
     const foot = h("div", { class: "footer" }, btn);
-    if (s.id === "intro") foot.append(h("div", { class: "hintline" }, "About 3 minutes · No X-ray needed · Not a diagnosis"));
+    if (id === "intro") foot.append(h("div", { class: "hintline" }, "About 3 minutes · No X-ray needed · Not a diagnosis"));
     nodes.push(foot);
   }
   host.replaceChildren(...nodes);
   setProgress(); update();
-  if (!same) window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  if (focusId){ const t = [...host.querySelectorAll("[data-fid]")].find(x => x.dataset.fid === focusId); if (t) t.focus({ preventScroll: true }); }
+  if (!same){
+    window.scrollTo(0, 0);
+    const hd = sc.querySelector("h1, h2");
+    if (hd && id !== "intro"){ hd.tabIndex = -1; hd.focus({ preventScroll: true }); }
+  }
+  if (st.started && id !== "intro"){ st.stepId = id === "analyze" ? "result" : id; save(); }
 }
-function next(){
-  const s = SCREENS[cur];
-  if (s.valid && !s.valid()) return;
+const go = id => show(id, 1);
+function start(){
+  st.started = true; if (!st.attr) st.attr = ATTR;
+  track("quiz_start");
+  go(STEPS[0].id);
+}
+function goNext(){
+  if (cur === "intro") return start();
+  const s = stepById(cur); if (!s || !s.validation()) return;
+  track("step_complete", { step_id: s.id, chapter: s.chapter + 1 });
   if (!st.earned.has(s.id)){ st.earned.add(s.id); addPoints(s.pts || 0); }
-  const nx = SCREENS[cur + 1];
-  if (nx && s.ch >= 0 && s.ch < 4 && nx.ch !== s.ch && !st.earned.has("ch" + s.ch)){ return showBadge(s.ch); }
-  show(cur + 1, 1);
+  const nid = s.next(), ns = stepById(nid);
+  if (!ns || ns.chapter !== s.chapter){
+    track("chapter_complete", { chapter: s.chapter + 1 });
+    if (!st.earned.has("ch" + s.chapter)) return showBadge(s.chapter, nid);
+  }
+  go(nid);
 }
 function back(){
-  if (interstitial != null){ interstitial = null; return show(cur, -1); }
-  if (cur > 0) show(cur - 1, -1);
+  if (badgeFor != null) return show(cur, -1);
+  if (stepById(cur)) show(prevActive(cur), -1);
 }
 $("#backBtn").addEventListener("click", back);
 
-function showBadge(chi){
-  interstitial = chi; st.earned.add("ch" + chi);
+function showBadge(chi, nid){
+  st.earned.add("ch" + chi);
+  badgeFor = chi;
   const c = CHAPTERS[chi];
   setProgress();
-  $("#chName").replaceChildren();
-  const ring = S("svg", { viewBox: "0 0 150 150" });
-  ring.innerHTML = `<circle cx="75" cy="75" r="66" fill="#EEF9FD"/><circle cx="75" cy="75" r="66" fill="none" stroke="#93E5F9" stroke-width="8" stroke-dasharray="415" stroke-dashoffset="415" stroke-linecap="round" transform="rotate(-90 75 75)"><animate attributeName="stroke-dashoffset" from="415" to="0" dur=".9s" fill="freeze" begin=".2s"/></circle><circle cx="75" cy="75" r="52" fill="none" stroke="#002553" stroke-width="1.5" stroke-dasharray="2 5"/>`;
+  const ring = S("svg", { viewBox: "0 0 150 150", "aria-hidden": "true" });
+  ring.innerHTML = `<circle cx="75" cy="75" r="66" fill="#EEF9FD"/><circle cx="75" cy="75" r="66" fill="none" stroke="#93E5F9" stroke-width="8" stroke-dasharray="415" stroke-dashoffset="${reducedMotion() ? 0 : 415}" stroke-linecap="round" transform="rotate(-90 75 75)">${reducedMotion() ? "" : '<animate attributeName="stroke-dashoffset" from="415" to="0" dur=".9s" fill="freeze" begin=".2s"/>'}</circle><circle cx="75" cy="75" r="52" fill="none" stroke="#002553" stroke-width="1.5" stroke-dasharray="2 5"/>`;
   const sc = h("section", { class: "screen" },
     h("div", { class: "badge-wrap" },
       h("div", { class: "medal" }, ring, icon(c.icon, true)),
       h("div", { class: "eyebrow" }, `Chapter ${chi + 1} of 4`),
-      h("h1", {}, c.unlock),
-      h("span", { class: "unlock" }, icon("auto_awesome", true), "+100 bonus points"),
+      h("h1", { tabindex: "-1" }, c.unlock),
+      REWARD ? h("span", { class: "unlock" }, icon("auto_awesome", true), "+100 bonus points") : null,
       chi === 0 ? h("p", {}, chapterOneSummary()) : h("p", {}, ["Nice work. The doctors ask these same questions at a screening, so you're already ahead.", "Travel is the part most people worry about. You've got it mapped.", "That's everything we need to build your plan."][chi - 1]),
       h("div", { class: "nextch" }, icon(chi < 3 ? CHAPTERS[chi + 1].icon : "lock_open"), h("span", {}, "Next: " + c.next))
     ));
-  const foot = h("div", { class: "footer" }, h("button", { class: "cta", type: "button", onclick: () => { interstitial = null; show(cur + 1, 1); } }, chi < 3 ? "Keep going" : "See my solution", icon("arrow_forward")));
+  const foot = h("div", { class: "footer" }, h("button", { class: "cta", type: "button", onclick: () => go(nid) }, chi < 3 ? "Keep going" : "See my solution", icon("arrow_forward")));
   host.replaceChildren(sc, foot);
-  addPoints(100); confetti(40);
+  $("#backBtn").disabled = false;
+  window.scrollTo(0, 0); sc.querySelector("h1").focus({ preventScroll: true });
+  addPoints(100);
 }
 function chapterOneSummary(){
   const u = archStats(UPPER), l = archStats(LOWER), a = u.affected + l.affected;
@@ -904,116 +1060,150 @@ function chapterOneSummary(){
 }
 
 /* ============ intro ============ */
+function stepLabel(id){ const s = stepById(id); return s ? `${CHAPTERS[s.chapter].name} · ${s.title}` : id === "result" ? "Your results" : "the start"; }
+function resume(saved){
+  st = saved; aiPromise = null; resultTracked = false;
+  $("#ptsVal").textContent = st.points.toLocaleString();
+  track("quiz_start", { resumed: true });
+  let id = st.stepId;
+  if (id !== "result"){ const s = stepById(id); if (!s) id = STEPS[0].id; else if (!isActive(s)) id = nextActive(id); }
+  go(id === "result" ? "analyze" : id);
+}
 function renderIntro(el){
   const mini = buildMap("mini");
+  const saved = loadSaved();
   el.append(
     h("div", { class: "eyebrow" }, icon("auto_awesome", true), "AI Smile Path · Losan Dental"),
     h("h1", { class: "q" }, "Find out if implants or All-on-4 could fit you, before you travel."),
-    h("p", { class: "sub" }, "Map your teeth on an X-ray, answer a few quick questions, and our AI builds your probable treatment path for your consultation with Dr. José Luis and Dr. Diego López."),
-    h("div", { class: "intro-hero" }, mini, h("span", { class: "k" }, "4 CHAPTERS · ~3 MIN"), h("span", { class: "big" }, "Earn points as you go. See your probable solution at the end.")),
-    h("div", { class: "hero-badges" }, CHAPTERS.map((c, i) => h("div", { class: "hb", style: { "--i": i } }, h("span", { class: "n" }, icon(c.icon)), h("div", {}, h("b", {}, c.name), h("span", {}, ["Tap your teeth","6 doctor questions","Getting here","What matters"][i]))))),
-    h("div", { class: "stars" }, h("span", { class: "ms fill" }, "star"), h("b", {}, "5.0"), "on Google · Patients from the U.S. and Canada"),
+    h("p", { class: "sub" }, "Map your teeth on an X-ray, answer a few quick questions, and our AI builds your probable treatment path for your consultation with Dr. José Luis and Dr. Diego López."));
+  if (saved){
+    el.append(h("div", { class: "resume" }, icon("history"),
+      h("div", {}, h("b", {}, "Continue where you left off"), h("span", {}, "You stopped at: " + stepLabel(saved.stepId))),
+      h("div", { class: "resume-actions" },
+        h("button", { class: "cta small", type: "button", onclick: () => resume(saved) }, "Continue", icon("arrow_forward")),
+        h("button", { class: "linkbtn", type: "button", onclick: () => { clearSaved(); rerender(); } }, "Start fresh"))));
+  }
+  el.append(
+    h("div", { class: "intro-hero" }, mini, h("span", { class: "k" }, "4 CHAPTERS · ~3 MIN"), h("span", { class: "big" }, REWARD ? "Earn points as you go. See your probable solution at the end." : "See your probable solution at the end.")),
+    h("div", { class: "hero-badges" }, CHAPTERS.map((c, i) => h("div", { class: "hb", style: { "--i": i } }, h("span", { class: "n" }, icon(c.icon)), h("div", {}, h("b", {}, c.name), h("span", {}, ["Tap your teeth","Health questions","Getting here","What matters"][i]))))),
+    h("div", { class: "stars" }, h("span", { class: "ms fill", "aria-hidden": "true" }, "star"), h("b", {}, "5.0"), "on Google · Patients from the U.S. and Canada"),
     DEMO ? h("div", { class: "hintline" }, h("button", { class: "linkbtn", type: "button", onclick: loadSample }, "Preview with a sample patient"), " (demo for the clinic team)") : null
   );
-  // light up a sample pattern on the intro X-ray
   const demo = { 3:"missing", 4:"failing", 13:"missing", 14:"missing", 19:"missing", 30:"failing", 8:"failing" };
   mini.querySelectorAll("[data-t]").forEach(g => paintTooth(g, demo[g.dataset.t] || "ok"));
 }
 
-/* ============ tooth map screen ============ */
-let tool = "missing";
+/* ============ tooth map ============ */
+let tool = "missing", paintMode = false, painting = false, paintVal = "missing";
+window.addEventListener("pointerup", () => painting = false);
+window.addEventListener("pointercancel", () => painting = false);
+const STATE_WORD = { missing: "missing", failing: "loose or broken", ok: "healthy" };
 function renderTeeth(el){
-  const tools = h("div", { class: "tools", role: "radiogroup", "aria-label": "Marking tool" });
+  const tools = h("div", { class: "tools", role: "radiogroup", "aria-label": "What to mark" });
   [["missing","m","Missing"],["failing","f","Loose / broken"],["ok","o","Healthy"]].forEach(([k, cls, t]) => {
-    tools.append(h("button", { class: "tool", type: "button", "aria-pressed": String(tool === k), onclick: e => { tool = k; tools.querySelectorAll(".tool").forEach(b => b.setAttribute("aria-pressed", "false")); e.currentTarget.setAttribute("aria-pressed", "true"); } }, h("span", { class: "sw " + cls }), t));
+    tools.append(h("button", { class: "tool", type: "button", role: "radio", "aria-checked": String(tool === k), "data-fid": "tool:" + k,
+      onclick: e => { tool = k; tools.querySelectorAll(".tool").forEach(b => b.setAttribute("aria-checked", String(b === e.currentTarget))); } },
+      h("span", { class: "sw " + cls, "aria-hidden": "true" }), t));
   });
   const svg = buildMap("edit");
-  const ro = h("div", { class: "readout" });
-  const status = h("div", { class: "status" }, "Tap a tooth to begin");
+  const groups = new Map(); svg.querySelectorAll("[data-t]").forEach(g => groups.set(Number(g.dataset.t), g));
+  const ro = h("div", { class: "readout", "aria-hidden": "true" });
+  const status = h("div", { class: "status", role: "status" }, "Tap a tooth to begin");
+  const xray = h("div", { class: "xray" + (paintMode ? " painting" : "") }, reducedMotion() ? null : h("div", { class: "scan" }),
+    h("div", { class: "hdr", "aria-hidden": "true" }, h("span", { class: "rec" }, h("i"), "OCCLUSAL VIEW"), h("span", {}, "28 TEETH · WISDOM TEETH HIDDEN")), svg, ro, status);
   const paintAll = () => {
-    svg.querySelectorAll("[data-t]").forEach(g => paintTooth(g, st.teeth[g.dataset.t]));
-    const all = [...UPPER, ...LOWER].map(n => st.teeth[n]);
+    groups.forEach((g, n) => { paintTooth(g, st.teeth[n]); g.setAttribute("aria-label", `Tooth ${n}, ${STATE_WORD[st.teeth[n]]}. ${toothMeta(n).name}`); });
+    const all = ALL.map(n => st.teeth[n]);
     const m = all.filter(x => x === "missing").length, f = all.filter(x => x === "failing").length;
     ro.replaceChildren(h("div", { class: "m" }, h("b", {}, m), h("span", {}, "MISSING")), h("div", { class: "f" }, h("b", {}, f), h("span", {}, "FAILING")), h("div", {}, h("b", {}, 28 - m - f), h("span", {}, "HEALTHY")));
+    changed();
   };
-  let painting = false, paintVal = "missing";
-  const apply = (g, first) => {
-    const n = Number(g.dataset.t);
-    if (first) paintVal = st.teeth[n] === tool ? "ok" : tool;
-    if (st.teeth[n] === paintVal) return;
-    st.teeth[n] = paintVal; paintAll();
-    status.textContent = `#${n} · ${toothMeta(n).name} · ${paintVal === "ok" ? "healthy" : paintVal}`;
-    if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {}
-  };
-  svg.addEventListener("pointerdown", e => { const g = e.target.closest("[data-t]"); if (!g) return; painting = true; apply(g, true); e.preventDefault(); });
-  svg.addEventListener("pointermove", e => { if (!painting) return; const t = document.elementFromPoint(e.clientX, e.clientY); const g = t && t.closest && t.closest("[data-t]"); if (g) apply(g, false); });
-  window.addEventListener("pointerup", () => painting = false);
-  const setMany = (list, v) => { list.forEach(n => st.teeth[n] = v); paintAll(); status.textContent = v === "ok" ? "Map cleared" : `${list === UPPER ? "Upper" : list === LOWER ? "Lower" : "All"} teeth marked ${v}`; };
-  const quick = h("div", { class: "quick" },
-    h("button", { type: "button", onclick: () => setMany(UPPER, "missing") }, "No upper teeth"),
-    h("button", { type: "button", onclick: () => setMany(LOWER, "missing") }, "No lower teeth"),
-    h("button", { type: "button", onclick: () => setMany([...UPPER, ...LOWER], "failing") }, "All failing"),
-    h("button", { type: "button", onclick: () => setMany([...UPPER, ...LOWER], "ok") }, "Clear"));
-  el.append(tools,
-    h("div", { class: "xray" }, h("div", { class: "scan" }), h("div", { class: "hdr" }, h("span", { class: "rec" }, h("i"), "OCCLUSAL VIEW"), h("span", {}, "28 TEETH · WISDOM TEETH HIDDEN")), svg, ro, status),
-    quick);
-  paintAll();
+  const say = (n, v) => { status.textContent = `Tooth ${n} · ${toothMeta(n).name} · ${STATE_WORD[v]}`; if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {} };
+  const toggle = n => { const v = st.teeth[n] === tool ? "ok" : tool; st.teeth[n] = v; paintAll(); say(n, v); };
+  const setRoving = n => groups.forEach((g, k) => g.setAttribute("tabindex", k === n ? "0" : "-1"));
+  // Tap mode (default): a tap marks one tooth; scrolling over the map still scrolls the page.
+  svg.addEventListener("click", e => { if (paintMode) return; const g = e.target.closest("[data-t]"); if (!g) return; const n = Number(g.dataset.t); toggle(n); setRoving(n); });
+  // Paint mode: only after "Paint several"; touch-action:none is applied only then.
+  svg.addEventListener("pointerdown", e => {
+    if (!paintMode) return; const g = e.target.closest("[data-t]"); if (!g) return;
+    const n = Number(g.dataset.t); painting = true; paintVal = st.teeth[n] === tool ? "ok" : tool;
+    st.teeth[n] = paintVal; paintAll(); say(n, paintVal); e.preventDefault();
+  });
+  svg.addEventListener("pointermove", e => {
+    if (!paintMode || !painting) return;
+    const t = document.elementFromPoint(e.clientX, e.clientY), g = t && t.closest && t.closest("[data-t]");
+    if (g){ const n = Number(g.dataset.t); if (st.teeth[n] !== paintVal){ st.teeth[n] = paintVal; paintAll(); say(n, paintVal); } }
+  });
+  // Keyboard: arrows move along the arch, up/down switch arch, Enter or Space marks.
+  svg.addEventListener("keydown", e => {
+    const g = e.target.closest && e.target.closest("[data-t]"); if (!g) return;
+    const n = Number(g.dataset.t), up = UPPER.includes(n), arr = up ? UPPER : LOWER, i = arr.indexOf(n);
+    let to = null;
+    if (e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(n); return; }
+    if (e.key === "ArrowRight") to = arr[Math.min(arr.length - 1, i + 1)];
+    else if (e.key === "ArrowLeft") to = arr[Math.max(0, i - 1)];
+    else if (e.key === "ArrowDown" || e.key === "ArrowUp") to = (up ? LOWER : UPPER)[i];
+    else if (e.key === "Home") to = arr[0];
+    else if (e.key === "End") to = arr[arr.length - 1];
+    if (to != null){ e.preventDefault(); setRoving(to); groups.get(to).focus(); }
+  });
+  setRoving(UPPER[0]);
+  const paintLbl = h("span", {}, paintMode ? "Painting on · tap to stop" : "Paint several");
+  const paintBtn = h("button", { class: "paintbtn", type: "button", "aria-pressed": String(paintMode), "data-fid": "paint", onclick: () => {
+    paintMode = !paintMode; painting = false;
+    paintBtn.setAttribute("aria-pressed", String(paintMode)); xray.classList.toggle("painting", paintMode);
+    paintLbl.textContent = paintMode ? "Painting on · tap to stop" : "Paint several";
+    status.textContent = paintMode ? "Paint mode: drag your finger across the teeth" : "Tap mode: tap a tooth to mark it";
+  } }, icon("brush"), paintLbl);
+  const setMany = (list, v, txt) => { list.forEach(n => st.teeth[n] = v); paintAll(); status.textContent = txt; };
+  const quick = h("div", { class: "quick" }, paintBtn,
+    h("button", { type: "button", onclick: () => setMany(UPPER, "missing", "Upper teeth marked missing") }, "No upper teeth"),
+    h("button", { type: "button", onclick: () => setMany(LOWER, "missing", "Lower teeth marked missing") }, "No lower teeth"),
+    h("button", { type: "button", onclick: () => setMany(ALL, "failing", "All teeth marked failing") }, "All failing"),
+    h("button", { type: "button", onclick: () => setMany(ALL, "ok", "Map cleared") }, "Clear"));
+  el.append(tools, xray, quick, h("p", { class: "fhint" }, "Keyboard: arrow keys move between teeth, Enter marks the tooth."));
+  groups.forEach((g, n) => { paintTooth(g, st.teeth[n]); g.setAttribute("aria-label", `Tooth ${n}, ${STATE_WORD[st.teeth[n]]}. ${toothMeta(n).name}`); });
+  const all = ALL.map(n => st.teeth[n]), m = all.filter(x => x === "missing").length, f = all.filter(x => x === "failing").length;
+  ro.replaceChildren(h("div", { class: "m" }, h("b", {}, m), h("span", {}, "MISSING")), h("div", { class: "f" }, h("b", {}, f), h("span", {}, "FAILING")), h("div", {}, h("b", {}, 28 - m - f), h("span", {}, "HEALTHY")));
 }
 
-/* ============ contact ============ */
-function renderContact(el){
-  const c = st.contact;
-  const inp = (id, label, type, key, attrs = {}) => h("div", { class: "field" }, h("label", { for: id }, label),
-    h("input", { id, type, value: c[key], autocomplete: attrs.ac, inputmode: attrs.im, placeholder: attrs.ph, oninput: e => { c[key] = e.target.value; update(); } }));
-  el.append(
-    h("div", { class: "row2" }, inp("fn", "First name", "text", "first", { ac: "given-name" }), inp("ln", "Last name", "text", "last", { ac: "family-name" })),
-    inp("em", "Email", "email", "email", { ac: "email", ph: "you@example.com" }),
-    inp("ph", "Mobile phone", "tel", "phone", { ac: "tel", im: "tel", ph: "(555) 123-4567" }),
-    h("label", { class: "check" }, h("input", { type: "checkbox", id: "wa", checked: c.whatsapp, onchange: e => c.whatsapp = e.target.checked }), "This number has WhatsApp"),
-    h("div", { class: "label" }, "Preferred language"),
-    optGrid([["English","translate","English"],["Español","translate","Español"]], k => c.lang === k, k => { c.lang = k; update(); }),
-    h("label", { class: "check" }, h("input", { type: "checkbox", id: "consent", checked: c.consent, onchange: e => { c.consent = e.target.checked; update(); } }),
-      "I agree that Losan Dental may contact me by phone, text, WhatsApp or email about my inquiry. Message and data rates may apply. Reply STOP to opt out."),
-    h("div", { class: "lock" }, icon("lock", true), "Your health answers are shared only with Losan's doctors and coordinator.")
-  );
-}
-
-/* ============ analysis ============ */
-let aiPromise = null;
+/* ============ loading ============
+   The plan is computed in the browser, so this screen is short (~2 s) and each line is a real step.
+   The AI notes are requested here but not waited for: they load on the result page with their own indicator. */
 function renderAnalyze(el){
   const mini = buildMap("mini");
-  const phases = ["Reading your tooth map","Checking health and healing factors","Matching implant vs All-on-4 options","Planning your trip","Writing your personal notes"];
-  const ph = h("div", { class: "phases" }, phases.map(p => h("div", { class: "phase" }, icon("progress_activity"), p)));
-  const ticker = h("div", { class: "ticker" });
-  el.append(h("div", { class: "analyze" }, h("div", { class: "scan" }), mini, h("h2", {}, "Building your smile path"), ph, ticker));
   const plan = buildPlan();
-  aiPromise = runAI(plan);
-  const lines = ["14 upper + 14 lower teeth scanned", `${plan.upper.stats.affected + plan.lower.stats.affected} teeth flagged`, "Cross-checking healing factors", "Estimating visits and healing time", "Matching to Dr. José Luis + Dr. Diego López"];
+  aiPromise = medicalReview() ? null : runAI(plan);
+  const jobs = [["Reading your tooth map", () => archStats(UPPER) && archStats(LOWER)], ["Checking health and healing factors", () => readiness()],
+                ["Matching implant vs All-on-4 options", () => buildPlan()], ["Planning your trip", () => tripPlan(plan)]];
+  const rows = jobs.map(([t]) => h("div", { class: "phase" }, icon("progress_activity"), t));
+  el.append(h("div", { class: "analyze" }, reducedMotion() ? null : h("div", { class: "scan" }), mini, h("h2", { tabindex: "-1" }, "Building your smile path"), h("div", { class: "phases", role: "status" }, rows)));
+  mini.querySelectorAll("[data-t]").forEach(g => paintTooth(g, st.teeth[g.dataset.t]));
   let i = 0;
-  const rows = [...ph.children];
-  const step = () => {
-    rows.forEach((r, k) => { r.className = "phase" + (k < i ? " ok" : k === i ? " on" : ""); r.firstChild.textContent = k < i ? "check_circle" : "progress_activity"; });
-    ticker.textContent = lines[Math.min(i, lines.length - 1)];
-    // light teeth progressively on the mini map
-    mini.querySelectorAll("[data-t]").forEach((g, k) => { if (k < (i + 1) * 6) paintTooth(g, st.teeth[g.dataset.t]); });
-    if (i < phases.length){ i++; setTimeout(step, 1100); } else setTimeout(() => show(cur + 1, 1), 700);
+  const tick = () => {
+    if (cur !== "analyze") return;
+    if (i < jobs.length){
+      jobs[i][1]();
+      rows.forEach((r, k) => { r.className = "phase" + (k <= i ? " ok" : k === i + 1 ? " on" : ""); r.firstChild.textContent = k <= i ? "check_circle" : "progress_activity"; });
+      i++; setTimeout(tick, 400);
+    } else setTimeout(() => { if (cur === "analyze") go("result"); }, 250);
   };
-  mini.querySelectorAll("[data-t]").forEach(g => { g.firstChild.setAttribute("fill", "rgba(147,229,249,.04)"); g.firstChild.setAttribute("stroke", "rgba(147,229,249,.25)"); g.children[1].setAttribute("opacity", 0); });
-  step();
+  rows[0].className = "phase on";
+  setTimeout(tick, 300);
 }
 
-/* ============ AI ============ */
+/* ============ AI notes ============ */
 function summaryData(plan, ready){
   const list = arr => [...arr];
   return {
     plan: { headline: plan.headline, upper: plan.upper.label || "no treatment marked", lower: plan.lower.label || "no treatment marked", borderline: plan.borderline },
     teeth: { upperMissing: plan.upper.stats.missing, upperFailing: plan.upper.stats.failing, lowerMissing: plan.lower.stats.missing, lowerFailing: plan.lower.stats.failing },
     current: list(st.current).map(k => lbl(CURRENT, k)), denture: st.current.has("full") ? { arch: st.dentureArch, fit0to10: st.dentureFit } : null,
-    timeMissing: DURATION[st.duration], pain: st.pain, chewing: st.chew, hidingSmile: st.conf, age: st.age,
+    timeMissing: askDuration() ? DURATION[st.duration] : null, bothersMost: list(st.impact).map(k => lbl(IMPACT, k)), age: st.age,
     smoking: st.smoke + (st.smoke === "smoke" ? ` (${st.cigs}/day, willing to pause: ${st.smokeStop})` : st.smoke === "former" ? ` (quit ${st.quitYears} yrs ago)` : ""),
     health: list(st.health).map(k => lbl(HEALTH, k)), diabetesControl: st.diabetes || null, gums: list(st.gums).map(k => lbl(GUMS, k)),
-    history: list(st.history).map(k => lbl(HISTORY, k)), priorConsult: st.consult, recentImaging: st.imaging, anxiety: st.anxiety,
-    travelFrom: lbl(FROM, st.from), travel: lbl(TRAVEL, st.travel), travelDoc: lbl(DOCS, st.docs), daysAvailable: st.days, secondVisit: st.second,
+    history: list(st.history).map(k => lbl(HISTORY, k)), priorConsult: st.consult, recentImaging: st.imaging, dentalAnxiety: lbl(ANXIETY, st.anxiety),
+    travelFrom: lbl(FROM, st.from), travel: lbl(TRAVEL, st.travel), travelDoc: st.from === "mx" ? null : lbl(DOCS, st.docs), daysAvailable: st.days, secondVisit: st.second,
     priorities: list(st.priority).map(k => lbl(PRIORITY, k)), timing: lbl(TIMING, st.timing), payment: lbl(PAY, st.pay),
     readiness: { score: ready.score, flags: ready.factors.filter(f => !f.ok).map(f => f.label) }, language: st.contact.lang
   };
@@ -1039,33 +1229,31 @@ ${JSON.stringify(data)}`;
     if (!out || typeof out.summary !== "string") throw { code: "invalid_json" };
     return { source: "ai", headline: String(out.headline || ""), summary: out.summary, why: [].concat(out.why || []).map(String).slice(0, 3), ask: [].concat(out.ask || []).map(String).slice(0, 3), prep: [].concat(out.prep || []).map(String).slice(0, 3) };
   };
-  // 1) Hosted page: the clinic's own server calls the AI and returns the JSON above
   if (CFG.aiEndpoint){
     try {
       const r = await fetch(CFG.aiEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt, data }) });
       if (!r.ok) throw { code: "http_" + r.status };
       return norm(await r.json());
-    } catch (e) { return { source: "template", error: e && e.code, ...templateNotes(plan, ready) }; }
+    } catch (e) { return { source: "template", error: e && e.code, ...templateNotes(plan) }; }
   }
-  // 2) Claude artifact preview
   let sample = null;
-  try { sample = window.claude && await window.claude.use("sample"); } catch (e) { sample = null; }
-  if (!sample) return { source: "template", ...templateNotes(plan, ready) };
+  try { sample = window.claude && typeof window.claude.use === "function" ? await window.claude.use("sample") : null; } catch (e) { sample = null; }
+  if (!sample) return { source: "template", ...templateNotes(plan) };
   try { return norm(await sample.json(prompt, { modelTier: "quick" })); }
-  catch (e) { return { source: "template", error: e && e.code, ...templateNotes(plan, ready) }; }
+  catch (e) { return { source: "template", error: e && e.code, ...templateNotes(plan) }; }
 }
-function templateNotes(plan, ready){
+function templateNotes(plan){
   const full = plan.family === "All-on-4";
   const why = [];
   const aff = plan.upper.stats.affected + plan.lower.stats.affected;
   if (full) why.push(plan.upper.denture || plan.lower.denture ? "You wear a full denture, and a fixed arch removes the slipping and adhesive." : `You marked ${aff} teeth as missing or failing. Past about 10 in one arch, one fixed bridge on 4 implants is usually simpler than many single implants.`);
   else if (aff) why.push(`You marked ${aff} teeth, so individual implants or an implant bridge keep your healthy teeth untouched.`);
-  if (st.chew >= 5) why.push("Chewing is hard for you today. Implants are anchored in bone, so you can bite with more force.");
+  if (st.impact.has("chew")) why.push("Chewing is hard for you today. Implants are anchored in bone, so you can bite with more force.");
   if (st.priority.has("fixed")) why.push("You want teeth that never come out. Implant teeth are fixed, not removable.");
   if (st.priority.has("natural") && why.length < 3) why.push("You want a natural look. Dr. Diego López designs the teeth to fit your face.");
   if (why.length < 3) why.push("Your answers give the doctors a head start before your first visit.");
   const prep = [];
-  if (st.docs === "none") prep.push("Apply for a passport card or passport book now. You need one to cross back by land.");
+  if (st.from !== "mx" && st.docs === "none") prep.push("Apply for a passport card or passport book now. You need one to cross back by land.");
   if (st.smoke === "smoke" || st.smoke === "vape") prep.push("Ask about pausing nicotine 2 weeks before and after surgery. It helps healing.");
   if (st.health.has("diabetes")) prep.push("Get a recent A1C blood test to bring with you.");
   if (st.imaging === "ct" || st.imaging === "pano") prep.push("Send your recent X-rays so the doctors can review them early.");
@@ -1086,238 +1274,348 @@ function helpPoints(plan){
   if (plan.family === "Evaluation"){
     pts.push(["search", "A full check of your teeth and gums", "The doctor looks for problems you can't see yet, like hidden decay or bone loss."]);
     pts.push(["shield", "Catch issues early", "Small problems found now are simpler to fix than missing teeth later."]);
+    pts.push(["auto_awesome", "Ask about cosmetic options", "Losan also offers cosmetic dentistry. Bring your questions to the consultation."]);
+    pts.push(["route", "Plan your visit with the coordinator", "Your coordinator helps with timing, the shuttle from Yuma and the hotel in the same building."]);
     return pts;
   }
   if (full){
     const dent = plan.upper.denture || plan.lower.denture;
     pts.push(["lock", "Fixed teeth that stay in", dent ? "No more slipping denture or adhesive. The bridge is screwed onto 4 implants, and only the dentist removes it." : "A full set of new teeth screwed onto 4 implants. You brush them, you don't take them out."]);
-    pts.push(["restaurant", "Eat with confidence again", st.chew >= 5 ? "You told us chewing is hard. Implants are anchored in bone, so you can bite with much more force than with a denture." : "Implants are anchored in bone, so you can bite and chew with real force."]);
-    pts.push(["sentiment_very_satisfied", "A full, natural smile", st.conf >= 5 ? "You said you hide your smile. Dr. Diego López designs the new teeth to fit your face." : "Dr. Diego López designs the new teeth to fit your face and bite."]);
+    pts.push(["restaurant", "Eat with confidence again", st.impact.has("chew") ? "You told us chewing is hard. Implants are anchored in bone, so you can bite with much more force than with a denture." : "Implants are anchored in bone, so you can bite and chew with real force."]);
+    pts.push(["sentiment_very_satisfied", "A full, natural smile", st.impact.has("smile") ? "You said you hide your smile. Dr. Diego López designs the new teeth to fit your face." : "Dr. Diego López designs the new teeth to fit your face and bite."]);
     if (plan.upper.type === "full") pts.push(["visibility_off", "Roof of your mouth stays open", "Unlike an upper denture, the bridge doesn't cover your palate, so food tastes like food."]);
     pts.push(["bolt", "Temporary teeth on your first visit", "You usually leave with fixed temporary teeth while the implants heal."]);
   } else {
     const n = plan.upper.implants.length + plan.lower.implants.length;
-    pts.push(["hardware", `Replaces each missing tooth at the root`, `About ${n} implant${n > 1 ? "s" : ""} act like new tooth roots, with a crown or bridge on top.`]);
+    pts.push(["hardware", "Replaces each missing tooth at the root", `About ${n} implant${n > 1 ? "s" : ""} act like new tooth roots, with a crown or bridge on top.`]);
     pts.push(["volunteer_activism", "Protects your healthy teeth", "Nothing is cut down or clipped onto your natural teeth, unlike a regular bridge or partial."]);
     pts.push(["landscape", "Keeps your jawbone strong", "An implant gives the bone work to do, which slows the shrinking that follows tooth loss."]);
-    pts.push(["restaurant", "Chew and smile normally", st.chew >= 5 ? "You told us chewing is hard. Implant teeth feel and work like your own." : "Implant teeth look, feel and work like your own."]);
+    pts.push(["restaurant", "Chew and smile normally", st.impact.has("chew") ? "You told us chewing is hard. Implant teeth feel and work like your own." : "Implant teeth look, feel and work like your own."]);
   }
   return pts.slice(0, 4);
 }
+const MED_NOTES = { chemo: ["Current cancer treatment", "Surgery is usually timed with your oncologist."], radiation: ["Radiation to head or neck", "Needs a careful review of the jawbone."], pregnant: ["Pregnant", "Implant surgery usually waits until after pregnancy."] };
+const waLink = text => `https://wa.me/${WA_NUM}?text=${encodeURIComponent(text)}`;
+function waText(plan, med){
+  const n = ALL.filter(k => st.teeth[k] !== "ok").length;
+  return ["Hi! I just finished the Smile Path on your website.",
+    med ? "My result says I need a medical evaluation before a plan." : `My probable path: ${plan.headline}.`,
+    !med && plan.upper.label ? `Upper: ${plan.upper.label}.` : "", !med && plan.lower.label ? `Lower: ${plan.lower.label}.` : "",
+    `Teeth marked: ${n}.`, st.leadId ? `Ref: ${st.leadId}.` : "", "Could you help me with the next step?"].filter(Boolean).join(" ");
+}
+function copyLink(display, num){
+  return h("button", { class: "linkbtn copy", type: "button", onclick: e => {
+    const b = e.currentTarget;
+    try { navigator.clipboard.writeText(num).then(() => b.textContent = "Copied " + display, () => b.textContent = display); } catch (err) { b.textContent = display; }
+  } }, "Copy number");
+}
+function contactRow(text, where){
+  return h("div", { class: "contactrow" },
+    h("a", { class: "cbtn", href: waLink(text), target: "_blank", rel: "noopener", onclick: () => trackClick("whatsapp_click", where) }, icon("chat"), "WhatsApp the coordinator"),
+    h("a", { class: "cbtn", href: "tel:+19288678333", onclick: () => trackClick("call_click", where) }, icon("call"), "Call +1 (928) 867-8333"),
+    h("div", { class: "hintline" }, "Patient coordinator · +1 (928) 867-8333 · ", copyLink("+1 (928) 867-8333", "+19288678333")));
+}
 
-function nextStepCard(plan, ready, refreshLead){
+/* ---------- form ---------- */
+const COUNTRIES = [["US", "+1", "US +1"], ["CA", "+1", "Canada +1"], ["MX", "+52", "México +52"]];
+const CONSENT_TEXT = "I agree that Losan Dental may contact me by email, phone, text or WhatsApp about my inquiry. Message and data rates may apply. Reply STOP to opt out.";
+function phoneE164(){
+  const c = st.contact; let d = (c.phone || "").replace(/\D/g, "");
+  if (c.country === "MX"){
+    if (d.length === 13 && d.startsWith("521")) d = d.slice(3); else if (d.length === 12 && d.startsWith("52")) d = d.slice(2);
+    return /^[1-9]\d{9}$/.test(d) ? "+52" + d : null;
+  }
+  if (d.length === 11 && d[0] === "1") d = d.slice(1);
+  return /^[2-9]\d{2}[2-9]\d{6}$/.test(d) ? "+1" + d : null;
+}
+const emailValid = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+function joinList(a){ return a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]; }
+function formCard(plan, med, onChange){
   const c = st.contact;
-  const card = h("div", { class: "card nextstep", id: "nextstep" });
-  const valid = () => !!c.goal && /^\S+@\S+\.\S+$/.test(c.email.trim()) && c.consent;
-  let btn;
-  const check = () => { if (btn) btn.disabled = !valid(); };
-  const inp = (id, label, type, key, attrs = {}) => h("div", { class: "field" }, h("label", { for: id }, label),
-    h("input", { id, type, value: c[key], autocomplete: attrs.ac, inputmode: attrs.im, placeholder: attrs.ph, oninput: e => { c[key] = e.target.value; check(); } }));
-  const goals = h("div", { class: "opts one", role: "radiogroup" });
-  [["exam", "stethoscope", "I need a full examination", "In-person exam and 3D CT scan in Los Algodones"],
-   ["confirm", "task_alt", "Confirm this solution with the doctor", "The doctors review my plan and answers first"]].forEach(([k, ic, t, d], i) => {
-    const b = h("button", { class: "opt", type: "button", "aria-pressed": String(c.goal === k), style: { "--i": i }, onclick: () => {
-      c.goal = k; goals.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.key === k))); check();
-    } }, h("span", { class: "ic" }, icon(ic)), h("span", {}, h("span", { class: "t" }, t), h("span", { class: "d" }, d)), h("span", { class: "tick" }, icon("check")));
-    b.dataset.key = k; goals.append(b);
-  });
-  const langs = h("div", { class: "chips" });
-  ["English", "Español"].forEach(l => langs.append(h("button", { class: "chip", type: "button", "aria-pressed": String(c.lang === l), onclick: e => {
-    c.lang = l; langs.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === e.currentTarget)));
-  } }, icon("translate"), l)));
-  const errBox = h("div");
-  const thanks = sent => {
-    addPoints(100); confetti(80);
+  if (!c.countryTouched && !c.phone){ if (st.from === "mx") c.country = "MX"; else if (st.from === "ca2") c.country = "CA"; }
+  const needPhone = CFG.REQUIRED_CONTACT === "phone", needEmail = !needPhone;
+  const card = h("div", { class: "card nextstep", id: "nextstep", tabindex: "-1" });
+  const emailOk = () => { const v = c.email.trim(); return v ? emailValid(v) : !needEmail; };
+  const phoneOk = () => c.phone.trim() ? !!phoneE164() : !needPhone;
+  const missing = () => { const m = [];
+    if (!emailOk()) m.push(c.email.trim() ? "a valid email" : "your email");
+    if (!phoneOk()) m.push(c.phone.trim() ? `a valid ${c.country === "MX" ? "10-digit Mexican" : "10-digit US or Canadian"} mobile number` : "your mobile number");
+    if (!c.consent) m.push("your consent below"); return m; };
+  let btn, help;
+  const check = () => { const m = missing(); if (btn) btn.disabled = m.length > 0; if (help) help.textContent = m.length ? "To send, add " + joinList(m) + "." : ""; onChange && onChange(); save(); };
+  const markInvalid = (input, ok) => input.setAttribute("aria-invalid", String(!ok()));
+
+  const renderForm = failed => {
+    const emailIn = h("input", { id: "em", type: "email", value: c.email, autocomplete: "email", placeholder: "you@example.com", "aria-describedby": "formhelp",
+      oninput: e => { c.email = e.target.value; check(); }, onblur: e => markInvalid(e.target, emailOk) });
+    const email = h("div", { class: "field" }, h("label", { for: "em" }, "Email" + (needEmail ? "" : " (optional)")), emailIn);
+    const ph = { US: "(555) 123-4567", CA: "(555) 123-4567", MX: "658 123 4567" };
+    const telIn = h("input", { id: "ph", type: "tel", value: c.phone, autocomplete: "tel-national", inputmode: "tel", placeholder: ph[c.country], "aria-describedby": "formhelp",
+      oninput: e => { c.phone = e.target.value; check(); }, onblur: e => markInvalid(e.target, phoneOk) });
+    const sel = h("select", { id: "cc", "aria-label": "Country code", autocomplete: "tel-country-code", onchange: e => { c.country = e.target.value; c.countryTouched = true; telIn.placeholder = ph[c.country]; check(); } },
+      COUNTRIES.map(([k, , t]) => h("option", { value: k, selected: c.country === k }, t)));
+    const phone = h("div", { class: "field" }, h("label", { for: "ph" }, "Mobile phone" + (needPhone ? "" : " (optional)")), h("div", { class: "phonerow" }, sel, telIn));
+    const wa = h("label", { class: "check" }, h("input", { type: "checkbox", id: "wa", checked: c.whatsapp, onchange: e => { c.whatsapp = e.target.checked; check(); } }), "This number has WhatsApp");
+    const first = h("div", { class: "field" }, h("label", { for: "fn" }, "First name (optional)"), h("input", { id: "fn", type: "text", value: c.first, autocomplete: "given-name", oninput: e => { c.first = e.target.value; check(); } }));
+    const langs = h("div", { class: "chips", role: "radiogroup", "aria-labelledby": "langlbl" });
+    ["English", "Español"].forEach(l => langs.append(h("button", { class: "chip", type: "button", role: "radio", "aria-checked": String(c.lang === l), onclick: e => {
+      c.lang = l; langs.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-checked", String(x === e.currentTarget))); check();
+    } }, icon("translate"), l)));
+    const privacy = CFG.privacyUrl ? h("a", { href: CFG.privacyUrl, target: "_blank", rel: "noopener" }, "Privacy notice") : h("span", {}, "Privacy notice: ", pend("URL del aviso de privacidad"));
+    const consent = h("label", { class: "check" }, h("input", { type: "checkbox", id: "consent", checked: c.consent, onchange: e => { c.consent = e.target.checked; check(); } }),
+      h("span", {}, CONSENT_TEXT + " ", privacy, "."));
+    btn = h("button", { class: "cta", type: "button", id: "sendBtn", disabled: true, onclick: submit }, "Send my plan to the doctor", icon("arrow_forward"));
+    help = h("p", { class: "formhelp", id: "formhelp", "aria-live": "polite" });
+    card.replaceChildren(
+      h("h3", {}, icon("event_available"), med ? "Next step: send your answers for a medical review" : "Next step: confirm your solution"),
+      h("p", { class: "fine big" }, med ? "The doctors review your health answers first. Leave your contact and the coordinator will follow up." : "Only the doctor can confirm the exact treatment. Send your plan and the doctors will review it."),
+      failed ? h("div", { class: "errorbox", role: "alert" }, insight("<b>We couldn't send your plan.</b> Check your connection and try again. You can also message the coordinator on WhatsApp.", true),
+        h("button", { class: "cta alt small", type: "button", onclick: submit }, icon("refresh"), "Try again")) : null,
+      ...(needPhone ? [phone, wa, email] : [email, phone, wa]),
+      first,
+      h("div", { class: "label", id: "langlbl" }, "Preferred language"), langs,
+      consent, btn, help,
+      h("div", { class: "alt-contact" }, h("span", { class: "fine" }, "Prefer to talk first?"), contactRow(waText(plan, med), "form")),
+      h("div", { class: "lock" }, icon("lock", true), "Your answers are shared only with Losan's doctors and coordinator."));
+    check();
+  };
+  const submit = async () => {
+    if (missing().length) return;
+    if (!st.leadId) st.leadId = uuid();
+    btn.disabled = true; btn.firstChild.textContent = "Sending…"; card.setAttribute("aria-busy", "true"); help.textContent = "Sending your plan…";
+    let sent = false;
+    try {
+      if (CFG.leadEndpoint){
+        const r = await fetch(CFG.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(leadPayload(plan, med)) });
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        sent = true;
+      } else await new Promise(r => setTimeout(r, 450));
+    } catch (e) { card.removeAttribute("aria-busy"); renderForm(true); card.querySelector(".errorbox").focus?.(); return; }
+    card.removeAttribute("aria-busy");
+    st.submitted = true; clearSaved();
+    track("lead_submit", sent ? { intencion: c.intent } : { intencion: c.intent, modo: "preview" });
+    renderSuccess(sent);
+    onChange && onChange();
+  };
+  const renderSuccess = sent => {
     const nm = c.first.trim();
     card.replaceChildren(
-      h("h3", {}, icon("mark_email_read", true), nm ? `Thanks, ${nm}. You're all set.` : "Thanks. You're all set."),
-      h("p", { class: "fine", style: { margin: 0, fontSize: "14.5px" } }, c.goal === "exam"
-        ? "Your coordinator will contact you to schedule your full examination and 3D CT scan, and send a copy of this plan to " + c.email.trim() + "."
-        : "Dr. José Luis and Dr. Diego López will review your plan and answers. Your coordinator will reply to " + c.email.trim() + "."),
-      sent ? null : insight("<b>Preview mode:</b> no CRM is connected yet, so nothing was sent. Set leadEndpoint to send real leads."));
-    refreshLead();
+      h("h3", { tabindex: "-1" }, icon("mark_email_read", true), nm ? `Thanks, ${nm}. Your plan is on its way.` : "Thanks. Your plan is on its way."),
+      h("p", { class: "fine big" }, "Next step: your coordinator will write to you within ", CFG.replyTime ? String(CFG.replyTime) : pend("tiempo de respuesta"), "."),
+      sent ? null : insight("<b>Preview mode:</b> no CRM is connected yet, so nothing was sent. Set leadEndpoint to send real leads.", true),
+      h("div", { class: "label" }, "Speed up your review"),
+      uploadBox(),
+      contactRow(waText(plan, med), "success"));
+    card.querySelector("h3").focus({ preventScroll: true });
   };
-  btn = h("button", { class: "cta", type: "button", disabled: true, onclick: async () => {
-    if (!valid()) return;
-    if (!CFG.leadEndpoint) return thanks(false);
-    btn.disabled = true; const label = btn.firstChild.textContent; btn.firstChild.textContent = "Sending…"; errBox.replaceChildren();
-    try {
-      const r = await fetch(CFG.leadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(leadPayload(plan, ready)) });
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      thanks(true);
-    } catch (e) {
-      btn.firstChild.textContent = label; check();
-      errBox.replaceChildren(insight("<b>We couldn't send your plan.</b> Check your connection and try again, or message the coordinator on WhatsApp at +1 (928) 867-8333.", true));
-    }
-  } }, "Send my plan to the doctor", icon("arrow_forward"));
-  card.append(
-    h("h3", {}, icon("event_available"), "Next step: confirm your solution"),
-    h("p", { class: "fine", style: { margin: 0, fontSize: "14.5px" } }, "Only the doctor can confirm the exact treatment. What would you like to do?"),
-    goals,
-    inp("em", "Your email", "email", "email", { ac: "email", ph: "you@example.com" }),
-    h("div", { class: "row2" }, inp("fn", "First name (optional)", "text", "first", { ac: "given-name" }), inp("ph", "Mobile (optional)", "tel", "phone", { ac: "tel", im: "tel", ph: "(555) 123-4567" })),
-    h("div", { class: "label" }, "Preferred language"), langs,
-    h("label", { class: "check" }, h("input", { type: "checkbox", id: "consent", checked: c.consent, onchange: e => { c.consent = e.target.checked; check(); } }),
-      "I agree that Losan Dental may contact me by email, phone, text or WhatsApp about my inquiry. Message and data rates may apply. Reply STOP to opt out."),
-    btn, errBox,
-    h("div", { class: "lock" }, icon("lock", true), "Your answers are shared only with Losan's doctors and coordinator."));
-  check();
+  if (st.submitted) renderSuccess(!!CFG.leadEndpoint); else renderForm(false);
   return card;
 }
 
+/* ---------- X-ray upload (after the lead is sent, tied to lead_id) ---------- */
+function uploadBox(){
+  const OK = /\.(jpe?g|png|pdf|dcm)$/i, max = Number(CFG.maxUploadMB) || 0;
+  const list = h("ul", { class: "upl", "aria-live": "polite" });
+  const handle = files => {
+    files.forEach(f => {
+      const bar = h("i"), stx = h("span", { class: "st" }, "Waiting");
+      const pb = h("span", { class: "bar", role: "progressbar", "aria-label": "Upload " + f.name, "aria-valuemin": "0", "aria-valuemax": "100", "aria-valuenow": "0" }, bar);
+      const row = h("li", {}, h("span", { class: "fn" }, f.name), pb, stx); list.append(row);
+      const set = p => { bar.style.width = p + "%"; pb.setAttribute("aria-valuenow", String(p)); };
+      const fail = msg => { row.classList.add("bad"); stx.textContent = msg; };
+      if (!OK.test(f.name)) return fail("Not accepted. Use JPG, PNG, PDF or DICOM (.dcm).");
+      if (max && f.size > max * 1048576) return fail(`Larger than ${max} MB.`);
+      if (!CFG.uploadEndpoint){ set(100); row.classList.add("done"); stx.textContent = "Preview mode: not uploaded"; track("xray_upload", { files: 1, modo: "preview" }); return; }
+      // 1) ask the server for a one-time upload URL tied to this lead, 2) send the file straight to storage with progress
+      stx.textContent = "Preparing…";
+      fetch(CFG.uploadEndpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lead_id: st.leadId, filename: f.name, size: f.size }) })
+        .then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
+        .then(({ uploadUrl }) => {
+          if (!uploadUrl) throw new Error("no url");
+          const x = new XMLHttpRequest(); x.open("PUT", uploadUrl);
+          x.setRequestHeader("Content-Type", f.type || "application/octet-stream");
+          x.upload.onprogress = ev => { if (ev.lengthComputable){ const p = Math.round(ev.loaded / ev.total * 100); set(p); stx.textContent = p + "%"; } };
+          x.onload = () => { if (x.status >= 200 && x.status < 300){ set(100); row.classList.add("done"); stx.textContent = "Uploaded"; track("xray_upload", { files: 1 }); } else fail("Upload failed. Try again or send it by WhatsApp."); };
+          x.onerror = () => fail("Upload failed. Try again or send it by WhatsApp.");
+          x.send(f);
+        })
+        .catch(() => fail("Upload failed. Try again or send it by WhatsApp."));
+    });
+  };
+  const input = h("input", { type: "file", id: "xr", class: "sr", multiple: true, accept: ".jpg,.jpeg,.png,.pdf,.dcm,image/jpeg,image/png,application/pdf,application/dicom",
+    onchange: e => { handle([...e.target.files]); e.target.value = ""; } });
+  return h("div", { class: "uploadwrap" },
+    input,
+    h("label", { class: "upload", for: "xr" }, icon("upload_file"),
+      h("div", {}, h("b", {}, "Add your X-rays or CT scan"), "JPG, PNG, PDF or DICOM (.dcm) · up to ", max ? max + " MB" : pend("tamaño máximo"), " per file")),
+    list);
+}
+
+/* ---------- result screen ---------- */
 function renderResult(el){
-  const plan = buildPlan(), ready = readiness(), trip = tripPlan(plan);
+  const plan = buildPlan(), ready = readiness(), trip = tripPlan(plan), med = medicalReview();
   const plans = [plan.upper, plan.lower].filter(p => p.type !== "none");
-  let notes = null;
-  const leadPre = h("pre", {}, leadText(plan, ready, null));
-  const tagBox = h("div", { class: "tags" });
-  const refreshLead = () => { leadPre.textContent = leadText(plan, ready, notes); tagBox.replaceChildren(...leadTags(plan, ready).map(t => h("span", {}, t))); };
-  refreshLead();
+  if (!st.contact.intent) st.contact.intent = med ? "valoracion_medica" : "enviar_plan";
+  const toForm = intent => {
+    if (intent && !st.submitted) st.contact.intent = intent;
+    const f = $("#nextstep"); if (!f) return;
+    f.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
+    setTimeout(() => { const t = f.querySelector("input:not([type=checkbox]), h3"); t && t.focus({ preventScroll: true }); }, reducedMotion() ? 0 : 450);
+  };
+  let refreshClinic = null;
 
-  // 1. the solution
-  el.append(
-    h("div", { class: "eyebrow" }, icon("auto_awesome", true), "Your probable solution · " + st.points.toLocaleString() + " pts"),
-    h("div", { class: "res-hero" },
+  // 1. probable solution + main button
+  el.append(h("div", { class: "eyebrow" }, icon("auto_awesome", true), med ? "Your result" : "Your probable solution", REWARD ? " · " + st.points.toLocaleString() + " pts" : ""));
+  if (med){
+    el.append(h("div", { class: "res-hero" },
+      h("span", { class: "k" }, "NEXT STEP · MEDICAL REVIEW"),
+      h("h2", { tabindex: "-1" }, "Requires a medical evaluation before defining a plan"),
+      h("div", { class: "plans" }, MED_REVIEW.filter(k => st.health.has(k)).map(k => h("div", { class: "plan" }, icon("medical_information"), h("div", {}, h("b", {}, MED_NOTES[k][0]), h("span", {}, MED_NOTES[k][1])))))));
+  } else {
+    el.append(h("div", { class: "res-hero" },
       h("span", { class: "k" }, "WHAT COULD WORK FOR YOU · " + plan.family.toUpperCase()),
-      h("h2", {}, plan.headline),
+      h("h2", { tabindex: "-1" }, plan.headline),
       h("div", { class: "plans" }, plans.length ? plans.map(p => h("div", { class: "plan" }, icon(p.type === "full" ? "dentistry" : "hardware"), h("div", {}, h("b", {}, p.label), h("span", {}, p.detail))))
-        : h("div", { class: "plan" }, icon("search"), h("div", {}, h("b", {}, "No missing teeth marked"), h("span", {}, "A consultation can still check loose, painful or worn teeth.")))),
-      plan.borderline ? h("div", { class: "plan" }, icon("alt_route"), h("div", {}, h("b", {}, "Close call"), h("span", {}, "With this many teeth affected, the doctor may suggest a full arch instead of a bridge."))) : null
-    ));
+        : h("div", { class: "plan" }, icon("search"), h("div", {}, h("b", {}, "No missing teeth marked"), h("span", {}, "A consultation can check loose, painful or worn teeth and talk through cosmetic options.")))),
+      plan.borderline ? h("div", { class: "plan" }, icon("alt_route"), h("div", {}, h("b", {}, "Close call"), h("span", {}, "With this many teeth affected, the doctor may suggest a full arch instead of a bridge."))) : null));
+  }
+  el.append(h("div", { class: "herocta" },
+    h("button", { class: "cta", type: "button", onclick: () => toForm(med ? "valoracion_medica" : "enviar_plan") }, "Send my plan to the doctor", icon("arrow_downward")),
+    h("a", { class: "linkbtn", href: waLink(waText(plan, med)), target: "_blank", rel: "noopener", onclick: () => trackClick("whatsapp_click", "result_top") }, "Or ask the coordinator on WhatsApp")));
 
-  // 2. how it helps
+  // reward (option B) only when the benefit is confirmed
+  if (REWARD) el.append(h("div", { class: "card reward" }, h("h3", {}, icon("redeem", true), "Your points unlock: " + String(CFG.rewardText)), h("p", { class: "fine big" }, `You earned ${st.points.toLocaleString()} points. Mention them to your coordinator when you book.`)));
+
+  // price block
+  if (!med){
+    el.append(CFG.priceFrom
+      ? h("div", { class: "card price" }, h("h3", {}, icon("sell"), "Price"), h("p", { class: "pricev" }, String(CFG.priceFrom)),
+          h("p", { class: "fine" }, "Your exact quote depends on your exam and 3D CT scan."),
+          h("button", { class: "cta alt", type: "button", onclick: () => toForm("cotizacion") }, "Get my personalized quote", icon("arrow_downward")))
+      : h("div", { class: "card price" }, h("h3", {}, icon("request_quote"), "Get your personalized quote"),
+          h("p", { class: "fine big" }, "Your coordinator sends an itemized quote after the doctors review your case."),
+          h("button", { class: "cta alt", type: "button", onclick: () => toForm("cotizacion") }, "Get my quote", icon("arrow_downward"))));
+  }
+
+  // 2. four benefits (or what happens next, for a medical review)
   el.append(h("div", { class: "card" },
-    h("h3", {}, icon("favorite"), "How it can help you"),
-    h("ul", { class: "factors helps" }, helpPoints(plan).map(([ic, t, d]) => h("li", { class: "ok" }, icon(ic, true), h("div", {}, t, h("small", {}, d))))),
-    h("div", { class: "musthave", role: "note" }, icon("stethoscope"), h("div", {}, h("b", {}, "This is a probable solution, not a diagnosis. "), "Your exact treatment is decided only after you see the doctor: an in-person exam and 3D CT scan with Dr. José Luis and Dr. Diego López."))));
+    med ? h("h3", {}, icon("route"), "What happens next") : h("h3", {}, icon("favorite"), "How it can help you"),
+    h("ul", { class: "factors helps" }, (med
+      ? [["assignment", "Share your answers", "Send your answers so the doctors can review your health before any plan is suggested."],
+         ["stethoscope", "A medical evaluation comes first", "Dr. José Luis and Dr. Diego López review your health factors before planning treatment."],
+         ["event_available", "Then your options", "Once your health is reviewed, the doctors can talk through the options that fit you."]]
+      : helpPoints(plan)).map(([ic, t, d]) => h("li", { class: "ok" }, icon(ic, true), h("div", {}, t, h("small", {}, d))))),
+    h("div", { class: "musthave", role: "note" }, icon("stethoscope"), h("div", {}, h("b", {}, med ? "This is not a diagnosis. " : "This is a probable solution, not a diagnosis. "), "Your exact treatment is decided only after you see the doctor: an in-person exam and 3D CT scan with Dr. José Luis and Dr. Diego López."))));
 
-  // 3. ask: full exam or confirm + email
-  el.append(nextStepCard(plan, ready, refreshLead));
+  // 3. form
+  el.append(formCard(plan, med, () => refreshClinic && refreshClinic()));
 
-  // 4. more detail
-  el.append(h("div", { class: "eyebrow", style: { marginTop: "6px" } }, icon("expand_more"), "More about your plan"));
-  const map = buildMap("result", plan);
-  el.append(h("div", { class: "card", style: { background: "#040D18", borderColor: "#0F2A45" } },
-    h("h3", { style: { color: "#fff" } }, h("span", { class: "ms", style: { color: "#93E5F9" } }, "radiology"), "Your probable result"),
-    h("div", { class: "xray", style: { padding: "0" } }, map),
-    h("div", { class: "legend" }, h("span", {}, h("i", { style: { background: "#3EE6A8" } }), "Implant"), h("span", {}, h("i", { style: { background: "#93E5F9" } }), "New tooth"), h("span", {}, h("i", { style: { background: "#7FA9BF" } }), "Your tooth"))));
-  const ai = h("div", { class: "card ai" }, h("span", { class: "who" }, "SMILE AI · PERSONAL NOTES"), h("div", { class: "thinking" }, icon("progress_activity"), "Writing your notes…"));
-  el.append(ai);
-  (aiPromise || runAI(plan)).then(n => {
-    notes = n;
-    const kids = [h("span", { class: "who" }, n.source === "ai" ? "SMILE AI · PERSONAL NOTES" : "YOUR PERSONAL NOTES"), h("h3", {}, n.headline), h("p", {}, n.summary)];
-    if (n.why.length) kids.push(h("h4", {}, "Why this path fits your answers"), h("ul", {}, n.why.map(x => h("li", {}, x))));
-    if (n.ask.length) kids.push(h("h4", {}, "Questions to ask at your consultation"), h("ul", {}, n.ask.map(x => h("li", {}, x))));
-    if (n.prep.length) kids.push(h("h4", {}, "Get ready"), h("ul", {}, n.prep.map(x => h("li", {}, x))));
-    ai.replaceChildren(...kids);
-    refreshLead();
-  });
-  const R = 46, C = Math.PI * R, off = C * (1 - ready.score / 100);
+  // 4. more about your plan
+  const more = h("div", { class: "more" });
+  el.append(h("h2", { class: "eyebrow moretitle" }, icon("expand_more"), "More about your plan"), more);
+  if (!med){
+    more.append(h("div", { class: "card", style: { background: "#040D18", borderColor: "#0F2A45" } },
+      h("h3", { style: { color: "#fff" } }, h("span", { class: "ms", style: { color: "#93E5F9" } }, "radiology"), "Your probable result"),
+      h("div", { class: "xray", style: { padding: "0" } }, buildMap("result", plan)),
+      h("div", { class: "legend" }, h("span", {}, h("i", { style: { background: "#3EE6A8" } }), "Implant"), h("span", {}, h("i", { style: { background: "#93E5F9" } }), "New tooth"), h("span", {}, h("i", { style: { background: "#7FA9BF" } }), "Your tooth"))));
+    const ai = h("div", { class: "card ai", "aria-live": "polite" }, h("span", { class: "who" }, "SMILE AI · PERSONAL NOTES"), h("div", { class: "thinking" }, icon("progress_activity"), "Writing your notes…"));
+    more.append(ai);
+    (aiPromise || (aiPromise = runAI(plan))).then(n => {
+      const kids = [h("span", { class: "who" }, n.source === "ai" ? "SMILE AI · PERSONAL NOTES" : "YOUR PERSONAL NOTES"), h("h3", {}, n.headline), h("p", {}, n.summary)];
+      if (n.why.length) kids.push(h("h4", {}, "Why this path fits your answers"), h("ul", {}, n.why.map(x => h("li", {}, x))));
+      if (n.ask.length) kids.push(h("h4", {}, "Questions to ask at your consultation"), h("ul", {}, n.ask.map(x => h("li", {}, x))));
+      if (n.prep.length) kids.push(h("h4", {}, "Get ready"), h("ul", {}, n.prep.map(x => h("li", {}, x))));
+      ai.replaceChildren(...kids);
+    });
+  }
+  const R = 46, C = Math.PI * R, off = C * (1 - ready.score / 100), rm = reducedMotion();
   const g = S("svg", { viewBox: "0 0 120 72", "aria-hidden": "true" });
-  g.innerHTML = `<path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="#E2EAF2" stroke-width="11" stroke-linecap="round"/><path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="${ready.score >= 80 ? "#14946A" : ready.score >= 65 ? "#2C8FC0" : "#F2A93B"}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"><animate attributeName="stroke-dashoffset" from="${C}" to="${off}" dur="1.1s" fill="freeze" begin=".3s"/></path><text x="60" y="58" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="600" font-size="24" fill="#002553">${ready.score}</text>`;
-  el.append(h("div", { class: "card" },
+  g.innerHTML = `<path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="#E2EAF2" stroke-width="11" stroke-linecap="round"/><path d="M14 62 A46 46 0 0 1 106 62" fill="none" stroke="${ready.score >= 80 ? "#14946A" : ready.score >= 65 ? "#2C8FC0" : "#F2A93B"}" stroke-width="11" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${rm ? off : C}">${rm ? "" : `<animate attributeName="stroke-dashoffset" from="${C}" to="${off}" dur="1.1s" fill="freeze" begin=".3s"/>`}</path><text x="60" y="58" text-anchor="middle" font-family="Rubik, sans-serif" font-weight="600" font-size="24" fill="#002553">${ready.score}</text>`;
+  more.append(h("div", { class: "card" },
     h("h3", {}, icon("monitor_heart"), "Readiness signals"),
-    h("div", { class: "gauge" }, g, h("div", { class: "lab" }, ready.band, h("small", {}, "How many common healing factors look favorable. It's a guide for your consult, not medical clearance."))),
+    h("div", { class: "gauge" }, g, h("div", { class: "lab" }, `${ready.score} · ${ready.band}`, h("small", {}, "How many common healing factors look favorable. It's a guide for your consult, not medical clearance."))),
     h("ul", { class: "factors" }, ready.factors.map(f => h("li", { class: f.ok ? "ok" : "flag" }, icon(f.ok ? "check_circle" : "error", true), h("div", {}, f.label, h("small", {}, f.note)))))));
-  el.append(h("div", { class: "card" },
+  if (!med) more.append(h("div", { class: "card" },
     h("h3", {}, icon("route"), "Your likely journey"),
     h("ol", { class: "timeline" },
       h("li", {}, h("span", { class: "dot" }, icon("flight_land")), h("div", {}, h("em", {}, "VISIT 1 · " + trip.v1.days), h("b", {}, "Surgery visit in Los Algodones"), h("span", {}, trip.v1.txt))),
       h("li", {}, h("span", { class: "dot" }, icon("home")), h("div", {}, h("em", {}, "HEALING · " + trip.heal.days), h("b", {}, "Back home"), h("span", {}, trip.heal.txt))),
       h("li", {}, h("span", { class: "dot" }, icon("sentiment_very_satisfied")), h("div", {}, h("em", {}, "VISIT 2 · " + trip.v2.days), h("b", {}, "Your final teeth"), h("span", {}, trip.v2.txt)))),
     trip.fits ? null : insight(`<b>Heads-up:</b> you said you can stay ${st.days} day${st.days > 1 ? "s" : ""}. Visit 1 usually needs about ${trip.need}. Your coordinator can help plan it.`, true),
-    st.docs === "none" ? insight("<b>Before you book:</b> get a passport card or passport book to cross back into the U.S. by land.", true) : null,
+    st.from !== "mx" && st.docs === "none" ? insight("<b>Before you book:</b> get a passport card or passport book to cross back into the U.S. by land.", true) : null,
     h("p", { class: "fine" }, "Typical timing. The doctors confirm your schedule after your scan.")));
-  el.append(h("div", { class: "card" },
+  more.append(h("div", { class: "card" },
     h("h3", {}, icon("groups"), "Two specialists, one plan"),
     h("div", { class: "team" },
       h("div", { class: "doc" }, h("span", { class: "av" }, icon("surgical")), h("div", {}, h("b", {}, "Dr. José Luis"), h("span", {}, "Oral surgeon: extractions, bone grafts and implants"))),
       h("div", { class: "doc" }, h("span", { class: "av", style: { backgroundImage: `url(${DOCTOR_IMG})`, backgroundPosition: "center 15%" } }), h("div", {}, h("b", {}, "Dr. Diego López"), h("span", {}, "Prosthodontist: designs and fits your new teeth"))))));
-  const upTxt = h("div", {}, h("b", {}, "Add your X-rays or CT scan"), "Panoramic, CBCT or photos of your smile");
-  const fileIn = h("input", { type: "file", id: "xr", accept: "image/*,.pdf,.dcm", multiple: true, onchange: e => { const n = e.target.files.length; upTxt.replaceChildren(h("b", {}, n ? `${n} file${n > 1 ? "s" : ""} ready` : "Add your X-rays or CT scan"), n ? [...e.target.files].map(f => f.name).join(", ") : "Panoramic, CBCT or photos of your smile"); } });
-  const copyBtn = num => h("button", { type: "button", onclick: e => { const b = e.currentTarget; try { navigator.clipboard.writeText(num).then(() => b.textContent = "Copied", () => b.textContent = "Select it"); } catch (err) { b.textContent = "Select it"; } } }, "Copy");
-  el.append(h("div", { class: "card" },
-    h("h3", {}, icon("support_agent"), "Speed up your review"),
-    h("label", { class: "upload", for: "xr" }, icon("upload_file"), upTxt, fileIn),
-    h("div", { class: "contactbox" },
-      h("div", { class: "numrow" }, h("span", {}, "Patient coordinator (WhatsApp)"), h("b", {}, "+1 (928) 867-8333"), copyBtn("+19288678333")),
-      h("div", { class: "numrow" }, h("span", {}, "U.S. office"), h("b", {}, "+1 (928) 487-2150"), copyBtn("+19284872150"))),
-    h("button", { class: "cta alt", type: "button", onclick: () => $("#nextstep").scrollIntoView({ behavior: "smooth", block: "start" }) }, "Confirm my solution", icon("arrow_upward"))));
-  el.append(h("details", { class: "internal" }, h("summary", {}, "Clinic view: what the CRM receives (internal preview)"),
-    tagBox, leadPre));
+
+  // internal view, only with ?modo=clinica (or #clinica)
+  if (CLINIC){
+    const pre = h("pre");
+    refreshClinic = () => { pre.textContent = JSON.stringify(leadPayload(plan, med), null, 2); };
+    refreshClinic();
+    el.append(h("details", { class: "internal", open: true }, h("summary", {}, "Clinic view: what the CRM receives"), pre));
+  }
   el.append(h("p", { class: "fine" }, "Results are estimates based on your answers and are for information only. They are not a diagnosis, treatment plan or quote. All-on-4 is a registered trademark of Nobel Biocare. Individual results vary."),
     h("div", { class: "hintline" }, h("button", { class: "linkbtn", type: "button", onclick: restart }, "Start over")));
-  setTimeout(() => confetti(110), 300);
+
+  if (!resultTracked){ resultTracked = true; track("result_view", { solucion_probable: med ? "Medical review" : plan.family }); }
+  if (!med) setTimeout(() => confetti(110), 300);
 }
 
-function leadPayload(plan, ready){
-  const c = st.contact;
+/* ============ CRM payload (schema documented in CHANGELOG.md) ============ */
+function leadPayload(plan, med){
+  const c = st.contact, ready = readiness(), by = v => ALL.filter(n => st.teeth[n] === v);
   return {
-    submittedAt: new Date().toISOString(), page: location.href, utm: UTM,
-    contact: { email: c.email.trim(), firstName: c.first.trim(), phone: c.phone.trim(), whatsapp: !!(c.phone && c.whatsapp), language: c.lang, consent: c.consent },
-    wants: c.goal === "exam" ? "full_examination" : "confirm_solution",
-    plan: { family: plan.family, headline: plan.headline, upper: plan.upper.type, lower: plan.lower.type, upperLabel: plan.upper.label, lowerLabel: plan.lower.label, borderline: plan.borderline, implantSites: [...plan.upper.implants, ...plan.lower.implants] },
-    teeth: Object.fromEntries([...UPPER, ...LOWER].filter(n => st.teeth[n] !== "ok").map(n => [n, st.teeth[n]])),
-    readiness: { score: ready.score, band: ready.band, flags: ready.factors.filter(f => !f.ok).map(f => f.label) },
-    tags: leadTags(plan, ready), answers: summaryData(plan, ready), summary: leadText(plan, ready, null), points: st.points
+    lead_id: st.leadId || null,
+    timestamp: new Date().toISOString(),
+    idioma: c.lang === "Español" ? "es" : "en",
+    contacto: { nombre: c.first.trim(), email: c.email.trim(), telefono: phoneE164() || c.phone.trim(), pais_telefono: c.country,
+      whatsapp: !!(c.phone.trim() && c.whatsapp), consentimiento: !!c.consent, consentimiento_texto: CONSENT_TEXT },
+    mapa_dental: { faltantes: by("missing"), "dañados": by("failing"), sanos: by("ok"),
+      uso_actual: [...st.current], dentadura_completa: st.current.has("full") ? { arcada: st.dentureArch, ajuste_0a10: st.dentureFit } : null,
+      tiempo_sin_dientes: askDuration() ? DURATION[st.duration] : null, impacto_principal: [...st.impact] },
+    salud: { edad: st.age, tabaco: st.smoke, anios_sin_fumar: st.smoke === "former" ? st.quitYears : null, cigarros_dia: st.smoke === "smoke" ? st.cigs : null,
+      pausaria_tabaco: st.smoke === "smoke" ? st.smokeStop : null, condiciones: [...st.health], control_diabetes: st.health.has("diabetes") ? st.diabetes : null,
+      encias_mordida: [...st.gums], tratamientos_previos: [...st.history], consulta_previa: st.consult, radiografias_12m: st.imaging, ansiedad: st.anxiety,
+      alertas: ready.factors.filter(f => !f.ok).map(f => f.label) },
+    viaje: { desde: st.from, como_llega: st.travel, documento: st.from === "mx" ? null : st.docs, dias_estancia: st.days, segunda_visita: st.second },
+    metas: { prioridades: [...st.priority], inicio: st.timing, pago: st.pay },
+    solucion_probable: { familia: med ? "Medical review" : plan.family, titulo: med ? "Requires a medical evaluation before defining a plan" : plan.headline,
+      superior: { tipo: plan.upper.type, detalle: plan.upper.label }, inferior: { tipo: plan.lower.type, detalle: plan.lower.label },
+      sitios_implante: [...plan.upper.implants, ...plan.lower.implants], caso_limite: plan.borderline },
+    puntaje_preparacion: ready.score,
+    requiere_revision_medica: med,
+    intencion: c.intent || (med ? "valoracion_medica" : "enviar_plan"),
+    utm: (st.attr || ATTR).utm,
+    referrer: (st.attr || ATTR).referrer
   };
 }
-function leadTags(plan, ready){
-  const t = [plan.family.toUpperCase().replace(/ /g, "-")];
-  if (plan.upper.type !== "none") t.push("UPPER:" + plan.upper.type.toUpperCase());
-  if (plan.lower.type !== "none") t.push("LOWER:" + plan.lower.type.toUpperCase());
-  t.push("READY:" + ready.score);
-  t.push("TIMING:" + st.timing.toUpperCase());
-  if (st.pay === "finance") t.push("FINANCING");
-  if (st.smoke === "smoke") t.push("SMOKER");
-  if (st.health.has("diabetes")) t.push("DIABETES");
-  if (st.docs === "none") t.push("NO-TRAVEL-DOC");
-  if (st.anxiety >= 7) t.push("SEDATION-INTEREST");
-  if (st.imaging === "ct" || st.imaging === "pano") t.push("HAS-XRAYS");
-  if (st.contact.goal) t.push("WANTS:" + (st.contact.goal === "exam" ? "EXAM" : "CONFIRM"));
-  t.push("LANG:" + (st.contact.lang === "Español" ? "ES" : "EN"));
-  return t;
-}
-function leadText(plan, ready, notes){
-  const c = st.contact, miss = n => st.teeth[n];
-  const marked = [...UPPER, ...LOWER].filter(n => miss(n) !== "ok").map(n => `#${n}${miss(n) === "failing" ? "(F)" : ""}`).join(" ") || "none";
-  return [
-    `Lead: ${c.first || "(no name)"} ${c.last} · ${c.email || "no email yet"} · wants: ${c.goal === "exam" ? "full examination" : c.goal === "confirm" ? "doctor to confirm solution" : "not chosen yet"} · ${c.phone || "no phone"}${c.phone && c.whatsapp ? " (WhatsApp)" : ""} · ${c.lang}`,
-    `Probable path: ${plan.headline}`,
-    `  Upper: ${plan.upper.label || "none"} | Lower: ${plan.lower.label || "none"}${plan.borderline ? " | borderline bridge vs full arch" : ""}`,
-    `Teeth marked (Universal #, F = failing): ${marked}`,
-    `Today: ${[...st.current].map(k => lbl(CURRENT, k)).join(", ")}${st.current.has("full") ? ` (${st.dentureArch}, fit ${st.dentureFit}/10)` : ""} · missing for ${DURATION[st.duration]}`,
-    `Impact: pain ${st.pain}/10 · chewing ${st.chew}/10 · hiding smile ${st.conf}/10`,
-    `Health: age ${st.age} · smoking ${st.smoke}${st.smoke === "smoke" ? ` ${st.cigs}/day, pause: ${st.smokeStop}` : ""} · ${[...st.health].map(k => lbl(HEALTH, k)).join(", ")}${st.diabetes ? ` (diabetes: ${st.diabetes})` : ""}`,
-    `Gums/bite: ${[...st.gums].map(k => lbl(GUMS, k)).join(", ")} · History: ${[...st.history].map(k => lbl(HISTORY, k)).join(", ")} · prior consult: ${st.consult} · imaging: ${st.imaging} · anxiety ${st.anxiety}/10`,
-    `Trip: from ${lbl(FROM, st.from)} · ${lbl(TRAVEL, st.travel)} · doc: ${lbl(DOCS, st.docs)} · ${st.days} days · 2nd visit: ${st.second}`,
-    `Goals: ${[...st.priority].map(k => lbl(PRIORITY, k)).join(" + ")} · start: ${lbl(TIMING, st.timing)} · pay: ${lbl(PAY, st.pay)}`,
-    `Readiness ${ready.score} (${ready.band}) · flags: ${ready.factors.filter(f => !f.ok).map(f => f.label).join("; ") || "none"}`,
-    notes ? `AI notes (${notes.source}): ${notes.summary}` : "AI notes: pending…"
-  ].join("\n");
-}
+
+/* ============ restart / demo ============ */
 function restart(){
-  st = fresh(); [...UPPER, ...LOWER].forEach(n => st.teeth[n] = "ok"); aiPromise = null; interstitial = null;
-  $("#ptsVal").textContent = "0"; show(0, -1);
+  st = fresh(); clearSaved(); aiPromise = null; resultTracked = false;
+  $("#ptsVal").textContent = "0"; show("intro", -1);
 }
 function loadSample(){
   st = fresh();
-  [...UPPER, ...LOWER].forEach(n => st.teeth[n] = "ok");
   UPPER.forEach(n => st.teeth[n] = [3,4,5,12,13,14].includes(n) ? "missing" : "failing");
   [30, 31, 19].forEach(n => st.teeth[n] = "missing"); st.teeth[18] = "failing";
-  Object.assign(st, { current: new Set(["partial"]), duration: 4, pain: 6, chew: 8, conf: 9, age: 63, smoke: "former", quitYears: 6,
-    health: new Set(["diabetes","bp"]), diabetes: "good", gums: new Set(["bleeding","loose"]), history: new Set(["extract","rootcanal"]), consult: "yes", imaging: "pano", anxiety: 7,
-    from: "az", travel: "drive", docs: "card", days: 6, second: "yes", priority: new Set(["fixed","eat"]), timing: "1-3", pay: "finance" });
-  SCREENS.forEach(s => { if (s.pts) { st.earned.add(s.id); st.points += s.pts; } });
+  Object.assign(st, { current: new Set(["partial"]), duration: 4, impact: new Set(["chew", "smile"]), age: 63, smoke: "former", quitYears: 6,
+    health: new Set(["diabetes","bp"]), diabetes: "good", gums: new Set(["bleeding","loose"]), history: new Set(["extract","rootcanal"]), consult: "yes", imaging: "pano", anxiety: "fear",
+    from: "az", travel: "drive", docs: "card", days: 6, second: "yes", priority: new Set(["fixed","eat"]), timing: "1-3", pay: "finance", started: true });
+  STEPS.forEach(s => { st.earned.add(s.id); st.points += s.pts || 0; });
   [0,1,2,3].forEach(i => { st.earned.add("ch" + i); st.points += 100; });
   $("#ptsVal").textContent = st.points.toLocaleString();
-  show(SCREENS.findIndex(s => s.id === "analyze"), 1);
+  aiPromise = null; resultTracked = false;
+  go("analyze");
 }
 
-/* ============ confetti ============ */
+/* ============ confetti (final result only) ============ */
 function confetti(n){
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const app = $("#app"); const cv = h("canvas", { class: "confetti" }); app.append(cv);
+  if (reducedMotion()) return;
+  const app = $("#app"); const cv = h("canvas", { class: "confetti", "aria-hidden": "true" }); app.append(cv);
   const r = app.getBoundingClientRect(); cv.width = r.width; cv.height = Math.min(r.height, 900);
   const ctx = cv.getContext("2d"); const cols = ["#93E5F9", "#002553", "#3EE6A8", "#FFFFFF", "#1BA9CF"];
   const ps = Array.from({ length: n }, () => ({ x: cv.width / 2 + (Math.random() - .5) * 80, y: 120, vx: (Math.random() - .5) * 9, vy: -Math.random() * 9 - 3, s: 4 + Math.random() * 5, c: cols[Math.random() * cols.length | 0], a: Math.random() * 6, va: (Math.random() - .5) * .3 }));
@@ -1330,6 +1628,20 @@ function confetti(n){
   loop();
 }
 
-show(0);
+/* ============ measurement hooks ============ */
+document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("[data-track]"); if (a) trackClick(a.dataset.track, a.dataset.where || ""); });
+let abandonSent = false;
+const abandon = () => {
+  if (abandonSent || !st.started || st.submitted) return;
+  if (Date.now() - lastExternalClick < 8000) return; // leaving to WhatsApp or a call is not abandoning
+  abandonSent = true; track("quiz_abandon", { last_step_id: cur });
+};
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") abandon(); });
+window.addEventListener("pagehide", abandon);
+window.addEventListener("beforeunload", abandon);
+
+$("#pts").hidden = !REWARD;
+show("intro");
+
 })();
 </script>

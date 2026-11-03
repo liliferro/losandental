@@ -1,0 +1,7 @@
+node_modules/
+.vercel/
+.env
+.env.*
+dist/_preview.html
+tests/*.png
+.DS_Store
