@@ -1,5 +1,11 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.2.1 · 2026-11-03 · Corrección: texto "null" visible
+- En la intro, sin `?demo=1`, aparecía la palabra "null" donde va el enlace de demo. El mismo error afectaba al formulario (bloque de error vacío) y a la pantalla de éxito (aviso de preview).
+- Causa: `append()` y `replaceChildren()` del DOM convierten `null` en texto. Se agregó el filtro `kids()` para todos los hijos condicionales.
+- La prueba e2e ahora falla si aparece "null", "undefined" o "NaN" en el texto visible (excepto en la vista interna del JSON del CRM).
+
+
 ## v2.2.0 · 2026-11-03 · Flujo continuo, sin gamificación, con datos entre etapas
 Pedido de Lili: quitar la gamificación, acortar el quiz y dar datos que enganchen al pasar de etapa.
 - **Sin gamificación:** se eliminaron los puntos, el contador, las pantallas de "etapa completada" (+100 puntos), la opción B de recompensa (`ENABLE_REWARD` y `rewardText`) y el confeti del resultado. Esto reemplaza la sección 3 de v2.0.

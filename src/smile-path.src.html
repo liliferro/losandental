@@ -425,6 +425,8 @@ const h = (tag, attrs = {}, ...kids) => {
   for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
   return el;
 };
+// DOM append/replaceChildren print null as the text "null": always pass conditional children through this.
+const kids = (...a) => a.flat().filter(x => x != null && x !== false);
 const icon = (name, fill) => h("span", { class: "ms" + (fill ? " fill" : ""), "aria-hidden": "true" }, name);
 const svgNS = "http://www.w3.org/2000/svg";
 const S = (tag, attrs = {}) => { const el = document.createElementNS(svgNS, tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); return el; };
@@ -1063,12 +1065,12 @@ function renderIntro(el){
         h("button", { class: "cta small", type: "button", onclick: () => resume(saved) }, "Continue", icon("arrow_forward")),
         h("button", { class: "linkbtn", type: "button", onclick: () => { clearSaved(); rerender(); } }, "Start fresh"))));
   }
-  el.append(
+  el.append(...kids(
     h("div", { class: "intro-hero" }, mini, h("span", { class: "k" }, "4 CHAPTERS · ~3 MIN"), h("span", { class: "big" }, "See your probable solution at the end.")),
     h("div", { class: "hero-badges" }, CHAPTERS.map((c, i) => h("div", { class: "hb", style: { "--i": i } }, h("span", { class: "n" }, icon(c.icon)), h("div", {}, h("b", {}, c.name), h("span", {}, ["Tap your teeth","Health questions","Getting here","What matters"][i]))))),
     h("div", { class: "stars" }, h("span", { class: "ms fill", "aria-hidden": "true" }, "star"), h("b", {}, "5.0"), "on Google · Patients from the U.S. and Canada"),
     DEMO ? h("div", { class: "hintline" }, h("button", { class: "linkbtn", type: "button", onclick: loadSample }, "Preview with a sample patient"), " (demo for the clinic team)") : null
-  );
+  ));
   const demo = { 3:"missing", 4:"failing", 13:"missing", 14:"missing", 19:"missing", 30:"failing", 8:"failing" };
   mini.querySelectorAll("[data-t]").forEach(g => paintTooth(g, demo[g.dataset.t] || "ok"));
 }
@@ -1346,7 +1348,7 @@ function formCard(plan, med, onChange){
       h("span", {}, CONSENT_TEXT + " ", privacy, "."));
     btn = h("button", { class: "cta", type: "button", id: "sendBtn", disabled: true, onclick: submit }, "Send my plan to the doctor", icon("arrow_forward"));
     help = h("p", { class: "formhelp", id: "formhelp", "aria-live": "polite" });
-    card.replaceChildren(
+    card.replaceChildren(...kids(
       h("h3", {}, icon("event_available"), med ? "Next step: send your answers for a medical review" : "Next step: confirm your solution"),
       h("p", { class: "fine big" }, med ? "The doctors review your health answers first. Leave your contact and the coordinator will follow up." : "Only the doctor can confirm the exact treatment. Send your plan and the doctors will review it."),
       failed ? h("div", { class: "errorbox", role: "alert" }, insight("<b>We couldn't send your plan.</b> Check your connection and try again. You can also message the coordinator on WhatsApp.", true),
@@ -1356,7 +1358,7 @@ function formCard(plan, med, onChange){
       h("div", { class: "label", id: "langlbl" }, "Preferred language"), langs,
       consent, btn, help,
       h("div", { class: "alt-contact" }, h("span", { class: "fine" }, "Prefer to talk first?"), contactRow(waText(plan, med), "form")),
-      h("div", { class: "lock" }, icon("lock", true), "Your answers are shared only with Losan's doctors and coordinator."));
+      h("div", { class: "lock" }, icon("lock", true), "Your answers are shared only with Losan's doctors and coordinator.")));
     check();
   };
   const submit = async () => {
@@ -1379,13 +1381,13 @@ function formCard(plan, med, onChange){
   };
   const renderSuccess = sent => {
     const nm = c.first.trim();
-    card.replaceChildren(
+    card.replaceChildren(...kids(
       h("h3", { tabindex: "-1" }, icon("mark_email_read", true), nm ? `Thanks, ${nm}. Your plan is on its way.` : "Thanks. Your plan is on its way."),
       h("p", { class: "fine big" }, "Next step: your coordinator will write to you within ", CFG.replyTime ? String(CFG.replyTime) : pend("tiempo de respuesta"), "."),
       sent ? null : insight("<b>Preview mode:</b> no CRM is connected yet, so nothing was sent. Set leadEndpoint to send real leads.", true),
       h("div", { class: "label" }, "Speed up your review"),
       uploadBox(),
-      contactRow(waText(plan, med), "success"));
+      contactRow(waText(plan, med), "success")));
     card.querySelector("h3").focus({ preventScroll: true });
   };
   if (st.submitted) renderSuccess(!!CFG.leadEndpoint); else renderForm(false);

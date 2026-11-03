@@ -10,7 +10,8 @@ async function run(width, scenario){
   await p.goto(FILE + (scenario.qs || ''));
   const steps = [];
   const hscroll = async tag => { const o = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); if (o > 0) log(`  [${width}] HSCROLL ${o}px at ${tag}`); };
-  await hscroll('intro');
+  const stray = async tag => { const t = await p.evaluate(() => { const c = document.body.cloneNode(true); c.querySelectorAll('details.internal').forEach(e => e.remove()); document.body.append(c); c.style.position = 'absolute'; const txt = c.innerText; c.remove(); return txt; }); const m = t.match(/\b(null|undefined|NaN)\b/g); if (m) log(`  [${width}] STRAY TEXT at ${tag}: ${m.join(',')}`); };
+  await hscroll('intro'); await stray('intro');
   log(`[${width} ${scenario.name}] demo link: ${await p.locator('text=Preview with a sample patient').count()}`);
   await p.click('#nextBtn');
   const step = async () => { const t = await p.locator('#chName').innerText(); steps.push(t.replace(/\s+/g,' ')); await hscroll(t); };
@@ -44,7 +45,7 @@ async function run(width, scenario){
   await cont(p);
   await p.waitForSelector('#nextstep', { timeout: 8000 });
   await p.waitForTimeout(400);
-  await hscroll('result');
+  await hscroll('result'); await stray('result');
   log('  steps:', steps.length, '|', steps.join(' / '));
   const h2 = await p.locator('.res-hero h2').innerText(); log('  result:', h2);
   const order = await p.evaluate(() => [...document.querySelectorAll('.screen > *')].map(e => (e.className || e.tagName).toString().split(' ')[0] + (e.querySelector('h3') ? ':' + e.querySelector('h3').innerText.slice(0,28) : '')).join(' | '));
@@ -56,7 +57,7 @@ async function run(width, scenario){
   log('  send disabled w/o consent:', await p.isDisabled('#sendBtn'));
   await p.check('#consent'); log('  send enabled:', !(await p.isDisabled('#sendBtn')));
   if (scenario.payload){ const pl = await p.evaluate(() => document.querySelector('details.internal pre')?.textContent); log('  PAYLOAD', pl); }
-  await p.click('#sendBtn'); await p.waitForSelector('text=Your plan is on its way');
+  await p.click('#sendBtn'); await p.waitForSelector('text=Your plan is on its way'); await stray('success');
   log('  upload input accept:', await p.getAttribute('#xr', 'accept'));
   await p.setInputFiles('#xr', { name: 'pano.jpg', mimeType: 'image/jpeg', buffer: Buffer.from('x') });
   await p.waitForTimeout(100);
