@@ -60,10 +60,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 .seg{flex:1;height:8px;border-radius:99px;background:#E5ECF3;overflow:hidden;position:relative}
 .seg i{position:absolute;inset:0;width:var(--p,0%);background:linear-gradient(90deg,var(--navy-2),#2C8FC0);border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
 .seg.done i{background:linear-gradient(90deg,#1BA9CF,var(--cyan))}
-.pts{display:flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border-radius:99px;padding:7px 12px 7px 9px;font-family:var(--display);font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;position:relative;flex:none}
-.pts .ms{color:var(--cyan);font-size:18px}
-.pop{position:absolute;right:6px;top:-4px;font-family:var(--display);font-weight:700;color:var(--cyan-ink);font-size:15px;animation:pop 1s ease-out forwards;pointer-events:none}
-@keyframes pop{from{opacity:0;transform:translateY(6px) scale(.8)}20%{opacity:1}to{opacity:0;transform:translateY(-28px) scale(1.1)}}
 .chaptername{padding:0 20px;display:flex;justify-content:space-between;font-family:var(--display);font-size:12px;color:var(--muted);letter-spacing:.04em}
 .chaptername b{color:var(--navy);font-weight:600}
 
@@ -190,18 +186,6 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
 .lock{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
 .lock .ms{font-size:18px;color:var(--green)}
 
-/* ---------- chapter badge ---------- */
-.badge-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:10px 0}
-.medal{width:150px;height:150px;position:relative;display:grid;place-items:center;animation:medal .7s cubic-bezier(.3,1.5,.5,1) both}
-.medal svg{position:absolute;inset:0}
-.medal .ms{font-size:56px;color:var(--navy);width:auto}
-@keyframes medal{from{transform:scale(.4) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}
-.badge-wrap h1{font-family:var(--display);font-weight:600;color:var(--navy);font-size:27px;margin:0;text-wrap:balance}
-.badge-wrap p{color:var(--muted);margin:0;max-width:38ch}
-.unlock{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#fff;border-radius:99px;padding:8px 14px;font-family:var(--display);font-size:14px}
-.unlock .ms{color:var(--cyan);font-size:18px}
-.nextch{display:flex;gap:10px;align-items:center;border:1px dashed #B7CADB;border-radius:14px;padding:10px 14px;font-size:14px;color:var(--muted);text-align:left}
-.nextch .ms{color:var(--cyan-ink)}
 
 /* ---------- analysis ---------- */
 .analyze{flex:1;background:var(--xray);margin:-18px -22px -24px;padding:28px 24px;color:#DDEFF8;display:flex;flex-direction:column;gap:22px;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
@@ -283,7 +267,6 @@ details.internal pre{white-space:pre-wrap;word-break:break-word;font-family:var(
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .tags span{font-family:var(--mono);font-size:12px;background:var(--navy);color:var(--cyan);border-radius:6px;padding:3px 7px}
 .fine{font-size:12.5px;color:var(--muted);line-height:1.45}
-canvas.confetti{position:absolute;inset:0;pointer-events:none;z-index:5}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 /* ---------- v2: merged steps, a11y, mobile ---------- */
 .sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -317,7 +300,6 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .herocta{display:flex;flex-direction:column;gap:6px;align-items:center}
 .herocta .linkbtn{text-align:center}
 .price .pricev{font-family:var(--display);font-weight:600;font-size:24px;color:var(--navy);margin:0}
-.reward{background:#F3FAFE;border-color:#BFE6F4}
 .fine.big{font-size:14.5px;margin:0}
 .phonerow{display:grid;grid-template-columns:minmax(118px,auto) minmax(0,1fr);gap:8px}
 .field input[aria-invalid="true"]{border-color:var(--red)}
@@ -341,6 +323,15 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .upl .st{grid-column:1/-1;color:var(--muted);font-size:12.5px}
 .upl li.done .bar i{background:var(--green)}
 .upl li.bad .st{color:var(--red)}
+.fact{display:flex;flex-direction:column;gap:10px;animation:rise .45s both}
+.fact-lead{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:15px;color:#0B6E4D}
+.fact-lead .ms{font-size:20px}
+.fact-body{background:var(--navy);color:#fff;border-radius:var(--r-md);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.fact-k{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+.fact-k .ms{font-size:18px;color:var(--cyan)}
+.fact-body p{margin:0;font-size:16px;line-height:1.4}
+.fact-body b{color:var(--cyan);font-weight:600}
+.fact-src{font-size:12px;color:#B9C9DE}
 .moretitle{margin:6px 0 0}
 .more{display:flex;flex-direction:column;gap:16px}
 @media (prefers-reduced-motion:reduce){.scan{display:none}.xray .hdr .rec i{animation:none}}
@@ -377,7 +368,6 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
       <div class="topbar">
         <button class="iconbtn" id="backBtn" aria-label="Previous question"><span class="ms">arrow_back</span></button>
         <div class="progress" id="progress" aria-hidden="true"></div>
-        <div class="pts" id="pts" aria-label="Smile points" hidden><span class="ms fill">auto_awesome</span><span id="ptsVal">0</span></div>
       </div>
       <div class="chaptername" id="chName" aria-live="polite"></div>
       <div id="screenHost" style="display:flex;flex-direction:column;flex:1"></div>
@@ -398,8 +388,6 @@ const CFG = Object.assign({
   leadEndpoint: "",        // POST lead JSON (schema in CHANGELOG.md). Empty = preview mode, nothing is sent.
   uploadEndpoint: "",      // POST {lead_id, filename, size} -> {uploadUrl}; the file is then PUT to that URL. Empty = preview mode.
   REQUIRED_CONTACT: "email", // "email" | "phone"  [[POR CONFIRMAR: cuál pide la clínica como obligatorio]]
-  ENABLE_REWARD: false,    // option B: redeemable points. Only turns on if rewardText is filled in.
-  rewardText: "",          // [[POR CONFIRMAR: beneficio real, p. ej. traslado o consulta]]
   priceFrom: "",           // [[POR CONFIRMAR: rango de precio por arcada / "desde"]] e.g. "$X,XXX per arch"
   insurancePolicy: "",     // [[POR CONFIRMAR: política de seguros de Losan]]
   privacyUrl: "",          // [[POR CONFIRMAR: URL del aviso de privacidad]]
@@ -411,7 +399,6 @@ const HASH = (location.hash || "").slice(1);
 // Internal views. "#demo" / "#clinica" also work because a Claude artifact link cannot carry a query string.
 const DEMO = QS.get("demo") === "1" || HASH === "demo";
 const CLINIC = QS.get("modo") === "clinica" || HASH === "clinica";
-const REWARD = !!(CFG.ENABLE_REWARD && String(CFG.rewardText).trim());
 const WA_NUM = "19288678333";
 const LS_KEY = "losan-smile-path-v2";
 const ATTR = (() => {
@@ -462,7 +449,7 @@ const fresh = () => {
     from: "", travel: "", docs: "", days: 5, second: "",
     priority: new Set(), timing: "", pay: "",
     contact: { first: "", email: "", phone: "", country: defaultCountry(), countryTouched: false, whatsapp: true, lang: defaultLang(), consent: false, intent: "" },
-    points: 0, earned: new Set(), started: false, submitted: false, leadId: "", stepId: "intro", attr: ATTR
+    started: false, submitted: false, leadId: "", stepId: "intro", attr: ATTR
   };
   ALL.forEach(n => s.teeth[n] = "ok");
   return s;
@@ -470,7 +457,7 @@ const fresh = () => {
 let st = fresh();
 
 /* progress saved in this browser only, so a patient can come back later */
-const SETS = ["current", "impact", "health", "gums", "history", "priority", "earned"];
+const SETS = ["current", "impact", "health", "gums", "history", "priority"];
 function save(){
   if (!st.started || st.submitted) return;
   try { const o = Object.assign({}, st); SETS.forEach(k => o[k] = [...st[k]]); localStorage.setItem(LS_KEY, JSON.stringify({ v: 2, at: Date.now(), st: o })); } catch (e) {}
@@ -813,17 +800,17 @@ const insight = (html, warn) => h("div", { class: "insight" + (warn ? " warn" : 
    Field types: options (single), multi, chips (multi), chips1 (single, chip style), slider, note, custom.
    A field is required unless optional:true; hidden fields (showIf false) are never required. */
 const CHAPTERS = [
-  { key: "map", name: "Smile Map", icon: "dentistry", unlock: "Smile Map complete", next: "Health Check: the questions a surgeon would ask" },
-  { key: "health", name: "Health Check", icon: "health_and_safety", unlock: "Health Check complete", next: "Your Trip: getting to Los Algodones" },
-  { key: "trip", name: "Your Trip", icon: "flight", unlock: "Trip planned", next: "Your Goals: what matters most to you" },
-  { key: "goals", name: "Your Goals", icon: "flag", unlock: "Profile ready to analyze", next: "See your probable solution" }
+  { key: "map", name: "Smile Map", icon: "dentistry" },
+  { key: "health", name: "Health Check", icon: "health_and_safety" },
+  { key: "trip", name: "Your Trip", icon: "flight" },
+  { key: "goals", name: "Your Goals", icon: "flag" }
 ];
 const STEPS = [
   /* ---- Chapter 1 · Smile Map (2) ---- */
-  { id: "teeth", chapter: 0, pts: 100, eyebrow: "Smile Map · X-ray", title: "Which teeth are missing or failing?",
+  { id: "teeth", chapter: 0, eyebrow: "Smile Map · X-ray", title: "Which teeth are missing or failing?",
     sub: "Tap a tooth to mark it. Loose, broken or painful teeth count as failing.",
     fields: [{ type: "custom", key: "teeth", optional: true, render: el => renderTeeth(el) }] },
-  { id: "today", chapter: 0, pts: 100, eyebrow: "Smile Map", title: "Your teeth today",
+  { id: "today", chapter: 0, eyebrow: "Smile Map", title: "Your teeth today",
     fields: [
       { key: "current", type: "multi", label: "What are you using today?", hint: "Pick all that apply.", items: CURRENT, exclusive: "nothing" },
       { key: "dentureArch", type: "options", label: "Which denture?", items: DENTURE_ARCH, showIf: () => st.current.has("full") },
@@ -839,7 +826,7 @@ const STEPS = [
     ] },
 
   /* ---- Chapter 2 · Health Check (4) ---- */
-  { id: "about", chapter: 1, pts: 50, eyebrow: "Health Check", title: "A little about you", sub: "Age alone rarely rules out implants. It helps the surgeon plan.",
+  { id: "about", chapter: 1, eyebrow: "Health Check", title: "A little about you", sub: "Age alone rarely rules out implants. It helps the surgeon plan.",
     fields: [
       { key: "age", type: "slider", name: "Age", ic: "cake", min: 18, max: 90, fmt: v => v + (v === 90 ? "+" : "") + " yrs", ticks: ["18","50","90+"] },
       { key: "smoke", type: "options", label: "Do you smoke or vape?", items: SMOKE },
@@ -851,20 +838,20 @@ const STEPS = [
       { type: "note", warn: true, showIf: () => st.smoke === "smoke" || st.smoke === "vape",
         html: () => "<b>Straight talk:</b> nicotine reduces blood flow to the gums and is one of the main reasons implants heal poorly. Surgeons usually ask patients to stop before and after surgery." }
     ] },
-  { id: "health", chapter: 1, pts: 50, eyebrow: "Health Check", title: "Do any of these apply to you?", sub: "Pick all that apply. This stays private and only goes to your doctors.",
+  { id: "health", chapter: 1, eyebrow: "Health Check", title: "Do any of these apply to you?", sub: "Pick all that apply. This stays private and only goes to your doctors.",
     fields: [
       { key: "health", type: "chips", label: "Medical conditions", items: HEALTH, exclusive: "none" },
       { key: "diabetes", type: "options", label: "How is your blood sugar?", items: DIABETES, showIf: () => st.health.has("diabetes") },
       { type: "note", showIf: () => st.health.has("diabetes"), html: () => "<b>Good to know:</b> well-controlled diabetes usually doesn't rule out implants. Bring a recent A1C result to your consult." },
       { type: "note", warn: true, showIf: () => st.health.has("bisphos") || st.health.has("radiation"), html: () => "<b>Bring your medication list.</b> Some bone medicines and past radiation change how the jaw heals. The surgeon will review them before planning." }
     ] },
-  { id: "mouth", chapter: 1, pts: 50, eyebrow: "Health Check", title: "Your gums and dental history",
+  { id: "mouth", chapter: 1, eyebrow: "Health Check", title: "Your gums and dental history",
     fields: [
       { key: "gums", type: "chips", label: "Anything going on with your gums or bite?", items: GUMS, exclusive: "none" },
       { key: "history", type: "chips", label: "What dental treatments have you had?", items: HISTORY, exclusive: "none" },
       { type: "note", html: () => "<b>Why we ask:</b> healthy gums and a calm bite help implants last. Gum problems are treated first, and grinders usually get a night guard." }
     ] },
-  { id: "prep", chapter: 1, pts: 50, eyebrow: "Health Check", title: "Before your consultation",
+  { id: "prep", chapter: 1, eyebrow: "Health Check", title: "Before your consultation",
     fields: [
       { key: "consult", type: "options", label: "Have you had an implant consultation before?", items: CONSULT },
       { key: "imaging", type: "options", label: "Do you have X-rays from the last 12 months?", items: IMAGING },
@@ -872,22 +859,18 @@ const STEPS = [
       { type: "note", showIf: () => st.anxiety === "fear", html: () => "<b>You're not alone.</b> Losan offers IV sedation, so you can rest through the procedure. You can even play your own music." }
     ] },
 
-  /* ---- Chapter 3 · Your Trip (3, or 2 when traveling from Mexico) ---- */
-  { id: "getting", chapter: 2, pts: 50, eyebrow: "Your Trip", title: "Getting to Los Algodones",
-    next: () => st.from === "mx" ? "stay" : "docs",
+  /* ---- Chapter 3 · Your Trip (2; the travel document only appears when not traveling from Mexico) ---- */
+  { id: "getting", chapter: 2, eyebrow: "Your Trip", title: "Getting to Los Algodones",
     fields: [
       { key: "from", type: "options", label: "Where would you travel from?", items: FROM },
       { key: "travel", type: "options", one: true, label: "How would you get there?", items: TRAVEL },
-      { type: "note", html: () => "<b>Close to the border.</b> Losan is in Los Algodones, 7 miles from Yuma, Arizona, with a shuttle from Yuma and a hotel in the same building." }
-    ] },
-  { id: "docs", chapter: 2, pts: 50, when: () => st.from !== "mx", eyebrow: "Your Trip", title: "Which travel document do you have?", sub: "You'll need one to walk or drive back into the U.S.",
-    fields: [
-      { key: "docs", type: "options", label: "Travel document", items: DOCS },
-      { type: "note", warn: () => st.docs === "none", html: () => st.docs === "none"
+      { key: "docs", type: "options", label: "Which travel document do you have?", hint: "You'll need one to walk or drive back into the U.S.", items: DOCS, showIf: () => !!st.from && st.from !== "mx" },
+      { type: "note", showIf: () => !!st.from && st.from !== "mx" && !!st.docs, warn: () => st.docs === "none", html: () => st.docs === "none"
         ? "<b>Plan ahead:</b> to return by land you need a passport book, passport card, SENTRI/NEXUS card or an enhanced driver's license. A passport card is the cheapest option for land crossings."
-        : "<b>Border tip:</b> crossing on foot from the Andrade port of entry takes minutes most days. Lines get longer in winter afternoons." }
+        : "<b>Border tip:</b> crossing on foot from the Andrade port of entry takes minutes most days. Lines get longer in winter afternoons." },
+      { type: "note", showIf: () => !st.from || st.from === "mx", html: () => "<b>Close to the border.</b> Losan is in Los Algodones, 7 miles from Yuma, Arizona, with a shuttle from Yuma and a hotel in the same building." }
     ] },
-  { id: "stay", chapter: 2, pts: 50, eyebrow: "Your Trip", title: "How long could you stay on your first visit?",
+  { id: "stay", chapter: 2, eyebrow: "Your Trip", title: "How long could you stay on your first visit?",
     fields: [
       { key: "days", type: "slider", name: "Days in Los Algodones", ic: "hotel", min: 1, max: 14, fmt: v => v + (v === 14 ? "+" : "") + " day" + (v > 1 ? "s" : ""),
         sub: v => v >= 5 ? "Enough for most full-arch cases" : v >= 3 ? "Enough for most implant visits" : "A short visit", ticks: ["1","7","14+"] },
@@ -896,9 +879,9 @@ const STEPS = [
     ] },
 
   /* ---- Chapter 4 · Your Goals (2) ---- */
-  { id: "priority", chapter: 3, pts: 50, eyebrow: "Your Goals", title: "What matters most to you?", sub: "Pick your top two.",
+  { id: "priority", chapter: 3, eyebrow: "Your Goals", title: "What matters most to you?", sub: "Pick your top two.",
     fields: [{ key: "priority", type: "chips", label: "Your top two priorities", items: PRIORITY, max: 2 }] },
-  { id: "plan", chapter: 3, pts: 50, eyebrow: "Your Goals", title: "Timing and payment",
+  { id: "plan", chapter: 3, eyebrow: "Your Goals", title: "Timing and payment",
     fields: [
       { key: "timing", type: "options", label: "When would you like to start?", items: TIMING },
       { key: "pay", type: "options", label: "How would you like to pay?", items: PAY },
@@ -919,6 +902,43 @@ STEPS.forEach(s => {
   if (!s.validation) s.validation = () => s.fields.every(f => !f.required || !shown(f) || filled(f));
   if (!s.next) s.next = () => nextActive(s.id);
 });
+
+
+/* ============ "Did you know?" between chapters ============
+   One fact per chapter change, picked from the patient's own answers. Every figure has a public source;
+   do not add a number here without one (CLAUDE.md). */
+const FACTS = {
+  teeth: { t: "About <b>178 million Americans</b> are missing at least one tooth. You're far from alone.", s: "American College of Prosthodontists" },
+  full: { t: "About <b>1 in 8 Americans over 65</b> have lost all of their natural teeth.", s: "CDC · NCHS Data Brief 368, 2015–2018" },
+  bone: { t: "After a tooth is lost, the jawbone ridge can shrink to <b>about half its width within a year</b>, mostly in the first 3 months.", s: "Schropp et al., Int J Periodontics Restorative Dent, 2003" },
+  gums: { t: "About <b>42% of U.S. adults over 30</b> have some form of gum disease, and many don't know it.", s: "CDC · Eke et al., JADA, 2018" },
+  smoke: { t: "Smokers have <b>about twice the risk</b> of gum disease compared with non-smokers.", s: "CDC" },
+  fear: { t: "About <b>1 in 3 adults</b> feel anxious about the dentist, and about <b>1 in 8</b> are very afraid. You're in good company.", s: "Adult Dental Health Survey (UK), 2009" },
+  molar: { t: "Los Algodones is nicknamed <b>“Molar City”</b>: thousands of Americans and Canadians cross over from Yuma for dental care, especially in winter.", s: "KYMA News 11; TRT World" }
+};
+function factFor(ch){
+  if (ch === 1){
+    const a = archStats(UPPER).affected + archStats(LOWER).affected;
+    const lead = a ? `Smile Map done: you marked ${a} ${a === 1 ? "tooth" : "teeth"}.` : "Smile Map done.";
+    if (st.current.has("full") || a >= 20) return { lead, ...FACTS.full };
+    if (a && askDuration() && st.duration >= 3) return { lead, ...FACTS.bone };
+    return { lead, ...FACTS.teeth };
+  }
+  if (ch === 2){
+    const lead = "Health Check done. Two chapters to go.";
+    if (st.smoke === "smoke" || st.smoke === "vape") return { lead, ...FACTS.smoke };
+    if (st.anxiety === "fear" || st.anxiety === "nervous") return { lead, ...FACTS.fear };
+    return { lead, ...FACTS.gums };
+  }
+  if (ch === 3) return { lead: "Trip planned. Last chapter, then your plan.", ...FACTS.molar };
+  return null;
+}
+function factCard(ch){
+  const f = factFor(ch); if (!f) return null;
+  return h("aside", { class: "fact", "aria-label": "Did you know?" },
+    h("div", { class: "fact-lead" }, icon("check_circle", true), f.lead),
+    h("div", { class: "fact-body" }, h("span", { class: "fact-k" }, icon("lightbulb", true), "Did you know?"), h("p", { html: f.t }), h("span", { class: "fact-src" }, "Source: " + f.s)));
+}
 
 /* ============ field renderer ============ */
 let liveNotes = [];
@@ -944,7 +964,7 @@ function renderFields(el, step){
 }
 
 /* ============ engine ============ */
-let cur = "intro", badgeFor = null, aiPromise = null, resultTracked = false;
+let cur = "intro", aiPromise = null, resultTracked = false;
 const host = $("#screenHost");
 function update(){
   const btn = $("#nextBtn"); if (!btn) return;
@@ -958,34 +978,27 @@ function setProgress(){
   CHAPTERS.forEach((c, i) => {
     const inCh = act.filter(x => x.chapter === i), pos = s ? inCh.indexOf(s) : -1;
     let p = 0;
-    if (curCh > i || (badgeFor != null && badgeFor >= i)) p = 100;
+    if (curCh > i) p = 100;
     else if (curCh === i) p = Math.round((pos / inCh.length) * 100) + 6;
     prog.append(h("div", { class: "seg" + (p >= 100 ? " done" : ""), style: { "--p": Math.min(100, p) + "%" } }, h("i")));
   });
   const name = $("#chName");
-  if (s && badgeFor == null){
+  if (s){
     const inCh = act.filter(x => x.chapter === s.chapter), total = act.length, n = act.indexOf(s) + 1;
     name.replaceChildren(h("b", {}, `Chapter ${s.chapter + 1} · ${CHAPTERS[s.chapter].name}`), h("span", {}, `${inCh.indexOf(s) + 1} of ${inCh.length}`, h("span", { class: "sr" }, ` · question ${n} of ${total}`)));
   } else name.replaceChildren();
   $("#backBtn").disabled = cur === "intro" || cur === "analyze" || cur === "result";
 }
-function addPoints(n){
-  st.points += n || 0;
-  if (!n || !REWARD) return;
-  const v = $("#ptsVal"); const from = st.points - n; const t0 = performance.now();
-  const tick = t => { const k = Math.min(1, (t - t0) / 500); v.textContent = Math.round(from + n * k).toLocaleString(); if (k < 1) requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
-  const p = h("span", { class: "pop", "aria-hidden": "true" }, "+" + n); $("#pts").append(p); setTimeout(() => p.remove(), 1000);
-}
 function show(id, dir = 1, same = false){
   const ae = document.activeElement, focusId = same && ae && ae.dataset ? ae.dataset.fid : null;
-  cur = id; badgeFor = null; liveNotes = [];
+  cur = id; liveNotes = [];
   const s = stepById(id);
   const sc = h("section", { class: "screen" + (dir < 0 ? " back" : "") + (same ? " still" : "") });
   if (id === "intro") renderIntro(sc);
   else if (id === "analyze") renderAnalyze(sc);
   else if (id === "result") renderResult(sc);
   else {
+    if (s.chapter > 0 && activeSteps().find(x => x.chapter === s.chapter) === s){ const fc = factCard(s.chapter); if (fc) sc.append(fc); }
     sc.append(h("div", { class: "eyebrow" }, icon(CHAPTERS[s.chapter].icon), s.eyebrow), h("h1", { class: "q" }, s.title));
     if (s.sub) sc.append(h("p", { class: "sub" }, s.sub));
     renderFields(sc, s);
@@ -1017,53 +1030,20 @@ function goNext(){
   if (cur === "intro") return start();
   const s = stepById(cur); if (!s || !s.validation()) return;
   track("step_complete", { step_id: s.id, chapter: s.chapter + 1 });
-  if (!st.earned.has(s.id)){ st.earned.add(s.id); addPoints(s.pts || 0); }
   const nid = s.next(), ns = stepById(nid);
-  if (!ns || ns.chapter !== s.chapter){
-    track("chapter_complete", { chapter: s.chapter + 1 });
-    if (!st.earned.has("ch" + s.chapter)) return showBadge(s.chapter, nid);
-  }
+  if (!ns || ns.chapter !== s.chapter) track("chapter_complete", { chapter: s.chapter + 1 });
   go(nid);
 }
 function back(){
-  if (badgeFor != null) return show(cur, -1);
   if (stepById(cur)) show(prevActive(cur), -1);
 }
 $("#backBtn").addEventListener("click", back);
 
-function showBadge(chi, nid){
-  st.earned.add("ch" + chi);
-  badgeFor = chi;
-  const c = CHAPTERS[chi];
-  setProgress();
-  const ring = S("svg", { viewBox: "0 0 150 150", "aria-hidden": "true" });
-  ring.innerHTML = `<circle cx="75" cy="75" r="66" fill="#EEF9FD"/><circle cx="75" cy="75" r="66" fill="none" stroke="#93E5F9" stroke-width="8" stroke-dasharray="415" stroke-dashoffset="${reducedMotion() ? 0 : 415}" stroke-linecap="round" transform="rotate(-90 75 75)">${reducedMotion() ? "" : '<animate attributeName="stroke-dashoffset" from="415" to="0" dur=".9s" fill="freeze" begin=".2s"/>'}</circle><circle cx="75" cy="75" r="52" fill="none" stroke="#002553" stroke-width="1.5" stroke-dasharray="2 5"/>`;
-  const sc = h("section", { class: "screen" },
-    h("div", { class: "badge-wrap" },
-      h("div", { class: "medal" }, ring, icon(c.icon, true)),
-      h("div", { class: "eyebrow" }, `Chapter ${chi + 1} of 4`),
-      h("h1", { tabindex: "-1" }, c.unlock),
-      REWARD ? h("span", { class: "unlock" }, icon("auto_awesome", true), "+100 bonus points") : null,
-      chi === 0 ? h("p", {}, chapterOneSummary()) : h("p", {}, ["Nice work. The doctors ask these same questions at a screening, so you're already ahead.", "Travel is the part most people worry about. You've got it mapped.", "That's everything we need to build your plan."][chi - 1]),
-      h("div", { class: "nextch" }, icon(chi < 3 ? CHAPTERS[chi + 1].icon : "lock_open"), h("span", {}, "Next: " + c.next))
-    ));
-  const foot = h("div", { class: "footer" }, h("button", { class: "cta", type: "button", onclick: () => go(nid) }, chi < 3 ? "Keep going" : "See my solution", icon("arrow_forward")));
-  host.replaceChildren(sc, foot);
-  $("#backBtn").disabled = false;
-  window.scrollTo(0, 0); sc.querySelector("h1").focus({ preventScroll: true });
-  addPoints(100);
-}
-function chapterOneSummary(){
-  const u = archStats(UPPER), l = archStats(LOWER), a = u.affected + l.affected;
-  if (!a && !st.current.has("full")) return "You marked no missing teeth. We'll still build a plan from your answers.";
-  return `You mapped ${a} tooth${a === 1 ? "" : "s"} that need attention: ${u.affected} upper, ${l.affected} lower. The doctors see this map before you arrive.`;
-}
 
 /* ============ intro ============ */
 function stepLabel(id){ const s = stepById(id); return s ? `${CHAPTERS[s.chapter].name} · ${s.title}` : id === "result" ? "Your results" : "the start"; }
 function resume(saved){
   st = saved; aiPromise = null; resultTracked = false;
-  $("#ptsVal").textContent = st.points.toLocaleString();
   track("quiz_start", { resumed: true });
   let id = st.stepId;
   if (id !== "result"){ const s = stepById(id); if (!s) id = STEPS[0].id; else if (!isActive(s)) id = nextActive(id); }
@@ -1084,7 +1064,7 @@ function renderIntro(el){
         h("button", { class: "linkbtn", type: "button", onclick: () => { clearSaved(); rerender(); } }, "Start fresh"))));
   }
   el.append(
-    h("div", { class: "intro-hero" }, mini, h("span", { class: "k" }, "4 CHAPTERS · ~3 MIN"), h("span", { class: "big" }, REWARD ? "Earn points as you go. See your probable solution at the end." : "See your probable solution at the end.")),
+    h("div", { class: "intro-hero" }, mini, h("span", { class: "k" }, "4 CHAPTERS · ~3 MIN"), h("span", { class: "big" }, "See your probable solution at the end.")),
     h("div", { class: "hero-badges" }, CHAPTERS.map((c, i) => h("div", { class: "hb", style: { "--i": i } }, h("span", { class: "n" }, icon(c.icon)), h("div", {}, h("b", {}, c.name), h("span", {}, ["Tap your teeth","Health questions","Getting here","What matters"][i]))))),
     h("div", { class: "stars" }, h("span", { class: "ms fill", "aria-hidden": "true" }, "star"), h("b", {}, "5.0"), "on Google · Patients from the U.S. and Canada"),
     DEMO ? h("div", { class: "hintline" }, h("button", { class: "linkbtn", type: "button", onclick: loadSample }, "Preview with a sample patient"), " (demo for the clinic team)") : null
@@ -1465,7 +1445,7 @@ function renderResult(el){
   let refreshClinic = null;
 
   // 1. probable solution + main button
-  el.append(h("div", { class: "eyebrow" }, icon("auto_awesome", true), med ? "Your result" : "Your probable solution", REWARD ? " · " + st.points.toLocaleString() + " pts" : ""));
+  el.append(h("div", { class: "eyebrow" }, icon("auto_awesome", true), med ? "Your result" : "Your probable solution"));
   if (med){
     el.append(h("div", { class: "res-hero" },
       h("span", { class: "k" }, "NEXT STEP · MEDICAL REVIEW"),
@@ -1483,8 +1463,6 @@ function renderResult(el){
     h("button", { class: "cta", type: "button", onclick: () => toForm(med ? "valoracion_medica" : "enviar_plan") }, "Send my plan to the doctor", icon("arrow_downward")),
     h("a", { class: "linkbtn", href: waLink(waText(plan, med)), target: "_blank", rel: "noopener", onclick: () => trackClick("whatsapp_click", "result_top") }, "Or ask the coordinator on WhatsApp")));
 
-  // reward (option B) only when the benefit is confirmed
-  if (REWARD) el.append(h("div", { class: "card reward" }, h("h3", {}, icon("redeem", true), "Your points unlock: " + String(CFG.rewardText)), h("p", { class: "fine big" }, `You earned ${st.points.toLocaleString()} points. Mention them to your coordinator when you book.`)));
 
   // price block
   if (!med){
@@ -1561,7 +1539,6 @@ function renderResult(el){
     h("div", { class: "hintline" }, h("button", { class: "linkbtn", type: "button", onclick: restart }, "Start over")));
 
   if (!resultTracked){ resultTracked = true; track("result_view", { solucion_probable: med ? "Medical review" : plan.family }); }
-  if (!med) setTimeout(() => confetti(110), 300);
 }
 
 /* ============ CRM payload (schema documented in CHANGELOG.md) ============ */
@@ -1596,7 +1573,7 @@ function leadPayload(plan, med){
 /* ============ restart / demo ============ */
 function restart(){
   st = fresh(); clearSaved(); aiPromise = null; resultTracked = false;
-  $("#ptsVal").textContent = "0"; show("intro", -1);
+  show("intro", -1);
 }
 function loadSample(){
   st = fresh();
@@ -1605,28 +1582,10 @@ function loadSample(){
   Object.assign(st, { current: new Set(["partial"]), duration: 4, impact: new Set(["chew", "smile"]), age: 63, smoke: "former", quitYears: 6,
     health: new Set(["diabetes","bp"]), diabetes: "good", gums: new Set(["bleeding","loose"]), history: new Set(["extract","rootcanal"]), consult: "yes", imaging: "pano", anxiety: "fear",
     from: "az", travel: "drive", docs: "card", days: 6, second: "yes", priority: new Set(["fixed","eat"]), timing: "1-3", pay: "finance", started: true });
-  STEPS.forEach(s => { st.earned.add(s.id); st.points += s.pts || 0; });
-  [0,1,2,3].forEach(i => { st.earned.add("ch" + i); st.points += 100; });
-  $("#ptsVal").textContent = st.points.toLocaleString();
   aiPromise = null; resultTracked = false;
   go("analyze");
 }
 
-/* ============ confetti (final result only) ============ */
-function confetti(n){
-  if (reducedMotion()) return;
-  const app = $("#app"); const cv = h("canvas", { class: "confetti", "aria-hidden": "true" }); app.append(cv);
-  const r = app.getBoundingClientRect(); cv.width = r.width; cv.height = Math.min(r.height, 900);
-  const ctx = cv.getContext("2d"); const cols = ["#93E5F9", "#002553", "#3EE6A8", "#FFFFFF", "#1BA9CF"];
-  const ps = Array.from({ length: n }, () => ({ x: cv.width / 2 + (Math.random() - .5) * 80, y: 120, vx: (Math.random() - .5) * 9, vy: -Math.random() * 9 - 3, s: 4 + Math.random() * 5, c: cols[Math.random() * cols.length | 0], a: Math.random() * 6, va: (Math.random() - .5) * .3 }));
-  let f = 0;
-  const loop = () => {
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    for (const p of ps){ p.x += p.vx; p.y += p.vy; p.vy += .28; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); ctx.restore(); }
-    if (++f < 110) requestAnimationFrame(loop); else cv.remove();
-  };
-  loop();
-}
 
 /* ============ measurement hooks ============ */
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("[data-track]"); if (a) trackClick(a.dataset.track, a.dataset.where || ""); });
@@ -1640,7 +1599,6 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 window.addEventListener("pagehide", abandon);
 window.addEventListener("beforeunload", abandon);
 
-$("#pts").hidden = !REWARD;
 show("intro");
 
 })();

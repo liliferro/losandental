@@ -22,21 +22,26 @@ async function run(width, scenario){
   await step();
   log('  duration shown:', await p.locator('#f-duration').count());
   await opt(p, 'current:nothing'); await opt(p, 'impact:chew');
-  await cont(p); await p.click('text=Keep going');
-  await step(); await opt(p, 'smoke:never'); await cont(p);
+  await cont(p);
+  log('  fact:', (await p.locator('.fact').innerText().catch(() => 'NONE')).replace(/\s+/g,' ').slice(0,140));
+  await step(); await opt(p, 'smoke:'+(scenario.smoke||'never')); if (scenario.smoke==='smoke') await opt(p,'smokeStop:yes'); await cont(p);
   await step(); for (const k of scenario.health || ['none']) await opt(p, 'health:'+k); await cont(p);
   await step(); await opt(p,'gums:none'); await opt(p,'history:none'); await cont(p);
   await step(); log('  continue disabled before answers:', await p.isDisabled('#nextBtn'));
   await opt(p,'consult:no'); await opt(p,'imaging:none'); await opt(p,'anxiety:fear');
   log('  sedation note:', await p.locator('text=IV sedation').count() > 0);
-  await cont(p); await p.click('text=Keep going');
-  await step(); await opt(p,'from:'+(scenario.from||'az')); await opt(p,'travel:drive'); await cont(p);
-  if (scenario.from !== 'mx'){ await step(); await opt(p,'docs:card'); await cont(p); }
-  await step(); await opt(p,'second:yes'); await cont(p); await p.click('text=Keep going');
+  await cont(p);
+  log('  fact:', (await p.locator('.fact').innerText().catch(() => 'NONE')).replace(/\s+/g,' ').slice(0,140));
+  await step(); await opt(p,'from:'+(scenario.from||'az')); await opt(p,'travel:drive');
+  if (scenario.from !== 'mx'){ log('  continue disabled w/o doc:', await p.isDisabled('#nextBtn')); await opt(p,'docs:card'); }
+  else log('  doc field for MX:', await p.locator('[data-fid="docs:card"]').count());
+  await cont(p);
+  await step(); await opt(p,'second:yes'); await cont(p);
+  log('  fact:', (await p.locator('.fact').innerText().catch(() => 'NONE')).replace(/\s+/g,' ').slice(0,140));
   await step(); await opt(p,'priority:fixed'); await cont(p);
   await step(); await opt(p,'timing:asap'); await opt(p,'pay:insurance');
   log('  insurance placeholder:', await p.locator('mark.pending').count());
-  await cont(p); await p.click('text=See my solution');
+  await cont(p);
   await p.waitForSelector('#nextstep', { timeout: 8000 });
   await p.waitForTimeout(400);
   await hscroll('result');
@@ -44,6 +49,7 @@ async function run(width, scenario){
   const h2 = await p.locator('.res-hero h2').innerText(); log('  result:', h2);
   const order = await p.evaluate(() => [...document.querySelectorAll('.screen > *')].map(e => (e.className || e.tagName).toString().split(' ')[0] + (e.querySelector('h3') ? ':' + e.querySelector('h3').innerText.slice(0,28) : '')).join(' | '));
   log('  order:', order);
+  log('  gamification:', await p.locator('#pts, .pts, .badge-wrap, canvas.confetti').count(), '| points text:', await p.locator('text=/points|pts/i').count());
   log('  clinic view:', await p.locator('details.internal').count());
   // form
   await p.fill('#em', 'test@example.com'); await p.selectOption('#cc', 'MX'); await p.fill('#ph', '658 596 8115');
@@ -64,7 +70,7 @@ async function run(width, scenario){
   await b.close();
 }
 (async () => {
-  await run(375, { name: 'base', teeth: [3, 4, 14, 30] });
+  await run(375, { name: 'base', teeth: [3, 4, 14, 30], smoke: 'smoke' });
   await run(1280, { name: 'mx-med', teeth: [], from: 'mx', health: ['pregnant'], qs: '?modo=clinica&demo=1&utm_source=fb&utm_campaign=x', payload: true });
   await run(768, { name: 'eval', teeth: [] });
   console.log(out.join('\n'));

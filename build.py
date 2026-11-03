@@ -61,8 +61,6 @@ HEAD = """<!doctype html>
     leadEndpoint: "/api/lead",
     uploadEndpoint: "/api/upload-url",
     REQUIRED_CONTACT: "email",  // "email" | "phone"   [[POR CONFIRMAR]]
-    ENABLE_REWARD: false,
-    rewardText: "",             // [[POR CONFIRMAR: beneficio real]]
     priceFrom: "",              // [[POR CONFIRMAR: rango de precio por arcada / "desde"]]
     insurancePolicy: "",        // [[POR CONFIRMAR: política de seguros de Losan]]
     privacyUrl: "",             // [[POR CONFIRMAR: URL del aviso de privacidad]]

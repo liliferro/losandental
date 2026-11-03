@@ -1,5 +1,17 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.2.0 · 2026-11-03 · Flujo continuo, sin gamificación, con datos entre etapas
+Pedido de Lili: quitar la gamificación, acortar el quiz y dar datos que enganchen al pasar de etapa.
+- **Sin gamificación:** se eliminaron los puntos, el contador, las pantallas de "etapa completada" (+100 puntos), la opción B de recompensa (`ENABLE_REWARD` y `rewardText`) y el confeti del resultado. Esto reemplaza la sección 3 de v2.0.
+- **Más corto:** de 11 pasos + 4 pantallas intermedias (15 pantallas) a **10 pasos seguidos**. "Which travel document do you have?" ahora va dentro del paso `getting` y solo aparece si la persona no viaja desde México; con esto desaparece el paso `docs`.
+- **"Did you know?" entre etapas:** al entrar a los capítulos 2, 3 y 4 se muestra una tarjeta con lo que la persona acaba de completar ("Smile Map done: you marked 6 teeth.") y un dato elegido según sus respuestas:
+  - Capítulo 2: dentadura completa o 20+ dientes → 1 de cada 8 estadounidenses mayores de 65 perdió todos sus dientes (CDC, NCHS Data Brief 368). Dientes marcados y 1+ año sin ellos → pérdida de ~50% del ancho del hueso en un año (Schropp et al., 2003). En cualquier otro caso → 178 millones de estadounidenses con al menos un diente faltante (American College of Prosthodontists).
+  - Capítulo 3: fuma o vapea → el doble de riesgo de enfermedad de encías (CDC). Ansiedad → 1 de cada 3 adultos con ansiedad dental y 1 de cada 8 con miedo extremo (Adult Dental Health Survey, Reino Unido, 2009). En cualquier otro caso → 42% de los adultos de 30+ con enfermedad de encías (CDC, Eke et al. 2018).
+  - Capítulo 4: Los Algodones, "Molar City" (KYMA News 11; TRT World). No lleva cifras porque las estimaciones publicadas de pacientes y dentistas varían demasiado.
+- Cada dato muestra su fuente en la tarjeta. Regla: no se agrega una cifra a `FACTS` sin fuente pública.
+- No cambia el payload del CRM (los puntos nunca se enviaban).
+
+
 ## v2.1.0 · 2026-11-03 · Migración a GitHub + Vercel + Supabase
 - El repo `liliferro/losandental` es la fuente única. Vercel despliega `public/` en cada push a `main`.
 - `api/lead.js` guarda el lead en Supabase con `public.submit_lead()`, que valida consentimiento, contacto y tamaño, y descarta duplicados por `lead_id`. Si existe `CRM_WEBHOOK_URL`, reenvía el mismo JSON.
