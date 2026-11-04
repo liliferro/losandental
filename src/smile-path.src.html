@@ -350,7 +350,7 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .dr-photo{width:96px;height:120px;border-radius:14px;overflow:hidden;background:var(--cyan-50)}
 .dr-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .dr-photo.diego img{object-position:50% 0}
-.dr-photo.jose{background:linear-gradient(180deg,#EEF9FD,#D7EEF8)}
+.dr-photo.jose{background:#141414}
 .dr-photo.jose img{object-position:50% 0}
 .dr-body{display:flex;flex-direction:column;gap:4px;min-width:0}
 .dr-body > b{font-family:var(--display);font-weight:600;color:var(--navy);font-size:16px;line-height:1.2}
@@ -1091,15 +1091,18 @@ function factCard(ch){
 
 /* ============ reputation: doctors and a real result ============
    Bios are the clinic's own copy (summarized). Photos live in src/assets/img and are served as img/... */
-const IMG = { before: "img/ba-before.jpg", after: "img/ba-after.jpg", diego: "img/dr-diego-lopez.jpg", jose: "img/dr-jose-luis.webp", diegoFace: "img/dr-diego-avatar.jpg", joseFace: "img/dr-jose-avatar.jpg" };
+const IMG = { before: "img/ba-before.jpg", after: "img/ba-after.jpg", diego: "img/dr-diego-lopez.jpg", jose: "img/dr-jose-luis.jpg", diegoFace: "img/dr-diego-avatar.jpg", joseFace: "img/dr-jose-avatar.jpg" };
 const DOCTORS = [
   { key: "diego", name: "Dr. Diego López", role: "Prosthodontist and CEO, Losan Dental", img: IMG.diego, face: IMG.diegoFace, w: 640, h: 800,
     points: ["Prosthodontics and prosthetic implantology, Autonomous University of Guadalajara (UAG)",
              "Master's degree in advanced periodontics and implantology, New York University (NYU)",
              "Selected to do research at UNAM, with international recognition and publications",
              "More than 1,000 patients treated in Los Algodones"] },
-  { key: "jose", name: "Dr. José Luis", role: "Oral surgeon · Dental implant and smile transformation specialist", img: IMG.jose, face: IMG.joseFace, w: 480, h: 640,
-    quote: "Every patient deserves a confident smile with the best materials available, titanium and zirconia, at a price they can actually afford." }
+  { key: "jose", name: "Dr. José Luis Morales", role: "Oral and maxillofacial surgery · Implantologist", img: IMG.jose, face: IMG.joseFace, w: 320, h: 400,
+    points: ["Doctor of Dental Surgery, Autonomous University of Nuevo León (UANL)",
+             "Intensive course in dental esthetics, Autrán Advanced Dental Institute, Barcelona (2014)",
+             "CAD/CAM technology for complete dentures, USC Herman Ostrow School of Dentistry (2015)",
+             "Clinical experience in Mexico and Brazil"] }
 ];
 function doctorsCard(title){
   return h("section", { class: "drs", "aria-label": title },
@@ -1121,7 +1124,7 @@ function doctorsStrip(lead){
       h("span", { class: "ts-more" }, icon("expand_more"))),
     h("div", { class: "ts-body" },
       h("div", { class: "ts-dr" }, h("b", {}, diego.name), h("ul", {}, diego.points.map(x => h("li", {}, icon("verified", true), h("span", {}, x))))),
-      h("div", { class: "ts-dr" }, h("b", {}, jose.name), h("span", { class: "dr-role" }, jose.role), h("blockquote", {}, "“" + jose.quote + "”"))));
+      h("div", { class: "ts-dr" }, h("b", {}, jose.name), h("span", { class: "dr-role" }, jose.role), h("ul", {}, jose.points.map(x => h("li", {}, icon("verified", true), h("span", {}, x)))))));
 }
 /* Real result: before/after comparison slider + persuasive copy built only from facts already on the page. */
 function compareSlider(){

@@ -1,5 +1,17 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.6.2 · 2026-11-04 · Corrección: foto y perfil reales del Dr. José Luis Morales
+- La foto y la cita sobre titanio y zirconia correspondían a otro doctor ("Dr Joseph", One Destination Clinic San Antonio). Lili lo confirmó y envió el material real. Se eliminaron la foto y la cita.
+- Nuevo perfil, tomado de la lámina enviada por Lili:
+  - Nombre y especialidad: **Dr. José Luis Morales**, Oral and maxillofacial surgery · Implantologist.
+  - Cirujano Dentista por la UANL.
+  - Curso intensivo de estética dental, Autrán Advanced Dental Institute, Barcelona 2014.
+  - CAD/CAM para prótesis completas, USC Herman Ostrow School of Dentistry, 2015.
+  - Experiencia clínica en México y Brasil.
+- La foto se recortó de su ficha (`dr-jose-luis.jpg` y `dr-jose-avatar.jpg`), sin el número, la bandera ni el logo "DC" del uniforme.
+- Las menciones cortas "Dr. José Luis" en textos y notas no cambian.
+
+
 ## v2.6.1 · 2026-11-04 · Fotos de los doctores sin logos
 - En el círculo de la franja se colaba el logo rojo de UAG de la foto original. Ahora hay retratos propios de 160 px (`dr-diego-avatar.jpg` y `dr-jose-avatar.jpg`, unos 5 KB cada uno), sin escalado por CSS.
 - La foto de la tarjeta del Dr. López se recortó a 4:5 sin los logos de NYU y UAG. Las credenciales siguen en el texto.
