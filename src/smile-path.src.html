@@ -386,6 +386,31 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .cta.light{background:var(--cyan);color:var(--navy);box-shadow:0 10px 24px -12px rgba(147,229,249,.6)}
 .cta.light .ms{color:var(--navy)}
 .cta.light:hover{background:#B5EEFB}
+.tstrip{border:1px solid var(--line);border-radius:var(--r-md);background:linear-gradient(180deg,#FAFDFF,#F3F9FD);overflow:hidden;transition:box-shadow .3s var(--ease)}
+.tstrip[open]{box-shadow:var(--shadow-1)}
+.tstrip summary{list-style:none;display:flex;align-items:center;gap:12px;padding:10px 12px;min-height:60px;cursor:pointer}
+.tstrip summary::-webkit-details-marker{display:none}
+.ts-avs{display:flex;flex:none}
+.ts-av{width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,37,83,.18);background:var(--cyan-50)}
+.ts-av + .ts-av{margin-left:-12px}
+.ts-av img{width:100%;height:100%;object-fit:cover;display:block}
+.ts-av.diego img{object-position:40% 10%;transform:scale(1.5);transform-origin:40% 18%}
+.ts-av.jose{background:linear-gradient(180deg,#EEF9FD,#D7EEF8)}
+.ts-av.jose img{object-position:50% 0;transform:scale(1.25);transform-origin:50% 10%}
+.ts-txt{display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.ts-txt b{font-family:var(--display);font-weight:600;font-size:14px;color:var(--navy);line-height:1.25}
+.ts-txt span{font-size:12.5px;color:var(--muted);line-height:1.3}
+.ts-txt b,.ts-txt span{overflow:hidden;text-overflow:ellipsis}
+.ts-more{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--cyan-ink);transition:transform .35s var(--ease)}
+.tstrip[open] .ts-more{transform:rotate(180deg)}
+.ts-body{display:grid;gap:12px;padding:2px 14px 14px;border-top:1px dashed #D3E2EE;margin:0 12px;padding-left:0;padding-right:0;padding-top:12px}
+.tstrip[open] .ts-body{animation:rise .45s var(--ease) both}
+.ts-dr{display:flex;flex-direction:column;gap:4px}
+.ts-dr > b{font-family:var(--display);font-weight:600;color:var(--navy);font-size:14.5px}
+.ts-dr ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ts-dr li{display:flex;gap:6px;font-size:13px;line-height:1.35;color:var(--ink)}
+.ts-dr li .ms{font-size:15px;color:var(--green);flex:none;margin-top:1px}
+.ts-dr blockquote{margin:2px 0 0;padding-left:10px;border-left:3px solid var(--cyan);font-size:13px;font-style:italic;color:#163A5E;line-height:1.4}
 /* ---------- v2.3: motion & polish (transform/opacity only; all off with prefers-reduced-motion) ---------- */
 html:not(.icons-ready) .ms{opacity:0}
 .ms{transition:opacity .25s var(--ease-soft)}
@@ -930,7 +955,8 @@ const STEPS = [
   /* ---- Chapter 1 · Smile Map (2) ---- */
   { id: "teeth", chapter: 0, eyebrow: "Smile Map · X-ray", title: "Which teeth are missing or failing?",
     sub: "Tap a tooth to mark it. Loose, broken or painful teeth count as failing.",
-    fields: [{ type: "custom", key: "teeth", optional: true, render: el => renderTeeth(el) }] },
+    fields: [{ type: "custom", key: "teeth", optional: true, render: el => renderTeeth(el) },
+      { type: "custom", render: el => el.append(doctorsStrip("Prosthodontist (NYU) & oral surgeon")) }] },
   { id: "today", chapter: 0, eyebrow: "Smile Map", title: "Your teeth today",
     fields: [
       { key: "current", type: "multi", label: "What are you using today?", hint: "Pick all that apply.", items: CURRENT, exclusive: "nothing" },
@@ -957,7 +983,8 @@ const STEPS = [
         fmt: v => v + (v === 40 ? "+" : ""), sub: v => v >= 20 ? "A pack or more" : "Less than a pack", ticks: ["1","20","40+"] },
       { key: "smokeStop", type: "options", label: "Would you pause smoking around surgery?", items: SMOKE_STOP, showIf: () => st.smoke === "smoke" },
       { type: "note", warn: true, showIf: () => st.smoke === "smoke" || st.smoke === "vape",
-        html: () => "<b>Straight talk:</b> nicotine reduces blood flow to the gums and is one of the main reasons implants heal poorly. Surgeons usually ask patients to stop before and after surgery." }
+        html: () => "<b>Straight talk:</b> nicotine reduces blood flow to the gums and is one of the main reasons implants heal poorly. Surgeons usually ask patients to stop before and after surgery." },
+      { type: "custom", render: el => el.append(doctorsStrip("The only ones who see these answers")) }
     ] },
   { id: "health", chapter: 1, eyebrow: "Health Check", title: "Do any of these apply to you?", sub: "Pick all that apply. This stays private and only goes to your doctors.",
     fields: [
@@ -1085,6 +1112,19 @@ function doctorsCard(title){
       h("div", { class: "dr-body" }, h("b", {}, d.name), h("span", { class: "dr-role" }, d.role),
         d.points ? h("ul", {}, d.points.map(x => h("li", {}, icon("verified", true), h("span", {}, x)))) : null,
         d.quote ? h("blockquote", {}, "“" + d.quote + "”") : null))));
+}
+/* Compact trust strip for the first questions: one line, expandable to the full credentials. */
+function doctorsStrip(lead){
+  const av = d => h("span", { class: "ts-av " + d.key }, h("img", { src: d.img, alt: "", width: d.w, height: d.h, loading: "lazy", decoding: "async" }));
+  const [diego, jose] = DOCTORS;
+  return h("details", { class: "tstrip", open: !!doctorsStrip.open, ontoggle: e => { doctorsStrip.open = e.currentTarget.open; } },
+    h("summary", {},
+      h("span", { class: "ts-avs", "aria-hidden": "true" }, av(diego), av(jose)),
+      h("span", { class: "ts-txt" }, h("b", {}, "Dr. López & Dr. José Luis"), h("span", {}, lead)),
+      h("span", { class: "ts-more" }, icon("expand_more"))),
+    h("div", { class: "ts-body" },
+      h("div", { class: "ts-dr" }, h("b", {}, diego.name), h("ul", {}, diego.points.map(x => h("li", {}, icon("verified", true), h("span", {}, x))))),
+      h("div", { class: "ts-dr" }, h("b", {}, jose.name), h("span", { class: "dr-role" }, jose.role), h("blockquote", {}, "“" + jose.quote + "”"))));
 }
 /* Real result: before/after comparison slider + persuasive copy built only from facts already on the page. */
 function compareSlider(){

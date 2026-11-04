@@ -1,5 +1,13 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.6.0 · 2026-11-04 · Doctores al inicio del flujo
+Pedido de Lili: además de al final, mostrar a los doctores y su experiencia en las primeras preguntas, como complemento de confianza, sin que estorbe.
+- Nueva franja compacta `doctorsStrip()` con las dos fotos en círculo, "Dr. López & Dr. José Luis" y una línea de contexto. Cerrada mide unos 73 px en móvil; al tocarla se despliega la experiencia completa (las 4 credenciales del Dr. López, y el cargo y la cita del Dr. José Luis).
+- Va en el paso 1, debajo del mapa dental ("Prosthodontist (NYU) & oral surgeon"), y en el paso 3, la primera pregunta de salud ("The only ones who see these answers").
+- Recuerda si el usuario la abrió, entre pasos y cuando la pantalla se vuelve a dibujar.
+- Se mantienen las tarjetas completas del capítulo 3 y del resultado.
+
+
 ## v2.5.1 · 2026-11-04 · Corrección: el comparador no se podía arrastrar
 - Causa: la regla general `input[type=range]` (de los sliders de edad y días) tenía más especificidad que la del comparador y dejaba su zona interactiva en una franja de 30 px arriba de la imagen, lejos de la flecha.
 - Ahora el arrastre se maneja con Pointer Events sobre toda la imagen. Con mouse, el clic salta a ese punto y se puede arrastrar. Con el dedo, se mueve solo ante un gesto horizontal, así que el scroll vertical no lo mueve. El input range queda oculto, solo para teclado y lectores de pantalla.
