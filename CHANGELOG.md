@@ -1,5 +1,10 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.6.1 · 2026-11-04 · Fotos de los doctores sin logos
+- En el círculo de la franja se colaba el logo rojo de UAG de la foto original. Ahora hay retratos propios de 160 px (`dr-diego-avatar.jpg` y `dr-jose-avatar.jpg`, unos 5 KB cada uno), sin escalado por CSS.
+- La foto de la tarjeta del Dr. López se recortó a 4:5 sin los logos de NYU y UAG. Las credenciales siguen en el texto.
+
+
 ## v2.6.0 · 2026-11-04 · Doctores al inicio del flujo
 Pedido de Lili: además de al final, mostrar a los doctores y su experiencia en las primeras preguntas, como complemento de confianza, sin que estorbe.
 - Nueva franja compacta `doctorsStrip()` con las dos fotos en círculo, "Dr. López & Dr. José Luis" y una línea de contexto. Cerrada mide unos 73 px en móvil; al tocarla se despliega la experiencia completa (las 4 credenciales del Dr. López, y el cargo y la cita del Dr. José Luis).
