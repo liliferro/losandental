@@ -1,5 +1,15 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.5.0 · 2026-11-04 · Antes/después rediseñado como bloque de prueba social
+Pedido de Lili: el antes/después debe ir acompañado de un texto que convenza y en un espacio que funcione en la diagramación.
+- **Comparador deslizable:** la foto se separó en dos encuadres alineados por la línea de la encía (`ba-before.jpg` y `ba-after.jpg`, 36 KB cada uno, sin la marca de agua que quedaba entre ambas). Se arrastra con dedo, mouse o teclado (input range accesible). La primera vez que entra en pantalla hace un barrido suave para mostrar que se puede mover.
+- **Tarjeta azul marino:** "Real result · Losan Dental" → "A smile like this starts with a plan." más un texto que conecta el caso con terminar el quiz o enviar el plan, y tres chips con datos ya verificados de la clínica: Bilingual team, IV sedation available, Hotel in the same building. Cierra con "Drag to compare. Individual results vary."
+- **Ubicación en el flujo:** debajo de "What matters most to you?" (capítulo 4). La pregunta sigue arriba y la prueba aparece en cuanto la persona elige su prioridad. Al entrar al capítulo 4 solo queda una línea de avance ("Trip planned. Last chapter, then your plan.").
+- **En el resultado:** la misma tarjeta, justo antes del formulario, con el botón aqua "Send my plan to the doctor".
+- No se atribuye el caso a un tratamiento ni a un doctor específico, porque la clínica no lo indicó.
+- **Panel izquierdo (escritorio):** la foto del Dr. López tapaba los teléfonos. Ahora cada teléfono lleva su etiqueta arriba ("WhatsApp · Coordinator", "U.S. office", "Mexico office") y el número completo abajo, sin cortes.
+
+
 ## v2.4.0 · 2026-11-04 · Reputación: doctores y antes/después
 Pedido de Lili: incluir en el flujo el antes/después de un tratamiento, para empujar al usuario a terminar, y la experiencia resumida de los doctores. Todo el texto visible va en inglés.
 - **Doctores** (al final del paso `stay`, capítulo 3, y en la tarjeta de especialistas del resultado, ahora con fotos):
