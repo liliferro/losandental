@@ -1,5 +1,17 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.4.0 · 2026-11-04 · Reputación: doctores y antes/después
+Pedido de Lili: incluir en el flujo el antes/después de un tratamiento, para empujar al usuario a terminar, y la experiencia resumida de los doctores. Todo el texto visible va en inglés.
+- **Doctores** (al final del paso `stay`, capítulo 3, y en la tarjeta de especialistas del resultado, ahora con fotos):
+  - **Dr. Diego López**, Prosthodontist and CEO: UAG (prostodoncia e implantología protésica), maestría en periodoncia avanzada e implantología en NYU, investigación en UNAM con reconocimientos y publicaciones internacionales, más de 1,000 pacientes en Los Algodones. Es un resumen de la bio que envió la clínica.
+  - **Dr. José Luis**, Oral surgeon · Dental implant and smile transformation specialist, con su cita sobre titanio y zirconia. Lili confirmó que el "Dr Joseph" del material es el Dr. José Luis. Se omitieron la mención a "One Destination Clinic San Antonio" y los logros del equipo de esa clínica (Navy, radiología 3D, ortodoncia digital), porque no se pueden atribuir a él.
+- **Antes/después** (paciente real de Losan, con etiquetas Before/After y la leyenda "Individual results vary."):
+  - Al entrar al capítulo 4 sustituye el dato de "Molar City", con el texto "Two quick questions and your personal plan is ready".
+  - En el resultado aparece justo antes del formulario, con el botón "Send my plan to the doctor". No se muestra en casos de revisión médica.
+- Imágenes optimizadas de 4.1 MB a 169 KB en `src/assets/img/`. `build.py` las copia a `public/img/` y `dist/img/`. Se sirven como archivos aparte, con carga diferida, y el antes/después se precarga durante el capítulo 3.
+- Sin cambios en el payload.
+
+
 ## v2.3.0 · 2026-11-03 · Movimiento y acabado
 Pedido de Lili: efectos sutiles que hagan la experiencia más elegante, robusta y confiable. Todo anima solo `transform` y `opacity` (fluido en móvil) y se apaga con `prefers-reduced-motion`.
 - **Transiciones entre pasos:** entrada escalonada de cada bloque (55 ms entre bloques) con curva `cubic-bezier(.22,1,.36,1)` y dirección según si se avanza o se retrocede.

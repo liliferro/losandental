@@ -382,6 +382,34 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .moretitle{margin:6px 0 0}
 .more{display:flex;flex-direction:column;gap:16px}
 
+/* ---------- v2.4: doctors + before/after ---------- */
+.drs{display:flex;flex-direction:column;gap:12px}
+.dr{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start;border:1px solid var(--line);border-radius:var(--r-md);padding:12px;background:#fff;box-shadow:var(--shadow-1)}
+.dr-photo{width:96px;height:120px;border-radius:14px;overflow:hidden;background:var(--cyan-50)}
+.dr-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.dr-photo.diego img{object-position:38% 12%}
+.dr-photo.jose{background:linear-gradient(180deg,#EEF9FD,#D7EEF8)}
+.dr-photo.jose img{object-position:50% 0}
+.dr-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dr-body > b{font-family:var(--display);font-weight:600;color:var(--navy);font-size:16px;line-height:1.2}
+.dr-role{font-size:13.5px;color:var(--cyan-ink);font-weight:600;line-height:1.3}
+.dr ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:5px}
+.dr li{display:flex;gap:6px;align-items:flex-start;font-size:13.5px;color:var(--ink);line-height:1.35}
+.dr li .ms{font-size:16px;color:var(--green);margin-top:1px;flex:none}
+.dr blockquote{margin:6px 0 0;padding:0 0 0 10px;border-left:3px solid var(--cyan);font-size:14px;color:#163A5E;font-style:italic;line-height:1.4}
+@media (max-width:400px){.dr{grid-template-columns:76px minmax(0,1fr)}.dr-photo{width:76px;height:96px}}
+.ba{margin:0 auto;width:100%;max-width:440px;display:flex;flex-direction:column;gap:8px}
+.ba-img{position:relative;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-2);background:#F3E9E6;aspect-ratio:720/900}
+.ba-img img{display:block;width:100%;height:100%;object-fit:cover}
+.ba-tag{position:absolute;left:10px;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:99px;background:rgba(0,37,83,.88);color:#fff}
+.ba-tag.b{top:10px}
+.ba-tag.a{top:calc(48% + 10px);background:var(--cyan);color:var(--navy)}
+.ba figcaption{font-size:13px;color:var(--muted);text-align:center}
+.ba figcaption b{color:var(--navy);font-weight:600}
+.ba-cta{display:flex;align-items:center;justify-content:center;gap:6px;margin:0;font-family:var(--display);font-weight:600;color:var(--navy);font-size:15.5px;text-align:center}
+.ba-cta .ms{color:var(--cyan-ink);font-size:20px}
+@media (prefers-reduced-motion:no-preference){.ba-cta .ms{animation:nudge 1.6s var(--ease-soft) 1s infinite}}
+@keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateY(3px)}}
 /* ---------- v2.3: motion & polish (transform/opacity only; all off with prefers-reduced-motion) ---------- */
 html:not(.icons-ready) .ms{opacity:0}
 .ms{transition:opacity .25s var(--ease-soft)}
@@ -992,7 +1020,8 @@ const STEPS = [
       { key: "days", type: "slider", name: "Days in Los Algodones", ic: "hotel", min: 1, max: 14, fmt: v => v + (v === 14 ? "+" : "") + " day" + (v > 1 ? "s" : ""),
         sub: v => v >= 5 ? "Enough for most full-arch cases" : v >= 3 ? "Enough for most implant visits" : "A short visit", ticks: ["1","7","14+"] },
       { key: "second", type: "options", label: "Could you come back for a second visit in 3–6 months?", items: SECOND },
-      { type: "note", html: () => "<b>How it usually works:</b> implants need a few months to fuse with the bone, so most cases take two visits. You go home with temporary teeth in between." }
+      { type: "note", html: () => "<b>How it usually works:</b> implants need a few months to fuse with the bone, so most cases take two visits. You go home with temporary teeth in between." },
+      { type: "custom", render: el => el.append(doctorsCard("Who will take care of you")) }
     ] },
 
   /* ---- Chapter 4 · Your Goals (2) ---- */
@@ -1031,7 +1060,6 @@ const FACTS = {
   gums: { t: "About <b>42% of U.S. adults over 30</b> have some form of gum disease, and many don't know it.", s: "CDC · Eke et al., JADA, 2018" },
   smoke: { t: "Smokers have <b>about twice the risk</b> of gum disease compared with non-smokers.", s: "CDC" },
   fear: { t: "About <b>1 in 3 adults</b> feel anxious about the dentist, and about <b>1 in 8</b> are very afraid. You're in good company.", s: "Adult Dental Health Survey (UK), 2009" },
-  molar: { t: "Los Algodones is nicknamed <b>“Molar City”</b>: thousands of Americans and Canadians cross over from Yuma for dental care, especially in winter.", s: "KYMA News 11; TRT World" }
 };
 function factFor(ch){
   if (ch === 1){
@@ -1047,14 +1075,47 @@ function factFor(ch){
     if (st.anxiety === "fear" || st.anxiety === "nervous") return { lead, ...FACTS.fear };
     return { lead, ...FACTS.gums };
   }
-  if (ch === 3) return { lead: "Trip planned. Last chapter, then your plan.", ...FACTS.molar };
+  if (ch === 3) return { lead: "Trip planned. Last chapter, then your plan.", beforeAfter: true };
   return null;
 }
 function factCard(ch){
   const f = factFor(ch); if (!f) return null;
+  if (f.beforeAfter) return h("aside", { class: "fact", "aria-label": "A real Losan result" },
+    h("div", { class: "fact-lead" }, icon("check_circle", true), f.lead),
+    beforeAfter(),
+    h("p", { class: "ba-cta" }, icon("arrow_downward"), "Two quick questions and your personal plan is ready."));
   return h("aside", { class: "fact", "aria-label": "Did you know?" },
     h("div", { class: "fact-lead" }, icon("check_circle", true), f.lead),
     h("div", { class: "fact-body" }, h("span", { class: "fact-k" }, icon("lightbulb", true), "Did you know?"), h("p", { html: f.t }), h("span", { class: "fact-src" }, "Source: " + f.s)));
+}
+
+/* ============ reputation: doctors and a real result ============
+   Bios are the clinic's own copy (summarized). Photos live in src/assets/img and are served as img/... */
+const IMG = { beforeAfter: "img/before-after.jpg", diego: "img/dr-diego-lopez.jpg", jose: "img/dr-jose-luis.webp" };
+const DOCTORS = [
+  { key: "diego", name: "Dr. Diego López", role: "Prosthodontist and CEO, Losan Dental", img: IMG.diego, w: 640, h: 736,
+    points: ["Prosthodontics and prosthetic implantology, Autonomous University of Guadalajara (UAG)",
+             "Master's degree in advanced periodontics and implantology, New York University (NYU)",
+             "Selected to do research at UNAM, with international recognition and publications",
+             "More than 1,000 patients treated in Los Algodones"] },
+  { key: "jose", name: "Dr. José Luis", role: "Oral surgeon · Dental implant and smile transformation specialist", img: IMG.jose, w: 480, h: 640,
+    quote: "Every patient deserves a confident smile with the best materials available, titanium and zirconia, at a price they can actually afford." }
+];
+function doctorsCard(title){
+  return h("section", { class: "drs", "aria-label": title },
+    h("h2", { class: "flabel" }, title),
+    DOCTORS.map(d => h("article", { class: "dr" },
+      h("div", { class: "dr-photo " + d.key }, h("img", { src: d.img, alt: d.name, width: d.w, height: d.h, loading: "lazy", decoding: "async" })),
+      h("div", { class: "dr-body" }, h("b", {}, d.name), h("span", { class: "dr-role" }, d.role),
+        d.points ? h("ul", {}, d.points.map(x => h("li", {}, icon("verified", true), h("span", {}, x)))) : null,
+        d.quote ? h("blockquote", {}, "“" + d.quote + "”") : null))));
+}
+function beforeAfter(){
+  return h("figure", { class: "ba" },
+    h("div", { class: "ba-img" },
+      h("img", { src: IMG.beforeAfter, alt: "Before and after treatment at Losan Dental: worn, discolored front teeth, then a full, even smile", width: 720, height: 900, loading: "lazy", decoding: "async" }),
+      h("span", { class: "ba-tag b" }, "Before"), h("span", { class: "ba-tag a" }, "After")),
+    h("figcaption", {}, h("b", {}, "A real Losan patient."), " Individual results vary."));
 }
 
 /* ============ field renderer ============ */
@@ -1134,6 +1195,7 @@ function show(id, dir = 1, same = false){
     nodes.push(foot);
   }
   if (!same) [...sc.children].forEach((c, i) => c.style.setProperty("--d", Math.min(i, 8)));
+  if (s && s.chapter === 2 && !show.preloaded){ show.preloaded = true; const im = new Image(); im.src = IMG.beforeAfter; }
   host.replaceChildren(...nodes);
   setProgress();
   if (!same) lastReady = { id, ok: !(s && !s.validation()) }; // entering a step never pulses; completing one does
@@ -1618,7 +1680,11 @@ function renderResult(el){
       : helpPoints(plan)).map(([ic, t, d]) => h("li", { class: "ok" }, icon(ic, true), h("div", {}, t, h("small", {}, d))))),
     h("div", { class: "musthave", role: "note" }, icon("stethoscope"), h("div", {}, h("b", {}, med ? "This is not a diagnosis. " : "This is a probable solution, not a diagnosis. "), "Your exact treatment is decided only after you see the doctor: an in-person exam and 3D CT scan with Dr. José Luis and Dr. Diego López."))));
 
-  // 3. form
+  // 3. a real result, then the form
+  if (!med) el.append(h("div", { class: "card ba-card" },
+    h("h3", {}, icon("auto_awesome"), "Results like this start with a plan"),
+    beforeAfter(),
+    h("button", { class: "cta", type: "button", onclick: () => toForm("enviar_plan") }, "Send my plan to the doctor", icon("arrow_downward"))));
   el.append(formCard(plan, med, () => refreshClinic && refreshClinic()));
 
   // 4. more about your plan
@@ -1656,11 +1722,7 @@ function renderResult(el){
     trip.fits ? null : insight(`<b>Heads-up:</b> you said you can stay ${st.days} day${st.days > 1 ? "s" : ""}. Visit 1 usually needs about ${trip.need}. Your coordinator can help plan it.`, true),
     st.from !== "mx" && st.docs === "none" ? insight("<b>Before you book:</b> get a passport card or passport book to cross back into the U.S. by land.", true) : null,
     h("p", { class: "fine" }, "Typical timing. The doctors confirm your schedule after your scan.")));
-  more.append(h("div", { class: "card" },
-    h("h3", {}, icon("groups"), "Two specialists, one plan"),
-    h("div", { class: "team" },
-      h("div", { class: "doc" }, h("span", { class: "av" }, icon("surgical")), h("div", {}, h("b", {}, "Dr. José Luis"), h("span", {}, "Oral surgeon: extractions, bone grafts and implants"))),
-      h("div", { class: "doc" }, h("span", { class: "av", style: { backgroundImage: `url(${DOCTOR_IMG})`, backgroundPosition: "center 15%" } }), h("div", {}, h("b", {}, "Dr. Diego López"), h("span", {}, "Prosthodontist: designs and fits your new teeth"))))));
+  more.append(h("div", { class: "card" }, doctorsCard("Two specialists, one plan")));
 
   // internal view, only with ?modo=clinica (or #clinica)
   if (CLINIC){

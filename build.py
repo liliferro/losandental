@@ -9,6 +9,7 @@ Run:  python3 build.py      (no dependencies)
 """
 import base64
 import pathlib
+import shutil
 
 HERE = pathlib.Path(__file__).parent
 SRC = HERE / "src" / "smile-path.src.html"
@@ -18,6 +19,12 @@ ASSETS = HERE / "src" / "assets"
 def data_uri(name):
     return "data:image/png;base64," + base64.b64encode((ASSETS / name).read_bytes()).decode()
 
+
+# Photos are served as files next to the page (img/...), not inlined, so the page stays light.
+for out in (HERE / "public" / "img", HERE / "dist" / "img"):
+    out.mkdir(parents=True, exist_ok=True)
+    for f in (ASSETS / "img").glob("*"):
+        shutil.copy2(f, out / f.name)
 
 src = SRC.read_text(encoding="utf-8")
 body = src.replace("{{LOGO}}", data_uri("logo.png")).replace("{{DOCTOR}}", data_uri("doctor.png"))
