@@ -6,7 +6,7 @@ Proyecto de Lili (Marketech / Mood Agency) para su cliente Losan Dental. Landing
 1. Todo cambio que pida Lili se hace **en este repo** (`liliferro/losandental`) y se sube a `main`. Vercel despliega solo cada push a producción, y el historial de commits es el registro de cambios.
 2. Se edita **solo** `src/smile-path.src.html` (y `src/assets/` si cambian imágenes). Nunca se edita `public/index.html` ni `dist/` a mano.
 3. Se compila con `python3 build.py` (sin dependencias). Esto regenera `public/index.html` (producción) y `dist/artifact.html` (versión artefacto de Claude). Los archivos generados también se suben, porque Vercel no compila: sirve `public/` tal cual.
-4. Se prueba con `NODE_PATH=$(npm root -g) node tests/e2e.cjs` (Playwright, contra `dist/_preview.html`). Debe terminar con `errors: none` y sin `HSCROLL`.
+4. Se prueba con `NODE_PATH=$(npm root -g) node tests/e2e.cjs` (Playwright, contra `dist/_preview.html`). Debe terminar con `errors: none`, sin `HSCROLL` y sin `STRAY TEXT`. Si se toca el comparador antes/después, también se corre `node tests/slider.cjs`, que simula arrastres reales (mouse, teclado, dedo y scroll vertical). Las pruebas deben interactuar como una persona; cambiar valores por código no detecta fallas reales.
 5. Cada cambio se anota en `CHANGELOG.md`. Si cambia el JSON que llega al CRM o a Supabase, se documenta el esquema nuevo ahí mismo.
 6. Commits en español, descriptivos, un tema por commit.
 

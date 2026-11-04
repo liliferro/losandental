@@ -1,5 +1,11 @@
 # CHANGELOG · Losan Smile Path
 
+## v2.5.1 · 2026-11-04 · Corrección: el comparador no se podía arrastrar
+- Causa: la regla general `input[type=range]` (de los sliders de edad y días) tenía más especificidad que la del comparador y dejaba su zona interactiva en una franja de 30 px arriba de la imagen, lejos de la flecha.
+- Ahora el arrastre se maneja con Pointer Events sobre toda la imagen. Con mouse, el clic salta a ese punto y se puede arrastrar. Con el dedo, se mueve solo ante un gesto horizontal, así que el scroll vertical no lo mueve. El input range queda oculto, solo para teclado y lectores de pantalla.
+- Nueva prueba `tests/slider.cjs` con arrastres reales: mouse, clic, teclado, deslizamiento con el dedo y scroll vertical.
+
+
 ## v2.5.0 · 2026-11-04 · Antes/después rediseñado como bloque de prueba social
 Pedido de Lili: el antes/después debe ir acompañado de un texto que convenza y en un espacio que funcione en la diagramación.
 - **Comparador deslizable:** la foto se separó en dos encuadres alineados por la línea de la encía (`ba-before.jpg` y `ba-after.jpg`, 36 KB cada uno, sin la marca de agua que quedaba entre ambas). Se arrastra con dedo, mouse o teclado (input range accesible). La primera vez que entra en pantalla hace un barrido suave para mostrar que se puede mover.

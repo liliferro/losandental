@@ -402,7 +402,9 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 @media (max-width:400px){.dr{grid-template-columns:76px minmax(0,1fr)}.dr-photo{width:76px;height:96px}}
 .proof{background:var(--navy);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-2);color:#fff;position:relative}
 .proof::before{content:"";position:absolute;inset:auto -30% -40% auto;width:80%;height:80%;background:radial-gradient(closest-side,rgba(147,229,249,.16),transparent);pointer-events:none}
-.cmp{position:relative;aspect-ratio:900/367;background:#3a2a28;user-select:none;-webkit-user-select:none;overflow:hidden}
+.cmp{position:relative;aspect-ratio:900/367;background:#3a2a28;user-select:none;-webkit-user-select:none;overflow:hidden;cursor:ew-resize;touch-action:pan-y}
+.cmp.dragging .cmp-knob{transform:scale(1.08)}
+.cmp-knob{transition:transform .2s var(--ease)}
 .cmp-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
 .cmp-after{position:absolute;inset:0;clip-path:inset(0 0 0 var(--x));-webkit-clip-path:inset(0 0 0 var(--x))}
 .cmp-line{position:absolute;top:0;bottom:0;left:var(--x);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.35);pointer-events:none}
@@ -411,9 +413,6 @@ mark.pending{background:#FFF0B3;color:#5B3A06;font-family:var(--mono);font-size:
 .cmp-tag{position:absolute;top:10px;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:99px;pointer-events:none}
 .cmp-tag.b{left:10px;background:rgba(0,37,83,.85);color:#fff}
 .cmp-tag.a{right:10px;background:var(--cyan);color:var(--navy)}
-.cmp-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none;background:transparent;touch-action:pan-y}
-.cmp-range::-webkit-slider-thumb{-webkit-appearance:none;width:56px;height:400px}
-.cmp-range::-moz-range-thumb{width:56px;height:400px;border:0}
 .cmp:focus-within .cmp-knob{outline:3px solid var(--cyan);outline-offset:3px}
 .proof-body{position:relative;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px}
 .proof-k{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
@@ -1129,7 +1128,8 @@ function doctorsCard(title){
 }
 /* Real result: before/after comparison slider + persuasive copy built only from facts already on the page. */
 function compareSlider(){
-  const range = h("input", { type: "range", class: "cmp-range", min: 0, max: 100, value: 50, "aria-label": "Drag to compare before and after", "aria-valuetext": "50% after" });
+  // keyboard / screen-reader control (visually hidden); pointer dragging is handled on the whole image below
+  const range = h("input", { type: "range", class: "cmp-range sr", min: 0, max: 100, value: 50, "aria-label": "Compare before and after", "aria-valuetext": "50% after" });
   const cmp = h("div", { class: "cmp", style: { "--x": "50%" } },
     h("img", { class: "cmp-img", src: IMG.before, alt: "Before treatment at Losan Dental: worn, discolored front teeth", width: 900, height: 367, loading: "lazy", decoding: "async" }),
     h("div", { class: "cmp-after" }, h("img", { class: "cmp-img", src: IMG.after, alt: "After treatment: a full, even, natural-looking smile", width: 900, height: 367, loading: "lazy", decoding: "async" })),
@@ -1137,8 +1137,19 @@ function compareSlider(){
     h("div", { class: "cmp-line", "aria-hidden": "true" }, h("span", { class: "cmp-knob" }, icon("chevron_left"), icon("chevron_right"))),
     range);
   const set = v => { cmp.style.setProperty("--x", v + "%"); range.setAttribute("aria-valuetext", Math.round(100 - v) + "% after"); };
-  let touched = false;
+  let touched = false, dragging = false;
   range.addEventListener("input", () => { touched = true; set(Number(range.value)); });
+  const fromEvent = e => { const r = cmp.getBoundingClientRect(); const v = Math.max(0, Math.min(100, ((e.clientX - r.left) / r.width) * 100)); range.value = Math.round(v); set(v); };
+  // mouse/pen: jump and drag at once. Touch: start only after a horizontal gesture, so vertical page scrolling never moves it.
+  let startX = null;
+  const begin = e => { touched = dragging = true; cmp.classList.add("dragging"); try { cmp.setPointerCapture(e.pointerId); } catch (err) {} fromEvent(e); };
+  cmp.addEventListener("pointerdown", e => { if (e.button > 0) return; if (e.pointerType === "touch") startX = e.clientX; else begin(e); });
+  cmp.addEventListener("pointermove", e => {
+    if (dragging) return fromEvent(e);
+    if (startX != null && Math.abs(e.clientX - startX) > 6){ startX = null; begin(e); }
+  });
+  const end = () => { dragging = false; startX = null; cmp.classList.remove("dragging"); };
+  cmp.addEventListener("pointerup", end); cmp.addEventListener("pointercancel", end);
   // a gentle one-time sweep the first time it scrolls into view, to show it can be dragged
   if (!reducedMotion() && "IntersectionObserver" in window){
     const io = new IntersectionObserver(es => { if (!es.some(e => e.isIntersecting)) return; io.disconnect();
